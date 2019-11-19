@@ -1,0 +1,78 @@
+import { EmployeeService } from "./employee.service";
+import { injectable, inject } from "inversify";
+import { Request, Response } from "express";
+import uuidV4 from "uuid/v4";
+import { IEmployeeOther } from "../../../core/domain/entity/employee/IEmployeeOther";
+
+// Copyright 2019 Bik_krl
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+@injectable()
+/**
+ * EmployeeController
+ */
+export class EmployeeController {
+  private employeeService: EmployeeService;
+
+  constructor(@inject(EmployeeService) $employeeService: EmployeeService) {
+    this.employeeService = $employeeService;
+  }
+
+  async addNewEmployee(req: Request, res: Response) {
+    try {
+      const message = await this.employeeService.addNewEmployee({
+        id: 0,
+        email: "user@me.com",
+        empId: uuidV4(),
+        contactNo: "023235",
+        address: "kumasi",
+        dob: "1990-05-14",
+        fullName: "Owusu Georgina",
+        status: 1,
+        gender: "Female"
+      });
+      res.status(201).send({ status: 201, message });
+    } catch (error) {
+      console.error(error);
+      return res.send("An error occured, try again");
+    }
+  }
+
+  async setAccountStatus(req: Request, res: Response) {
+    try {
+      const empId = "2b48d086-14a8-421e-a4b8-29e96c08a139";
+      const status = 1;
+      const result = await this.employeeService.setAccountStatus(empId, status);
+      return res.send({ result });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  async addEmployeeDetailInfo(req: Request, res: Response) {
+    try {
+      const body: IEmployeeOther = req.body;
+      const result = await this.employeeService.addEmployeeDetails(body);
+      return res.send({ result, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+}
