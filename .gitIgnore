@@ -1,0 +1,8 @@
+node_modules
+.idea
+.vscode
+public
+config
+.yarn-error.log
+logs
+dist
