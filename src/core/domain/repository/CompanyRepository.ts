@@ -23,6 +23,8 @@ export interface CompanyRepository {
   addNewCompany(company: ICompany): Promise<any>;
   updateCompany(company: ICompany): Promise<any>;
   removeCompany(identifier: string): Promise<any>;
+  getCompanyWithIdentifier(identifier: string): Promise<Array<ICompany>>;
+  getCompany(): Promise<Array<ICompany>>;
 
   //
   // ─── BRANCH ─────────────────────────────────────────────────────────────────────

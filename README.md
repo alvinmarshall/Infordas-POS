@@ -21,6 +21,8 @@
 ### can add company info
 ### can update company info
 ### can remove company info
+### can get all companies info
+### can get company info with identifier
 
 # Branch use case
 

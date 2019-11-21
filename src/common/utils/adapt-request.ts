@@ -1,3 +1,6 @@
+import { Request } from "express";
+import { ParamsDictionary } from "express-serve-static-core";
+
 // Copyright 2019 Bik_krl
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,12 +15,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export interface ICompany {
-  id?: number;
-  name: string;
-  location: string;
-  address: string;
-  contact: string;
-  email: string;
-  website: string;
-}
+
+export const adapterRequest = (req: Request) => {
+  return Object.freeze({
+    path: req.path,
+    method: req.method,
+    pathParams: req.params,
+    queryParams: req.query,
+    body: req.body
+  });
+};

@@ -21,6 +21,7 @@ import { AddBranchTask } from "../../../core/domain/useCase/branch/AddBranchTask
 import { IBranch } from "../../../core/domain/entity/branch/IBranch";
 import { UpdateBranchTask } from "../../../core/domain/useCase/branch/UpdateBranchTask";
 import { RemoveBranchTask } from "../../../core/domain/useCase/branch/RemoveBranchTask";
+import { GetCompanyTask } from "../../../core/domain/useCase/company/GetCompanyTask";
 /**
  * CompanyService class
  */
@@ -32,14 +33,17 @@ export class CompanyService {
   private addBranchTask: AddBranchTask;
   private updateBranchTask: UpdateBranchTask;
   private removeBranchTask: RemoveBranchTask;
+  private getCompanyTask: GetCompanyTask;
 
   /**
    *
-   * @param $addCompanyTask
-   * @param $updateCompanyTask
-   * @param $removeCompanyTask
-   * @param $addBranchTask
-   * @param $updateBranchTask
+   * @param $addCompanyTask require AddCompanyTask instance
+   * @param $updateCompanyTask require UpdateCompanyTask instance
+   * @param $removeCompanyTask require RemoveCompanyTask instance
+   * @param $addBranchTask require AddBranchTask instance
+   * @param $updateBranchTask require UpdateBranchTask instance
+   * @param $removeBranchTask require RemoveBranchTask instance
+   * @param $getCompanyTask require GetCompanyTask instance
    */
   constructor(
     @inject(AddCompanyTask) $addCompanyTask: AddCompanyTask,
@@ -47,7 +51,8 @@ export class CompanyService {
     @inject(RemoveCompanyTask) $removeCompanyTask: RemoveCompanyTask,
     @inject(AddBranchTask) $addBranchTask: AddBranchTask,
     @inject(UpdateBranchTask) $updateBranchTask: UpdateBranchTask,
-    @inject(RemoveBranchTask) $removeBranchTask: RemoveBranchTask
+    @inject(RemoveBranchTask) $removeBranchTask: RemoveBranchTask,
+    @inject(GetCompanyTask) $getCompanyTask: GetCompanyTask
   ) {
     this.addCompanyTask = $addCompanyTask;
     this.updateCompanyTask = $updateCompanyTask;
@@ -55,6 +60,7 @@ export class CompanyService {
     this.addBranchTask = $addBranchTask;
     this.updateBranchTask = $updateBranchTask;
     this.removeBranchTask = $removeBranchTask;
+    this.getCompanyTask = $getCompanyTask;
   }
 
   //
@@ -111,6 +117,14 @@ export class CompanyService {
    */
   removeCompany(identifier: string): Promise<any> {
     return this.removeCompanyTask.buildUseCase(identifier);
+  }
+
+  getCompanies(): Promise<ICompany[]> {
+    return this.getCompanyTask.buildUseCase();
+  }
+
+  getCompany(identifier: string): Promise<ICompany[]> {
+    return this.getCompanyTask.buildUseCase(identifier);
   }
   //#endregion
 }

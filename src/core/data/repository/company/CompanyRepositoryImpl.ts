@@ -51,6 +51,12 @@ export class CompanyRepositoryImpl implements CompanyRepository {
     return this.remoteDataSource.removeCompany(identifier);
   }
 
+  getCompany(): Promise<ICompany[]> {
+    return this.remoteDataSource.getCompany();
+  }
+  getCompanyWithIdentifier(identifier: string): Promise<ICompany[]> {
+    return this.remoteDataSource.getCompanyWithIdentifier(identifier);
+  }
   //
   // ─── BRANCH ─────────────────────────────────────────────────────────────────────
   //

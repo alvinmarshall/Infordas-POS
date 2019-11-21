@@ -84,6 +84,12 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   removeCompany(identifier: string): Promise<any> {
     return this.companyDao.removeCompany(identifier);
   }
+  getCompany(): Promise<ICompany[]> {
+    return this.companyDao.getCompany();
+  }
+  getCompanyWithIdentifier(identifier: string): Promise<ICompany[]> {
+    return this.companyDao.getCompanyWithIdentifier(identifier);
+  }
 
   //
   // ─── RANK ───────────────────────────────────────────────────────────────────────
@@ -127,7 +133,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   ): Promise<UserEntity> {
     return this.userDao.getUserWithCredentials(username, password);
   }
-  
+
   setUserAccess(access: IAccess): Promise<any> {
     return this.userDao.addUserAccess(access);
   }

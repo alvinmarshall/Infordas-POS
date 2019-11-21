@@ -36,6 +36,9 @@ export interface RemoteDataSource {
   addNewCompany(company: ICompany): Promise<{}>;
   updateCompany(company: ICompany): Promise<any>;
   removeCompany(identifier: string): Promise<any>;
+  getCompany(): Promise<ICompany[]>;
+  getCompanyWithIdentifier(identifier: string): Promise<ICompany[]>;
+
 
   //
   // ─── USER ───────────────────────────────────────────────────────────────────────

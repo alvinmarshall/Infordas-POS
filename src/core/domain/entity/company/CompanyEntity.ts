@@ -22,16 +22,16 @@ export class CompanyEntity {
   private name: string;
   private location: string;
   private address: string;
-  private contactNo: string;
+  private contact: string;
   private email: string;
   private website: string;
 
-  private constructor($company?: ICompany) {
+   constructor($company?: ICompany) {
     this.id = ($company && $company.id) || 0;
     this.name = ($company && $company.name) || "";
     this.location = ($company && $company.location) || "";
     this.address = ($company && $company.address) || "";
-    this.contactNo = ($company && $company.contactNo) || "";
+    this.contact = ($company && $company.contact) || "";
     this.email = ($company && $company.email) || "";
     this.website = ($company && $company.website) || "";
   }
@@ -72,16 +72,16 @@ export class CompanyEntity {
    * Getter $contactNo
    * @return {string}
    */
-  public get $contactNo(): string {
-    return this.contactNo;
+  public get $contact(): string {
+    return this.contact;
   }
 
   /**
    * Setter $contactNo
    * @param {string} value
    */
-  public set $contactNo(value: string) {
-    this.contactNo = value;
+  public set $contact(value: string) {
+    this.contact = value;
   }
 
   /**

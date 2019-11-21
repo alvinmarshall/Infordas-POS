@@ -14,6 +14,7 @@
 
 import { ICompany } from "../../src/core/domain/entity/company/ICompany";
 import { IBranch } from "../../src/core/domain/entity/branch/IBranch";
+import { CompanyEntity } from "../../src/core/domain/entity/company/CompanyEntity";
 
 export class TestCompanyGenerator {
   static create(): ICompany {
@@ -22,7 +23,7 @@ export class TestCompanyGenerator {
       name: "test name",
       location: "test location",
       address: "test address",
-      contactNo: "test contact",
+      contact: "test contact",
       email: "test email",
       website: "test website"
     };
@@ -39,7 +40,42 @@ export class TestCompanyGenerator {
       name: "test name",
       uuid: "test uuid",
       website: "test website",
-      address:"test address"
+      address: "test address"
     };
+  }
+
+  static getCompany(): Array<ICompany> {
+    return [{
+      id: 1,
+      name: "test name",
+      location: "test location",
+      address: "test address",
+      contact: "test contact",
+      email: "test email",
+      website: "test website"
+    }];
+  }
+
+  static getCompanyList(): Array<ICompany> {
+    return [
+      {
+        id: 1,
+        name: "test name",
+        location: "test location",
+        address: "test address",
+        contact: "test contact",
+        email: "test email",
+        website: "test website"
+      },
+      {
+        id: 2,
+        name: "test name",
+        location: "test location",
+        address: "test address",
+        contact: "test contact",
+        email: "test email",
+        website: "test website"
+      }
+    ];
   }
 }

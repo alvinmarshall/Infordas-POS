@@ -31,6 +31,22 @@ router.post("/create-branch", (req, res) => {
 });
 
 //
+// ─── GET ALL COMPANY ────────────────────────────────────────────────────────────
+//
+
+router.get("/companies", (req, res) => {
+  controller.getCompanies(req, res);
+});
+
+//
+// ─── GET COMPANY WITH IDENTIFIER ────────────────────────────────────────────────
+//
+
+  
+router.get("/company/:id", (req, res) => {
+  controller.getCompany(req, res);
+});
+//
 // ─── UPDATE BRANCH ──────────────────────────────────────────────────────────────
 //
 

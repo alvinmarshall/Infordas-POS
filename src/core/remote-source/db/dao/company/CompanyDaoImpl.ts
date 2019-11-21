@@ -88,7 +88,7 @@ export class CompanyDaoImpl implements CompanyDao {
         company.name,
         company.location,
         company.address,
-        company.contactNo,
+        company.contact,
         company.email,
         company.website
       ])
@@ -98,13 +98,14 @@ export class CompanyDaoImpl implements CompanyDao {
   }
 
   updateCompany(company: ICompany): Promise<any> {
+    console.log(company)
     let sql = `UPDATE ${COMPANY_TABLE} SET Name = ?,Location = ?,Address = ?,Contact = ?,Email = ?,Website = ? WHERE id = ?`;
     return this.db
       .query(sql, [
         company.name,
         company.location,
         company.address,
-        company.contactNo,
+        company.contact,
         company.email,
         company.website,
         company.id
@@ -118,6 +119,21 @@ export class CompanyDaoImpl implements CompanyDao {
     let sql = `DELETE FROM ${COMPANY_TABLE} WHERE id = ?`;
     return this.db.query(sql, [identifier]).then(data => {
       return { message: `${data.affectedRows} record removed` };
+    });
+  }
+
+  getCompany(): Promise<ICompany[]> {
+    let sql = `SELECT id,Name AS name,Location AS location,Address AS address,
+    Contact AS contact,Email AS email,Website AS website FROM ${COMPANY_TABLE}`;
+    return this.db.query(sql, []).then(data => {
+      return data;
+    });
+  }
+  getCompanyWithIdentifier(identifier: string): Promise<ICompany[]> {
+    let sql = `SELECT id,Name AS name,Location AS location,Address AS address,
+    Contact AS contact,Email AS email,Website AS website FROM ${COMPANY_TABLE} WHERE id = ?`;
+    return this.db.query(sql, [identifier]).then(data => {
+      return data;
     });
   }
 }

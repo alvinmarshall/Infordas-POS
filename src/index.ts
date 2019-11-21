@@ -15,6 +15,7 @@
 import "reflect-metadata";
 import express, { Express } from "express";
 import config from "config";
+import cors from 'cors'
 import bodyParser from "body-parser";
 import router from "./app/router";
 import DIContainer from "./app/loc/di.container";
@@ -22,10 +23,11 @@ import PassportService from "./app/api/auth/passport-config";
 const app: Express = express();
 const port: number = config.get("port") || 3000;
 const passService = DIContainer.resolve<PassportService>(PassportService);
-router(app);
 //middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors())
+router(app);
 passService.init();
 app.listen(port, "0.0.0.0", () => {
   console.log(`${config.get("name")} running on port: ${port}`);

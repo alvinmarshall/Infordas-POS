@@ -53,6 +53,7 @@ import { AccessTask } from "../../core/domain/useCase/access/AccessTask";
 import { GetUserWithIdentifierTask } from "../../core/domain/useCase/user/GetUserWithIdentifierTask";
 import PassportService from "../api/auth/passport-config";
 import { JWTTokenService } from "../api/auth/jwtToken-config";
+import { GetCompanyTask } from "../../core/domain/useCase/company/GetCompanyTask";
 
 let DIContainer = new Container();
 
@@ -76,6 +77,7 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<GetCompanyTask>(GetCompanyTask).toSelf();
 DIContainer.bind<GetUserWithIdentifierTask>(GetUserWithIdentifierTask).toSelf();
 DIContainer.bind<AccessTask>(AccessTask).toSelf();
 DIContainer.bind<AddEmployeeDetailTask>(AddEmployeeDetailTask).toSelf();

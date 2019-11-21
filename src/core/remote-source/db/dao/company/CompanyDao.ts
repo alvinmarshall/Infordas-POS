@@ -23,6 +23,9 @@ export interface CompanyDao {
   addCompany(company: ICompany): Promise<any>;
   updateCompany(company: ICompany): Promise<any>;
   removeCompany(identifier: string): Promise<any>;
+  getCompany(): Promise<ICompany[]>;
+  getCompanyWithIdentifier(identifier: string): Promise<ICompany[]>;
+
 
   //
   // ─── BRANCH ─────────────────────────────────────────────────────────────────────
