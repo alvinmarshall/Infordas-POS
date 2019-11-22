@@ -17,6 +17,7 @@ import { CompanyService } from "./company.service";
 import { Request, Response } from "express";
 import { ICompany } from "../../../core/domain/entity/company/ICompany";
 import { IBranch } from "../../../core/domain/entity/branch/IBranch";
+import v4 from "uuid/v4";
 /**
  * CompanyController class
  */
@@ -34,10 +35,36 @@ export class CompanyController {
 
   async addBranch(req: Request, res: Response) {
     try {
-      const body = req.body;
+      const body: IBranch = req.body;
+      body.uuid = v4();
       const data = await this.companyService.addBranch(body);
       return res.status(201).send({ data, status: 201 });
     } catch (error) {
+      return res
+        .status(500)
+        .send({ message: "Internal error occurred", status: 500 });
+    }
+  }
+
+  async getBranches(req: Request, res: Response) {
+    try {
+      const data = await this.companyService.getBranches();
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "Internal error occurred", status: 500 });
+    }
+  }
+
+  async getBranch(req: Request, res: Response) {
+    try {
+      const identifier: string = req.params.identifier;
+      const data = await this.companyService.getBranchWithIdentifer(identifier);
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
       return res
         .status(500)
         .send({ message: "Internal error occurred", status: 500 });
@@ -89,7 +116,7 @@ export class CompanyController {
 
   async updateCompany(req: Request, res: Response) {
     try {
-      const body:ICompany = req.body;
+      const body: ICompany = req.body;
       const data = await this.companyService.updateCompany(body);
       return res.status(200).send({ data, status: 200 });
     } catch (error) {

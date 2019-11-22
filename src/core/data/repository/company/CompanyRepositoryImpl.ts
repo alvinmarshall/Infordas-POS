@@ -70,4 +70,10 @@ export class CompanyRepositoryImpl implements CompanyRepository {
   removeBranch(identifier: string): Promise<any> {
     return this.remoteDataSource.removeBranch(identifier);
   }
+  getBranchWithIdentifier(identifier: string): Promise<IBranch[]> {
+    return this.remoteDataSource.getBranchWithIdentifier(identifier);
+  }
+  getBranchs(): Promise<IBranch[]> {
+    return this.remoteDataSource.getBranchs();
+  }
 }

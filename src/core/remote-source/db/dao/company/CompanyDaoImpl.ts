@@ -14,7 +14,11 @@
 import { CompanyDao } from "./CompanyDao";
 import { ICompany } from "../../../../domain/entity/company/ICompany";
 import { MysqlDatabase } from "../../MysqlDatabase";
-import { COMPANY_TABLE, BRANCH_TABLE } from "../../../../../common/constants";
+import {
+  COMPANY_TABLE,
+  BRANCH_TABLE,
+  EMPLOYEE_TABLE
+} from "../../../../../common/constants";
 import { injectable, inject } from "inversify";
 import { IBranch } from "../../../../domain/entity/branch/IBranch";
 
@@ -32,6 +36,46 @@ export class CompanyDaoImpl implements CompanyDao {
   //
   // ─── BRANCH ─────────────────────────────────────────────────────────────────────
   //
+  getBranchWithIdentifier(identifier: string): Promise<IBranch[]> {
+    let sql = `SELECT
+
+    b.Branch_ID AS uuid,
+    b.Name AS name,
+    b.Contact AS contact,
+    b.Location AS location,
+    b.Address AS address,
+    b.Website AS website,
+    c.Name AS companyName,
+    e.Name AS employeeName
+    
+    FROM ${BRANCH_TABLE} b
+    
+    INNER JOIN ${COMPANY_TABLE} c, ${EMPLOYEE_TABLE} e
+    
+    WHERE b.Comp_ID = c.id AND b.Emp_ID = e.Emp_ID AND b.Branch_ID = ?`;
+
+    return this.db.query(sql, [identifier]);
+  }
+  getBranchs(): Promise<IBranch[]> {
+    let sql = `SELECT
+
+    b.Branch_ID AS uuid,
+    b.Name AS name,
+    b.Contact AS contact,
+    b.Location AS location,
+    b.Address AS address,
+    b.Website AS website,
+    c.Name AS companyName,
+    e.Name AS employeeName
+    
+    FROM ${BRANCH_TABLE} b
+    
+    INNER JOIN ${COMPANY_TABLE} c, ${EMPLOYEE_TABLE} e
+    
+    WHERE b.Comp_ID = c.id AND b.Emp_ID = e.Emp_ID`;
+
+    return this.db.query(sql, []);
+  }
   removeBranch(identifier: string): Promise<any> {
     let sql = `DELETE FROM ${BRANCH_TABLE} WHERE Branch_ID = ?`;
     return this.db.query(sql, [identifier]).then(data => {
@@ -48,7 +92,7 @@ export class CompanyDaoImpl implements CompanyDao {
         branch.name,
         branch.location,
         branch.address,
-        branch.contactNo,
+        branch.contact,
         branch.email,
         branch.website,
         branch.uuid
@@ -68,7 +112,7 @@ export class CompanyDaoImpl implements CompanyDao {
         branch.name,
         branch.location,
         branch.address,
-        branch.contactNo,
+        branch.contact,
         branch.email,
         branch.website
       ])
@@ -98,7 +142,7 @@ export class CompanyDaoImpl implements CompanyDao {
   }
 
   updateCompany(company: ICompany): Promise<any> {
-    console.log(company)
+    console.log(company);
     let sql = `UPDATE ${COMPANY_TABLE} SET Name = ?,Location = ?,Address = ?,Contact = ?,Email = ?,Website = ? WHERE id = ?`;
     return this.db
       .query(sql, [

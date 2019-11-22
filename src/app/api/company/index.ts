@@ -31,21 +31,20 @@ router.post("/create-branch", (req, res) => {
 });
 
 //
-// ─── GET ALL COMPANY ────────────────────────────────────────────────────────────
+// ─── GET ALL BRANCH ─────────────────────────────────────────────────────────────
 //
 
-router.get("/companies", (req, res) => {
-  controller.getCompanies(req, res);
+router.get("/branches", (req, res) => {
+  controller.getBranches(req, res);
+});
+//
+// ─── GET A BRANCH WITH IDENTIFIER ───────────────────────────────────────────────
+//
+
+router.get("/branch/:identifier", (req, res) => {
+  controller.getBranch(req, res);
 });
 
-//
-// ─── GET COMPANY WITH IDENTIFIER ────────────────────────────────────────────────
-//
-
-  
-router.get("/company/:id", (req, res) => {
-  controller.getCompany(req, res);
-});
 //
 // ─── UPDATE BRANCH ──────────────────────────────────────────────────────────────
 //
@@ -60,6 +59,7 @@ router.put("/update-branch", (req, res) => {
 router.delete("/delete-branch", (req, res) => {
   controller.removeBranch(req, res);
 });
+
 //#endregion
 
 //#region company
@@ -71,9 +71,21 @@ router.post("/create-company", (req, res) => {
   controller.addCompany(req, res);
 });
 
-// router.get("/create", (req, res) => {
-//   controller.addCompany(req, res);
-// });
+//
+// ─── GET ALL COMPANY ────────────────────────────────────────────────────────────
+//
+
+router.get("/companies", (req, res) => {
+  controller.getCompanies(req, res);
+});
+
+//
+// ─── GET COMPANY WITH IDENTIFIER ────────────────────────────────────────────────
+//
+
+router.get("/company/:id", (req, res) => {
+  controller.getCompany(req, res);
+});
 
 //
 // ─── UPDATE COMPANY ─────────────────────────────────────────────────────────────

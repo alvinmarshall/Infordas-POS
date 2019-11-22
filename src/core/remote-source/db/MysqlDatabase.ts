@@ -41,7 +41,7 @@ export class MysqlDatabase {
     return new Promise((resolve, rejects) => {
       this.connection.query(sql, args, (err, results) => {
         if (err) return rejects(err);
-        // console.log("results", JSON.stringify(results));
+        console.log("results", JSON.stringify(results));
         return resolve(results);
       });
     });

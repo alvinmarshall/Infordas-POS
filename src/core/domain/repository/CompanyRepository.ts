@@ -33,4 +33,6 @@ export interface CompanyRepository {
   addNewBranch(branch: IBranch): Promise<any>;
   updateBranch(branch: IBranch): Promise<any>;
   removeBranch(identifier: string): Promise<any>;
+  getBranchWithIdentifier(identifier: string): Promise<IBranch[]>;
+  getBranchs(): Promise<IBranch[]>;
 }

@@ -69,6 +69,12 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   removeBranch(identifier: string): Promise<any> {
     return this.companyDao.removeBranch(identifier);
   }
+  getBranchWithIdentifier(identifier: string): Promise<IBranch[]> {
+    return this.companyDao.getBranchWithIdentifier(identifier);
+  }
+  getBranchs(): Promise<IBranch[]> {
+    return this.companyDao.getBranchs();
+  }
 
   //
   // ─── COMPANY ────────────────────────────────────────────────────────────────────

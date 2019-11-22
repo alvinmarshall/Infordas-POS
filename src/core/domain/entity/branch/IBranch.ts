@@ -13,14 +13,17 @@
 // limitations under the License.
 
 export interface IBranch {
-  id: number;
+  id?: number;
   uuid: string;
   compId: number;
   empId: string;
   name: string;
   location: string;
-  address:string;
-  contactNo: string;
+  address: string;
+  contact: string;
   email: string;
   website: string;
+  companyName?: string;
+  employeeName?: string;
+  imageUrl?: string;
 }

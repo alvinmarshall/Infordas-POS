@@ -33,7 +33,7 @@ export class TestCompanyGenerator {
     return {
       id: 0,
       compId: 0,
-      contactNo: "test contact",
+      contact: "test contact",
       email: "test email",
       empId: "test empId",
       location: "test location",
@@ -45,15 +45,17 @@ export class TestCompanyGenerator {
   }
 
   static getCompany(): Array<ICompany> {
-    return [{
-      id: 1,
-      name: "test name",
-      location: "test location",
-      address: "test address",
-      contact: "test contact",
-      email: "test email",
-      website: "test website"
-    }];
+    return [
+      {
+        id: 1,
+        name: "test name",
+        location: "test location",
+        address: "test address",
+        contact: "test contact",
+        email: "test email",
+        website: "test website"
+      }
+    ];
   }
 
   static getCompanyList(): Array<ICompany> {
@@ -74,6 +76,52 @@ export class TestCompanyGenerator {
         address: "test address",
         contact: "test contact",
         email: "test email",
+        website: "test website"
+      }
+    ];
+  }
+
+  static getBranchList(): Array<IBranch> {
+    return [
+      {
+        id: 1,
+        address: "test address",
+        compId: 1,
+        contact: "test contact",
+        email: "test email",
+        empId: "test empid",
+        location: "test location",
+        name: "test name",
+        uuid: "test uuid",
+        website: "test website"
+      },
+      {
+        id: 2,
+        address: "test address",
+        compId: 2,
+        contact: "test contact",
+        email: "test email",
+        empId: "test empid",
+        location: "test location",
+        name: "test name",
+        uuid: "test uuid",
+        website: "test website"
+      }
+    ];
+  }
+
+  static getBranch(): Array<IBranch> {
+    return [
+      {
+        id: 1,
+        address: "test address",
+        compId: 1,
+        contact: "test contact",
+        email: "test email",
+        empId: "test empid",
+        location: "test location",
+        name: "test name",
+        uuid: "test uuid",
         website: "test website"
       }
     ];

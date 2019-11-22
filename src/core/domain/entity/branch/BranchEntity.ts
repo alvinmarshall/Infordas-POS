@@ -20,7 +20,7 @@ export class BranchEntity {
   private empId: string;
   private name: string;
   private location: string;
-  private contactNo: string;
+  private contact: string;
   private email: string;
   private website: string;
   private address: string;
@@ -32,7 +32,7 @@ export class BranchEntity {
     this.empId = (branch && branch.empId) || "";
     this.name = (branch && branch.name) || "";
     this.location = (branch && branch.location) || "";
-    this.contactNo = (branch && branch.contactNo) || "";
+    this.contact = (branch && branch.contact) || "";
     this.email = (branch && branch.email) || "";
     this.website = (branch && branch.website) || "";
     this.address = (branch && branch.address) || "";
@@ -92,16 +92,16 @@ export class BranchEntity {
    * Getter $contactNo
    * @return {string}
    */
-  public get $contactNo(): string {
-    return this.contactNo;
+  public get $contact(): string {
+    return this.contact;
   }
 
   /**
    * Setter $contactNo
    * @param {string} value
    */
-  public set $contactNo(value: string) {
-    this.contactNo = value;
+  public set $contact(value: string) {
+    this.contact = value;
   }
 
   /**

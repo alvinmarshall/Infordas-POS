@@ -54,6 +54,7 @@ import { GetUserWithIdentifierTask } from "../../core/domain/useCase/user/GetUse
 import PassportService from "../api/auth/passport-config";
 import { JWTTokenService } from "../api/auth/jwtToken-config";
 import { GetCompanyTask } from "../../core/domain/useCase/company/GetCompanyTask";
+import { GetBranchTask } from "../../core/domain/useCase/branch/GetBranchTask";
 
 let DIContainer = new Container();
 
@@ -77,6 +78,7 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<GetBranchTask>(GetBranchTask).toSelf();
 DIContainer.bind<GetCompanyTask>(GetCompanyTask).toSelf();
 DIContainer.bind<GetUserWithIdentifierTask>(GetUserWithIdentifierTask).toSelf();
 DIContainer.bind<AccessTask>(AccessTask).toSelf();
