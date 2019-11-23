@@ -33,9 +33,9 @@ export class RankController {
 
   async addRank(req: Request, res: Response) {
     try {
-      let rank = "Sales officer";
-      const message = await this.rankService.addRank(rank);
-      return res.status(201).send({ message, status: 201 });
+      const body: IRank = req.body;
+      const data = await this.rankService.addRank(body);
+      return res.status(201).send({ data, status: 201 });
     } catch (error) {
       console.error(error);
       return res
@@ -46,10 +46,9 @@ export class RankController {
 
   async removeRank(req: Request, res: Response) {
     try {
-      let rankId = req.params.id;
-      this.rankService.removeRank(rankId);
-      const results = await this.rankService.removeRank(rankId);
-      return res.send({ results, status: 200 });
+      let identifier = req.params.identifier;
+      const data = await this.rankService.removeRank(identifier);
+      return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
       return res
@@ -60,12 +59,35 @@ export class RankController {
 
   async updateRank(req: Request, res: Response) {
     try {
-      const { id, position } = req.query;
-      console.log("req", req.query);
-      let rank: IRank = { id, position };
-      this.rankService.updateRank(rank);
-      const results = await this.rankService.updateRank(rank);
-      return res.send({ results, status: 200 });
+      const body: IRank = req.body;
+      const data = await this.rankService.updateRank(body);
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred", status: 500 });
+    }
+  }
+
+  async getRanks(req: Request, res: Response) {
+    try {
+      const data = await this.rankService.getRanks();
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred", status: 500 });
+    }
+  }
+
+  async getRank(req: Request, res: Response) {
+    try {
+      const identifier = req.params.identifier;
+      console.log(identifier);
+      const data = await this.rankService.getRankWithIdentifier(identifier);
+      return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
       return res

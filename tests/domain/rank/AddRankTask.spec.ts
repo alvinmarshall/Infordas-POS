@@ -31,8 +31,8 @@ describe("domain.useCase.rank AddRank test", () => {
   it("Add new rank success", async () => {
     let rank = TestRankGenerator.create();
     let actual = { message: "1 record inserted" };
-    when(rankRepository.addRank(rank.position)).thenResolve(actual);
-    const expected = await addRankTask.buildUseCase(rank.position);
+    when(rankRepository.addRank(rank)).thenResolve(actual);
+    const expected = await addRankTask.buildUseCase(rank);
     assert.equal(expected, actual);
   });
 

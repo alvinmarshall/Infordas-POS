@@ -56,6 +56,7 @@ import { JWTTokenService } from "../api/auth/jwtToken-config";
 import { GetCompanyTask } from "../../core/domain/useCase/company/GetCompanyTask";
 import { GetBranchTask } from "../../core/domain/useCase/branch/GetBranchTask";
 import { GetEmployeeTask } from "../../core/domain/useCase/employee/GetEmployeeTask";
+import { GetRankTask } from "../../core/domain/useCase/rank/GetRankTask";
 
 let DIContainer = new Container();
 
@@ -79,6 +80,7 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<GetRankTask>(GetRankTask).toSelf();
 DIContainer.bind<GetEmployeeTask>(GetEmployeeTask).toSelf();
 DIContainer.bind<GetBranchTask>(GetBranchTask).toSelf();
 DIContainer.bind<GetCompanyTask>(GetCompanyTask).toSelf();

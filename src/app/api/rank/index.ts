@@ -19,7 +19,6 @@ import "reflect-metadata";
 import express from "express";
 import DIContainer from "../../loc/di.container";
 import { RankController } from "./rank.controller";
-import passport from "passport";
 const router = express.Router();
 const controller = DIContainer.resolve<RankController>(RankController);
 
@@ -35,7 +34,7 @@ router.post("/create-rank", (req, res) => {
 // ─── DELETE RANK ────────────────────────────────────────────────────────────────
 //
 
-router.delete("/delete-rank", (req, res) => {
+router.delete("/delete-rank/:identifier", (req, res) => {
   controller.removeRank(req, res);
 });
 
@@ -43,16 +42,24 @@ router.delete("/delete-rank", (req, res) => {
 // ─── UPDATE RANK ────────────────────────────────────────────────────────────────
 //
 
-router.put("/create-rank", (req, res) => {
+router.put("/update-rank", (req, res) => {
   controller.updateRank(req, res);
 });
 
-router.get(
-  "/delete-rank/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    controller.removeRank(req, res);
-  }
-);
+//
+// ─── GET ALL RANKS ──────────────────────────────────────────────────────────────
+//
+
+router.get("/", (req, res) => {
+  controller.getRanks(req, res);
+});
+
+//
+// ─── GET A RANK WITH IDENITIFIER ────────────────────────────────────────────────
+//
+
+router.get("/:identifier", (req, res) => {
+  controller.getRank(req, res);
+});
 
 export default router;

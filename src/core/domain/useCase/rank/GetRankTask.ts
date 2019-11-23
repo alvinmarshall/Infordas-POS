@@ -13,16 +13,17 @@
 // limitations under the License.
 
 import { BaseUseCase } from "../base/BaseUseCase";
+import { IRank } from "../../entity/rank/IRank";
 import { injectable, inject } from "inversify";
 import { RankRepository } from "../../repository/RankRepository";
 import { RankRepositoryImpl } from "../../../data/repository/rank/RankRepositoryImpl";
-import { IRank } from "../../entity/rank/IRank";
+
 /**
- * AddRankTask performs rank task
- * class extends BaseUseCase {@Link ../base/BaseUseCase}
+ * GetRankTask class
+ * super class BaseUseCase {@Link ../base/BaseUseCase }
  */
 @injectable()
-export class AddRankTask extends BaseUseCase<any, IRank> {
+export class GetRankTask extends BaseUseCase<IRank[], string> {
   private rankRepository: RankRepository;
 
   /**
@@ -33,9 +34,8 @@ export class AddRankTask extends BaseUseCase<any, IRank> {
     super();
     this.rankRepository = $rankRepository;
   }
-
-  protected generateUseCase(input?: IRank | undefined): Promise<any> {
-    if (input == null) throw new Error("position can't be null");
-    return this.rankRepository.addRank(input);
+  protected generateUseCase(input?: string | undefined): Promise<IRank[]> {
+    if (input == null) return this.rankRepository.getRanks();
+    return this.rankRepository.getRankWithIdentifier(input);
   }
 }

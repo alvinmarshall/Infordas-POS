@@ -17,7 +17,6 @@ import { injectable, inject } from "inversify";
 import { MysqlDatabase } from "../../MysqlDatabase";
 import { RANK_TABLE } from "../../../../../common/constants";
 import { IRank } from "../../../../domain/entity/rank/IRank";
-import { type } from "os";
 /**
  * RankDaoImpl
  * class implements RankDao {@Link ./RankDao}
@@ -34,14 +33,23 @@ export class RankDaoImpl implements RankDao {
     this.db = $db;
   }
 
+  getRanks(): Promise<IRank[]> {
+    let sql = `SELECT id, Position AS position FROM ${RANK_TABLE}`;
+    return this.db.query(sql, []);
+  }
+  getRankWithIdentifier(identifier: string): Promise<IRank[]> {
+    let sql = `SELECT id, Position AS position FROM rank WHERE id = ?`;
+    return this.db.query(sql, [identifier]);
+  }
+
   /**
    * AddRank new Rank
    * @param position provide type string
    * @returns Promise<{obj}>
    */
-  addRank(position: string): Promise<any> {
+  addRank(rank: IRank): Promise<any> {
     let sql = `INSERT INTO ${RANK_TABLE} (Position) VALUES (?)`;
-    return this.db.query(sql, [position]).then(data => {
+    return this.db.query(sql, [rank.position]).then(data => {
       if (data.affectedRows > 0) {
         const insertedId = data.insertId;
         return { message: "Rank added", rankId: insertedId };

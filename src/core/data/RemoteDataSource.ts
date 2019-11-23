@@ -66,9 +66,11 @@ export interface RemoteDataSource {
   // ─── RANK ───────────────────────────────────────────────────────────────────────
   //
 
-  addRank(position: string): Promise<{}>;
-  removeRank(id: string): Promise<{}>;
-  updateRank(rank: IRank): Promise<{}>;
+  addRank(rank:IRank): Promise<any>;
+  removeRank(id: string): Promise<any>;
+  updateRank(rank: IRank): Promise<any>;
+  getRanks(): Promise<IRank[]>;
+  getRankWithIdentifier(identifier: string): Promise<IRank[]>;
 
   //
   // ─── USER ───────────────────────────────────────────────────────────────────────

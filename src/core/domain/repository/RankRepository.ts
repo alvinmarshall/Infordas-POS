@@ -1,4 +1,3 @@
-
 // Copyright 2019 Bik_krl
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +15,10 @@
 import { IRank } from "../entity/rank/IRank";
 
 export interface RankRepository {
-  addRank(position: string): Promise<any>;
+  addRank(rank: IRank): Promise<any>;
   removeRank(identifier: string): Promise<any>;
-  updateRank(rank:IRank): Promise<any>;
+  updateRank(rank: IRank): Promise<any>;
+  getRanks(): Promise<IRank[]>;
+  getRankWithIdentifier(identifier:string): Promise<IRank[]>;
+
 }

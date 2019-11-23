@@ -17,6 +17,7 @@ import { RemoveRankTask } from "../../../core/domain/useCase/rank/RemoveRankTask
 import { injectable, inject } from "inversify";
 import { UpdateRankTask } from "../../../core/domain/useCase/rank/UpdateRankTask";
 import { IRank } from "../../../core/domain/entity/rank/IRank";
+import { GetRankTask } from "../../../core/domain/useCase/rank/GetRankTask";
 
 /**
  * RankService class
@@ -26,25 +27,29 @@ export class RankService {
   private addRankTask: AddRankTask;
   private removeTask: RemoveRankTask;
   private updateTask: UpdateRankTask;
+  private getRankTask: GetRankTask;
 
   /**
    * @constructor
    * @param $addRankTask require AddRankTask instance
    * @param $removeTask reqiore RemoveRankTask instance
    * @param $updateTask require UpdateRankTask instance
+   * @param
    */
   constructor(
     @inject(AddRankTask) $addRankTask: AddRankTask,
     @inject(RemoveRankTask) $removeTask: RemoveRankTask,
-    @inject(UpdateRankTask) $updateTask: UpdateRankTask
+    @inject(UpdateRankTask) $updateTask: UpdateRankTask,
+    @inject(GetRankTask) $getRankTask: GetRankTask
   ) {
     this.addRankTask = $addRankTask;
     this.removeTask = $removeTask;
     this.updateTask = $updateTask;
+    this.getRankTask = $getRankTask;
   }
 
-  addRank(position: string): Promise<any> {
-    return this.addRankTask.buildUseCase(position);
+  addRank(rank: IRank): Promise<any> {
+    return this.addRankTask.buildUseCase(rank);
   }
 
   removeRank(rankId: string): Promise<any> {
@@ -53,5 +58,13 @@ export class RankService {
 
   updateRank(rank: IRank): Promise<any> {
     return this.updateTask.buildUseCase(rank);
+  }
+
+  getRanks(): Promise<IRank[]> {
+    return this.getRankTask.buildUseCase();
+  }
+
+  getRankWithIdentifier(identifier: string): Promise<IRank[]> {
+    return this.getRankTask.buildUseCase(identifier);
   }
 }

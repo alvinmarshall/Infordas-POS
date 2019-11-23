@@ -37,10 +37,10 @@ export class RankRepositoryImpl implements RankRepository {
 
   /**
    * AddRank
-   * @param position type string
+   * @param rank type IRank
    */
-  addRank(position: string): Promise<any> {
-    return this.remoteDataSource.addRank(position);
+  addRank(rank:IRank): Promise<any> {
+    return this.remoteDataSource.addRank(rank);
   }
   /**
    * RemoveRank
@@ -56,5 +56,12 @@ export class RankRepositoryImpl implements RankRepository {
    */
   updateRank(rank: IRank): Promise<any> {
     return this.remoteDataSource.updateRank(rank);
+  }
+
+  getRanks(): Promise<IRank[]> {
+    return this.remoteDataSource.getRanks();
+  }
+  getRankWithIdentifier(identifier: string): Promise<IRank[]> {
+    return this.remoteDataSource.getRankWithIdentifier(identifier);
   }
 }

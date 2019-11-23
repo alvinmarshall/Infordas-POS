@@ -17,6 +17,8 @@
 ### can add a new rank
 ### can remove rank
 ### can update rank
+### can get all rank info
+### can get rank info with identifier
 
 # Company use case
 

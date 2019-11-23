@@ -14,7 +14,9 @@
 import { IRank } from "../../../../domain/entity/rank/IRank";
 
 export interface RankDao {
-  addRank(position: string): Promise<any>;
+  addRank(rank: IRank): Promise<any>;
   removeRank(identifier: string): Promise<any>;
   updateRank(rank: IRank): Promise<any>;
+  getRanks(): Promise<IRank[]>;
+  getRankWithIdentifier(identifier: string): Promise<IRank[]>;
 }

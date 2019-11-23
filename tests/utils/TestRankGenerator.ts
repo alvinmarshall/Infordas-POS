@@ -25,4 +25,26 @@ export class TestRankGenerator {
   static getRanks(): RankEntity {
     return new RankEntity({ id: 1, position: "test position" });
   }
+
+  static getRankList(): IRank[] {
+    return [
+      {
+        id: 1,
+        position: "test position"
+      },
+      {
+        id: 2,
+        position: "test position"
+      }
+    ];
+  }
+
+  static getRank(): IRank[] {
+    return [
+      {
+        id: 1,
+        position: "test position"
+      }
+    ];
+  }
 }

@@ -32,10 +32,10 @@ describe("data.repository.rank RankRepositoryImpl test", () => {
   it("addRank success", async () => {
     let rank = TestRankGenerator.create();
     const actual = { message: "1 item inserted" };
-    when(remoteDataSource.addRank(rank.position)).thenResolve(actual);
-    const expected = await rankRepositoryImpl.addRank(rank.position);
+    when(remoteDataSource.addRank(rank)).thenResolve(actual);
+    const expected = await rankRepositoryImpl.addRank(rank);
     assert.equal(expected, actual);
-    verify(remoteDataSource.addRank(rank.position)).called();
+    verify(remoteDataSource.addRank(rank)).called();
   });
 
   it("removeRank success", async () => {

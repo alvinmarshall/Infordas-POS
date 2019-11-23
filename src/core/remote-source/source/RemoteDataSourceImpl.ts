@@ -101,8 +101,8 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   // ─── RANK ───────────────────────────────────────────────────────────────────────
   //
 
-  addRank(position: string): Promise<any> {
-    return this.rankDao.addRank(position);
+  addRank(rank: IRank): Promise<any> {
+    return this.rankDao.addRank(rank);
   }
   removeRank(identifier: string): Promise<any> {
     return this.rankDao.removeRank(identifier);
@@ -111,14 +111,20 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   updateRank(rank: IRank): Promise<any> {
     return this.rankDao.updateRank(rank);
   }
-  addEmployeeOtherInfo(employeeDetail: IEmployeeOther): Promise<any> {
-    return this.employeeDao.addEmployeeDetailInfo(employeeDetail);
+  getRanks(): Promise<IRank[]> {
+    return this.rankDao.getRanks();
+  }
+  getRankWithIdentifier(identifier: string): Promise<IRank[]> {
+    return this.rankDao.getRankWithIdentifier(identifier);
   }
 
   //
   // ─── EMPLOYEE ───────────────────────────────────────────────────────────────────
   //
 
+  addEmployeeOtherInfo(employeeDetail: IEmployeeOther): Promise<any> {
+    return this.employeeDao.addEmployeeDetailInfo(employeeDetail);
+  }
   setActiveEmployee(empId: string, status: number): Promise<any> {
     return this.employeeDao.setActiveEmployee(empId, status);
   }

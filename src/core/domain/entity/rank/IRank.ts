@@ -13,6 +13,6 @@
 // limitations under the License.
 
 export interface IRank {
-  id: number;
-  position: string;
+  id?: number;
+  position?: string;
 }
