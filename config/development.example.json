@@ -1,0 +1,17 @@
+{
+    "name":"Server Development",
+    "version":"1.0.0",
+    "port":"",
+    "mysqlConfig":{
+        "host":"",
+        "database":"",
+        "user":"",
+        "password":"",
+        "connectionLimit":100
+    },
+    "sqliteFile":"",
+    "assert":"",
+    "jwtConfig":{
+        "secret":""
+    }
+}

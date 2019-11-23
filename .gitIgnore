@@ -2,7 +2,8 @@ node_modules
 .idea
 .vscode
 public
-config
+config/production.json
+config/development.json
 .yarn-error.log
 logs
 dist
