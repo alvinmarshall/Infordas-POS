@@ -44,6 +44,9 @@ export class CompanyDaoImpl implements CompanyDao {
     b.Contact AS contact,
     b.Location AS location,
     b.Address AS address,
+    b.Email AS email,
+    b.Comp_ID AS compId,
+    b.Emp_ID AS empId,
     b.Website AS website,
     c.Name AS companyName,
     e.Name AS employeeName
@@ -64,6 +67,9 @@ export class CompanyDaoImpl implements CompanyDao {
     b.Contact AS contact,
     b.Location AS location,
     b.Address AS address,
+    b.Email AS email,
+    b.Comp_ID AS compId,
+    b.Emp_ID AS empId,
     b.Website AS website,
     c.Name AS companyName,
     e.Name AS employeeName

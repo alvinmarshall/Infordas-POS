@@ -14,15 +14,15 @@
 
 export interface IBranch {
   id?: number;
-  uuid: string;
-  compId: number;
-  empId: string;
-  name: string;
-  location: string;
-  address: string;
-  contact: string;
-  email: string;
-  website: string;
+  uuid?: string;
+  compId?: number;
+  empId?: string;
+  name?: string;
+  location?: string;
+  address?: string;
+  contact?: string;
+  email?: string;
+  website?: string;
   companyName?: string;
   employeeName?: string;
   imageUrl?: string;

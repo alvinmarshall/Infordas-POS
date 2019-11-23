@@ -18,6 +18,7 @@ import { IEmployee } from "../../../core/domain/entity/employee/IEmployee";
 import { SetEmployeeActiveTask } from "../../../core/domain/useCase/employee/SetEmployeeActiveTask";
 import { AddEmployeeDetailTask } from "../../../core/domain/useCase/employee/AddEmployeeDetailTask";
 import { IEmployeeOther } from "../../../core/domain/entity/employee/IEmployeeOther";
+import { GetEmployeeTask } from "../../../core/domain/useCase/employee/GetEmployeeTask";
 /**
  * EmployeeService class
  */
@@ -26,22 +27,27 @@ export class EmployeeService {
   private addEmployeeTask: AddEmployeeTask;
   private setEmployeeActiveTask: SetEmployeeActiveTask;
   private addEmployeeDetailTask: AddEmployeeDetailTask;
+  private getEmloyeeTask: GetEmployeeTask;
 
   /**
    * @constructor
    * @param $addEmployeeTask provide AddEmployeeTask instance
    * @param $setEmployeeActiveTask provide SetEmployeeActiveTask instance
    * @param $addEmployeeDetailTask  provide AddEmployeeDetailTask instance
+   * @param $getEmloyeeTask provide GetEmployeeTask instance
    */
   constructor(
     @inject(AddEmployeeTask) $addEmployeeTask: AddEmployeeTask,
     @inject(SetEmployeeActiveTask)
     $setEmployeeActiveTask: SetEmployeeActiveTask,
-    @inject(AddEmployeeDetailTask) $addEmployeeDetailTask: AddEmployeeDetailTask
+    @inject(AddEmployeeDetailTask)
+    $addEmployeeDetailTask: AddEmployeeDetailTask,
+    @inject(GetEmployeeTask) $getEmloyeeTask: GetEmployeeTask
   ) {
     this.addEmployeeTask = $addEmployeeTask;
     this.setEmployeeActiveTask = $setEmployeeActiveTask;
     this.addEmployeeDetailTask = $addEmployeeDetailTask;
+    this.getEmloyeeTask = $getEmloyeeTask;
   }
 
   /**
@@ -66,5 +72,13 @@ export class EmployeeService {
    */
   addEmployeeDetails(employeeDetail: IEmployeeOther): Promise<any> {
     return this.addEmployeeDetailTask.buildUseCase(employeeDetail);
+  }
+
+  getEmployees(): Promise<IEmployee[]> {
+    return this.getEmloyeeTask.buildUseCase();
+  }
+
+  getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]> {
+    return this.getEmloyeeTask.buildUseCase(identifier);
   }
 }

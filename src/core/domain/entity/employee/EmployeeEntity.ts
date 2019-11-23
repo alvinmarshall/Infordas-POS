@@ -27,7 +27,7 @@ export class EmployeeEntity {
   dob: string;
   status: number;
   gender: string;
-  contactNo: string;
+  contact: string;
   email: string;
   address: string;
 
@@ -38,7 +38,7 @@ export class EmployeeEntity {
     this.dob = (employee && employee.dob) || "";
     this.status = (employee && employee.status) || 0;
     this.gender = (employee && employee.gender) || "";
-    this.contactNo = (employee && employee.contactNo) || "";
+    this.contact = (employee && employee.contact) || "";
     this.email = (employee && employee.email) || "";
     this.address = (employee && employee.address) || "";
   }
@@ -79,16 +79,16 @@ export class EmployeeEntity {
    * Getter $contactNo
    * @return {string}
    */
-  public get $contactNo(): string {
-    return this.contactNo;
+  public get $contact(): string {
+    return this.contact;
   }
 
   /**
    * Setter $contactNo
    * @param {string} value
    */
-  public set $contactNo(value: string) {
-    this.contactNo = value;
+  public set $contact(value: string) {
+    this.contact = value;
   }
 
   /**

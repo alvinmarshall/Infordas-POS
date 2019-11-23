@@ -46,4 +46,10 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
   addEmployeeDetailInfo(employeeDetail: IEmployeeOther): Promise<string> {
     return this.remoteDataSource.addEmployeeOtherInfo(employeeDetail);
   }
+  getEmployees(): Promise<IEmployee[]> {
+    return this.remoteDataSource.getEmployees();
+  }
+  getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]> {
+    return this.remoteDataSource.getEmployeeWithIdentifier(identifier);
+  }
 }

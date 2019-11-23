@@ -26,7 +26,7 @@ export class TestEmployeeGenerator {
       status: 1,
       dob: "test dob",
       address: "test address",
-      contactNo: "test contact",
+      contact: "test contact",
       email: "test email",
       empId: "test uuid",
       fullName: "test fullname",
@@ -40,7 +40,7 @@ export class TestEmployeeGenerator {
       status: 1,
       dob: "test dob",
       address: "test address",
-      contactNo: "test contact",
+      contact: "test contact",
       email: "test email",
       empId: "test uuid",
       fullName: "test fullname",
@@ -53,5 +53,48 @@ export class TestEmployeeGenerator {
       religion: "test religtion",
       maritalStatus: "test marital status"
     };
+  }
+
+  static getEmployeeList(): IEmployee[] {
+    return [
+      {
+        id: 1,
+        status: 1,
+        dob: "test dob",
+        address: "test address",
+        contact: "test contact",
+        email: "test email",
+        empId: "test uuid",
+        fullName: "test fullname",
+        gender: "test gender"
+      },
+      {
+        id: 2,
+        status: 1,
+        dob: "test dob",
+        address: "test address",
+        contact: "test contact",
+        email: "test email",
+        empId: "test uuid",
+        fullName: "test fullname",
+        gender: "test gender"
+      }
+    ];
+  }
+
+  static getEmployee(): IEmployee[] {
+    return [
+      {
+        id: 1,
+        status: 1,
+        dob: "test dob",
+        address: "test address",
+        contact: "test contact",
+        email: "test email",
+        empId: "test uuid",
+        fullName: "test fullname",
+        gender: "test gender"
+      }
+    ];
   }
 }

@@ -36,6 +36,35 @@ export class EmployeeDaoImpl implements EmployeeDao {
     this.db = $db;
   }
 
+  getEmployees(): Promise<IEmployee[]> {
+    let sql = `SELECT
+      Emp_ID AS uuid,
+      Name AS fullName,
+      DOB AS dob,
+      Status AS status,
+      Gender AS gender,
+      Contact AS contact,
+      Email AS email,
+      Address AS address
+    FROM ${EMPLOYEE_TABLE}`;
+
+    return this.db.query(sql, []);
+  }
+  getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]> {
+    let sql = `SELECT
+    Emp_ID AS uuid,
+    Name AS fullName,
+    DOB AS dob,
+    Status AS status,
+    Gender AS gender,
+    Contact AS contact,
+    Email AS email,
+    Address AS address
+  FROM ${EMPLOYEE_TABLE} WHERE Emp_ID = ?`;
+
+    return this.db.query(sql, [identifier]);
+  }
+
   /**
    * addEmployeeDetailInfo
    * @param employeeDetail require IEmployeeOther
@@ -137,7 +166,7 @@ export class EmployeeDaoImpl implements EmployeeDao {
         employee.fullName,
         employee.dob,
         employee.gender,
-        employee.contactNo,
+        employee.contact,
         employee.email,
         employee.address
       ])

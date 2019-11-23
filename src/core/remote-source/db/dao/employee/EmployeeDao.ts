@@ -19,4 +19,6 @@ export interface EmployeeDao {
   addEmployee(employee: IEmployee): Promise<any>;
   setActiveEmployee(empId: string, status: number): Promise<any>;
   addEmployeeDetailInfo(employeeDetail: IEmployeeOther): Promise<any>;
+  getEmployees(): Promise<IEmployee[]>;
+  getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]>;
 }

@@ -35,7 +35,7 @@ export class EmployeeController {
         id: 0,
         email: "user@me.com",
         empId: uuidV4(),
-        contactNo: "023235",
+        contact: "023235",
         address: "kumasi",
         dob: "1990-05-14",
         fullName: "Owusu Georgina",
@@ -53,8 +53,8 @@ export class EmployeeController {
     try {
       const empId = "2b48d086-14a8-421e-a4b8-29e96c08a139";
       const status = 1;
-      const result = await this.employeeService.setAccountStatus(empId, status);
-      return res.send({ result });
+      const data = await this.employeeService.setAccountStatus(empId, status);
+      return res.send({ data });
     } catch (error) {
       console.error(error);
       return res
@@ -66,8 +66,32 @@ export class EmployeeController {
   async addEmployeeDetailInfo(req: Request, res: Response) {
     try {
       const body: IEmployeeOther = req.body;
-      const result = await this.employeeService.addEmployeeDetails(body);
-      return res.send({ result, status: 200 });
+      const data = await this.employeeService.addEmployeeDetails(body);
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  async getEmployees(req: Request, res: Response) {
+    try {
+      const data = await this.employeeService.getEmployees();
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+  async getEmployee(req: Request, res: Response) {
+    try {
+      const params = req.params.identifier;
+      const data = await this.employeeService.getEmployeeWithIdentifier(params);
+      return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
       return res

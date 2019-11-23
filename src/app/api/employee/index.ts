@@ -32,6 +32,21 @@ router.post("/create-new", (req, res) => {
 });
 
 //
+// ─── GET ALL EMPLOYEES ──────────────────────────────────────────────────────────
+//
+router.get("/", (req, res) => {
+  controller.getEmployees(req, res);
+});
+
+//
+// ─── GET EMPLOYEE WITH IDENTIFIER ───────────────────────────────────────────────
+//
+
+router.get("/:identifier", (req, res) => {
+  controller.getEmployee(req, res);
+});
+
+//
 // ─── CHANGE EMPLOYEE STATUS ─────────────────────────────────────────────────────
 //
 

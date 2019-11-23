@@ -9,6 +9,8 @@
 ### can register a new employee
 ### can flag employee account status (Active or InActive)
 ### can update other info
+### can get all employees
+### can get employee with identifier
 
 # Rank use case
 

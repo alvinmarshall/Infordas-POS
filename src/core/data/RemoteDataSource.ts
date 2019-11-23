@@ -41,7 +41,6 @@ export interface RemoteDataSource {
   getCompany(): Promise<ICompany[]>;
   getCompanyWithIdentifier(identifier: string): Promise<ICompany[]>;
 
-
   //
   // ─── USER ───────────────────────────────────────────────────────────────────────
   //
@@ -60,6 +59,8 @@ export interface RemoteDataSource {
   addNewEmployee(employee: IEmployee): Promise<any>;
   setActiveEmployee(empId: string, status: number): Promise<any>;
   addEmployeeOtherInfo(employeeDetail: IEmployeeOther): Promise<any>;
+  getEmployees(): Promise<IEmployee[]>;
+  getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]>;
 
   //
   // ─── RANK ───────────────────────────────────────────────────────────────────────

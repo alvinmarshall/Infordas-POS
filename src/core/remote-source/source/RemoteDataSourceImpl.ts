@@ -126,6 +126,12 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     return this.employeeDao.addEmployee(employee);
   }
 
+  getEmployees(): Promise<IEmployee[]> {
+    return this.employeeDao.getEmployees();
+  }
+  getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]> {
+    return this.employeeDao.getEmployeeWithIdentifier(identifier);
+  }
   //
   // ─── USERS ──────────────────────────────────────────────────────────────────────
   //
