@@ -50,13 +50,13 @@ import { UpdateBranchTask } from "../../core/domain/useCase/branch/UpdateBranchT
 import { RemoveBranchTask } from "../../core/domain/useCase/branch/RemoveBranchTask";
 import { AddEmployeeDetailTask } from "../../core/domain/useCase/employee/AddEmployeeDetailTask";
 import { AccessTask } from "../../core/domain/useCase/access/AccessTask";
-import { GetUserWithIdentifierTask } from "../../core/domain/useCase/user/GetUserWithIdentifierTask";
 import PassportService from "../api/auth/passport-config";
 import { JWTTokenService } from "../api/auth/jwtToken-config";
 import { GetCompanyTask } from "../../core/domain/useCase/company/GetCompanyTask";
 import { GetBranchTask } from "../../core/domain/useCase/branch/GetBranchTask";
 import { GetEmployeeTask } from "../../core/domain/useCase/employee/GetEmployeeTask";
 import { GetRankTask } from "../../core/domain/useCase/rank/GetRankTask";
+import { GetUsersTask } from "../../core/domain/useCase/user/GetUsersTask";
 
 let DIContainer = new Container();
 
@@ -80,11 +80,11 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<GetUsersTask>(GetUsersTask).toSelf();
 DIContainer.bind<GetRankTask>(GetRankTask).toSelf();
 DIContainer.bind<GetEmployeeTask>(GetEmployeeTask).toSelf();
 DIContainer.bind<GetBranchTask>(GetBranchTask).toSelf();
 DIContainer.bind<GetCompanyTask>(GetCompanyTask).toSelf();
-DIContainer.bind<GetUserWithIdentifierTask>(GetUserWithIdentifierTask).toSelf();
 DIContainer.bind<AccessTask>(AccessTask).toSelf();
 DIContainer.bind<AddEmployeeDetailTask>(AddEmployeeDetailTask).toSelf();
 DIContainer.bind<RemoveBranchTask>(RemoveBranchTask).toSelf();

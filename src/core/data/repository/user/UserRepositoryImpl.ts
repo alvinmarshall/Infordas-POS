@@ -30,10 +30,7 @@ export class UserRepositoryImpl implements UserRepository {
     this.remoteDataSource = $remoteDataSource;
   }
 
-  getUserWithCredentials(
-    username: string,
-    password: string
-  ): Promise<UserEntity> {
+  getUserWithCredentials(username: string, password: string): Promise<IUser> {
     return this.remoteDataSource.getUserWithCredentials(username, password);
   }
 
@@ -43,7 +40,10 @@ export class UserRepositoryImpl implements UserRepository {
   setUserAccess(access: IAccess): Promise<any> {
     return this.remoteDataSource.setUserAccess(access);
   }
-  getUserWithIdentifier(identifier: string): Promise<UserEntity> {
+  getUserWithIdentifier(identifier: string): Promise<IUser[]> {
     return this.remoteDataSource.getUserWithIdentifier(identifier);
+  }
+  getUsers(): Promise<IUser[]> {
+    return this.remoteDataSource.getUsers();
   }
 }

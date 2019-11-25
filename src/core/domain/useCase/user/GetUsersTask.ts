@@ -13,26 +13,29 @@
 // limitations under the License.
 
 import { BaseUseCase } from "../base/BaseUseCase";
-import { UserEntity } from "../../entity/user/UserEntity";
+import { IUser } from "../../entity/user/IUser";
 import { UserRepository } from "../../repository/UserRepository";
 import { injectable, inject } from "inversify";
 import { UserRepositoryImpl } from "../../../data/repository/user/UserRepositoryImpl";
-
 /**
- * GetUserWithIdentifierTask class
- * class extends BaseUseCase {@Link ../base/BaseUseCase}
+ * GetUsersTask
+ * super class BaseUseCase {@Link ../base/BaseUseCase}
  */
 @injectable()
-export class GetUserWithIdentifierTask extends BaseUseCase<UserEntity, string> {
+export class GetUsersTask extends BaseUseCase<IUser[], string> {
   private userRepository: UserRepository;
 
+  /**
+   * @constructor
+   * @param $userRepository require UserRepository instance
+   */
   constructor(@inject(UserRepositoryImpl) $userRepository: UserRepository) {
     super();
     this.userRepository = $userRepository;
   }
 
-  protected generateUseCase(input?: string | undefined): Promise<UserEntity> {
-    if (input == null) throw new Error("identifier can't be null");
+  protected generateUseCase(input?: string | undefined): Promise<IUser[]> {
+    if (input == null) return this.userRepository.getUsers();
     return this.userRepository.getUserWithIdentifier(input);
   }
 }

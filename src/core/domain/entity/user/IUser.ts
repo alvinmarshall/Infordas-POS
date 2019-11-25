@@ -15,11 +15,12 @@
 
 
 export interface IUser {
-  id: number;
-  name: string;
-  contactNo: string;
+  id?: number;
+  name?: string;
+  contact?: string;
   uuid: string;
   username: string;
   password: string;
-  rank: number;
+  rank?: number;
+  hours?:number;
 }

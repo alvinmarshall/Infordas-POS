@@ -20,6 +20,7 @@ import "reflect-metadata";
 import express from "express";
 import DIContainer from "../../loc/di.container";
 import { UserController } from "./user.controller";
+import passport from "passport";
 
 const router = express.Router();
 const controller = DIContainer.resolve<UserController>(UserController);
@@ -36,12 +37,23 @@ router.post("/login", (req, res) => {
 // ─── REGISTER USER ──────────────────────────────────────────────────────────────
 //
 
-router.post("/register", (req, res) => {
-  controller.createUserAccount(req, res);
-});
+router.post(
+  "/register",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.createUserAccount(req, res);
+  }
+);
 
-router.get("/login", (req, res) => {
-  controller.getAuthenticateUser(req, res);
-});
+//
+// ─── GET NUMBER OF USERS ────────────────────────────────────────────────────────
+//
 
+router.get(
+  "/counts",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getUsersCount(req, res);
+  }
+);
 export default router;

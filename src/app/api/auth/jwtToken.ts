@@ -13,9 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { UserEntity } from "../../../core/domain/entity/user/UserEntity";
+import { IUser } from "../../../core/domain/entity/user/IUser";
 
 export interface IJwtToken{
-     generateToken($userEntity: UserEntity):any
-
+     generateToken($user: IUser):string
 }

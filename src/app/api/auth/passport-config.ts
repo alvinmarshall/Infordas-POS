@@ -19,6 +19,7 @@ import { UserService } from "../user/user.service";
 import { inject, injectable } from "inversify";
 import isEmpty from "lodash/isEmpty";
 import { ITokenPayload } from "../../model/ITokenPayload";
+import { IUser } from "../../../core/domain/entity/user/IUser";
 /**
  * PassportService class
  */
@@ -39,21 +40,13 @@ class PassportService {
       opt,
       async (payload: ITokenPayload, done: any) => {
         try {
-          const result = await this.userService.getUserWithIdentifier(
-            payload.uuid
-          );
+          const result = await this.userService.getUserWithIdentifier(payload.uuid)
 
           if (isEmpty(result)) {
             return done(null, false);
           }
 
-          const tokenPayload: ITokenPayload = {
-            uuid: result.$uuid,
-            contact: result.$contactNo,
-            name: result.$name,
-            username: result.$username,
-            rankId: result.$rank
-          };
+          const tokenPayload:IUser = result;
           console.log(payload)
           return done(null, tokenPayload);
         } catch (error) {

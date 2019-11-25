@@ -20,7 +20,7 @@ import { IUser } from "./IUser";
 export class UserEntity {
   private id: number;
   private name: string;
-  private contactNo: string;
+  private contact: string;
   private uuid: string;
   private username: string;
   private password: string;
@@ -29,7 +29,7 @@ export class UserEntity {
   constructor(user?: IUser) {
     this.id = (user && user.id) || 0;
     this.name = (user && user.name) || "";
-    this.contactNo = (user && user.contactNo) || "";
+    this.contact = (user && user.contact) || "";
     this.uuid = (user && user.uuid) || "";
     this.username = (user && user.username) || "";
     this.password = (user && user.password) || "";
@@ -104,16 +104,16 @@ export class UserEntity {
    * Getter $contactNo
    * @return {string}
    */
-  public get $contactNo(): string {
-    return this.contactNo;
+  public get $contact(): string {
+    return this.contact;
   }
 
   /**
    * Setter $contactNo
    * @param {string} value
    */
-  public set $contactNo(value: string) {
-    this.contactNo = value;
+  public set $contact(value: string) {
+    this.contact = value;
   }
 
   /**

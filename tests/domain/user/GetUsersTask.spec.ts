@@ -11,39 +11,40 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import "reflect-metadata"
-import { GetUserWithIdentifierTask } from "../../../src/core/domain/useCase/user/GetUserWithIdentifierTask";
+
+import { GetUsersTask } from "../../../src/core/domain/useCase/user/GetUsersTask";
 import { UserRepository } from "../../../src/core/domain/repository/UserRepository";
 import { mock, instance, when, verify } from "ts-mockito";
 import { TestUserGeneratorTest } from "../../utils/TestUserGenerator";
-import { assert, expect } from "chai";
+import { assert } from "chai";
 
-describe("domain.useCase.user GetUserWithIdentifierTask test", () => {
-  let getUserWithIdentifierTask: GetUserWithIdentifierTask;
+describe("domain.useCase.users GetUsersTask test", () => {
+  let getUsersTask: GetUsersTask;
   let userRepository: UserRepository;
   let userRepositoryInstance: UserRepository;
 
   beforeEach(() => {
     userRepository = mock<UserRepository>();
     userRepositoryInstance = instance(userRepository);
-    getUserWithIdentifierTask = new GetUserWithIdentifierTask(
-      userRepositoryInstance
-    );
+    getUsersTask = new GetUsersTask(userRepositoryInstance);
   });
 
-  it("Get user data with identifier success", async () => {
+  it("Get All users with no params success", async () => {
+    const actual = TestUserGeneratorTest.getUserList();
+    when(userRepository.getUsers()).thenResolve(actual);
+    const expected = await getUsersTask.buildUseCase();
+    assert.equal(expected, actual);
+    verify(userRepository.getUsers()).called();
+    verify(userRepository.getUserWithIdentifier("")).never();
+  });
+
+  it("Get user with params success", async () => {
+    const identifier = "1";
     const actual = TestUserGeneratorTest.getUser();
-    const identifier = actual.$uuid;
     when(userRepository.getUserWithIdentifier(identifier)).thenResolve(actual);
-    const expected = await getUserWithIdentifierTask.buildUseCase(identifier);
+    const expected = await getUsersTask.buildUseCase(identifier);
     assert.equal(expected, actual);
     verify(userRepository.getUserWithIdentifier(identifier)).called();
-  });
-
-  it("Get user data with null params throws exception", async () => {
-    const errorMsg = "identifier can't be null";
-    expect(() => {
-      getUserWithIdentifierTask.buildUseCase();
-    }).throw(errorMsg);
+    verify(userRepository.getUsers()).never();
   });
 });

@@ -13,11 +13,10 @@ import { ICredentials } from "../../../core/domain/entity/user/IAuthenticationPa
 import { injectable, inject } from "inversify";
 import { IUser } from "../../../core/domain/entity/user/IUser";
 import { AddAUserTask } from "../../../core/domain/useCase/user/AddAUserTask";
-import { GetUserWithIdentifierTask } from "../../../core/domain/useCase/user/GetUserWithIdentifierTask";
-import { UserEntity } from "../../../core/domain/entity/user/UserEntity";
 import { JWTTokenService } from "../auth/jwtToken-config";
-import { LoginData } from "../../model/LoginData";
 import { AccessTask } from "../../../core/domain/useCase/access/AccessTask";
+import bcryptjs from "bcryptjs";
+import { GetUsersTask } from "../../../core/domain/useCase/user/GetUsersTask";
 
 /**
  * UserService class
@@ -26,7 +25,7 @@ import { AccessTask } from "../../../core/domain/useCase/access/AccessTask";
 export class UserService {
   private getAuthenticationTask: GetAuthenticationTask;
   private addAUserTask: AddAUserTask;
-  private getUserWithIdentifierTask: GetUserWithIdentifierTask;
+  private getUsersTask: GetUsersTask;
   private jwtService: JWTTokenService;
   private accessTask: AccessTask;
 
@@ -40,32 +39,36 @@ export class UserService {
     @inject(GetAuthenticationTask)
     $getAuthenticationTask: GetAuthenticationTask,
     @inject(AddAUserTask) $addAUserTask: AddAUserTask,
-    @inject(GetUserWithIdentifierTask)
-    $getUserWithIdentifierTask: GetUserWithIdentifierTask,
+    @inject(GetUsersTask)
+    $getUsersTask: GetUsersTask,
     @inject(JWTTokenService) $jwtService: JWTTokenService,
     @inject(AccessTask) $accessTask: AccessTask
   ) {
     this.getAuthenticationTask = $getAuthenticationTask;
     this.addAUserTask = $addAUserTask;
-    this.getUserWithIdentifierTask = $getUserWithIdentifierTask;
+    this.getUsersTask = $getUsersTask;
     this.jwtService = $jwtService;
     this.accessTask = $accessTask;
   }
 
   authenticateUser(credentials: ICredentials): Promise<any> {
     return this.getAuthenticationTask.buildUseCase(credentials).then(data => {
+      if (!data.uuid) return null;
+      const isValidPass = bcryptjs.compareSync(
+        credentials.password,
+        data.password
+      );
+      if (!isValidPass) return null;
       const token = this.jwtService.generateToken(data);
       this.accessTask.buildUseCase({
-        uuid: data.$uuid,
+        uuid: data.uuid,
         token,
         startTime: new Date().getTime().toString()
       });
       return {
-        uuid: data.$uuid,
-        name: data.$name,
-        username: data.$username,
+        name: data.name,
         token,
-        rank: data.$rank
+        rank: data.rank
       };
     });
   }
@@ -74,7 +77,11 @@ export class UserService {
     return this.addAUserTask.buildUseCase(user);
   }
 
-  getUserWithIdentifier(identifier: string): Promise<UserEntity> {
-    return this.getUserWithIdentifierTask.buildUseCase(identifier);
+  getUserWithIdentifier(identifier: string): Promise<IUser> {
+    return this.getUsersTask.buildUseCase(identifier).then(data => data[0]);
+  }
+
+  getUsers(): Promise<IUser[]> {
+    return this.getUsersTask.buildUseCase();
   }
 }

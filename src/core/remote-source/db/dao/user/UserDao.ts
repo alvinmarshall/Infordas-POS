@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { UserEntity } from "../../../../domain/entity/user/UserEntity";
 import { IUser } from "../../../../domain/entity/user/IUser";
 import { IAccess } from "../../../../domain/entity/access/IAccess";
 
@@ -20,9 +19,10 @@ export interface UserDao {
   getUserWithCredentials(
     username: string,
     password: string
-  ): Promise<UserEntity>;
+  ): Promise<IUser>;
 
-  getUserWithidentifier(identifier: string): Promise<UserEntity>;
+  getUserWithidentifier(identifier: string): Promise<IUser[]>;
+  getUsers(): Promise<IUser[]>;
 
   addUser(user: IUser): Promise<any>;
 

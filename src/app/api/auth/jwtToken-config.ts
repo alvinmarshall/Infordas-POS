@@ -12,30 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { UserEntity } from "../../../core/domain/entity/user/UserEntity";
 import { IJwtToken } from "./jwtToken";
 import JsonWebToken from "jsonwebtoken";
-import { ITokenPayload } from "../../model/ITokenPayload";
 import config from "config";
 import { injectable } from "inversify";
-
+import { IUser } from "../../../core/domain/entity/user/IUser";
+import { ITokenPayload } from "../../model/ITokenPayload";
 @injectable()
 export class JWTTokenService implements IJwtToken {
-  generateToken($userEntity: UserEntity): any {
+  generateToken($user: IUser): string {
     const payload: ITokenPayload = {
-      uuid: $userEntity.$uuid,
-      name: $userEntity.$name,
-      contact: $userEntity.$contactNo,
-      rankId: $userEntity.$rank,
-      username: $userEntity.$username
+      uuid: $user.uuid,
+      name: $user.name || "",
+      contact: $user.contact || "",
+      rankId: $user.rank || -1,
+      username: $user.username
     };
+    console.log(payload)
     let encode;
+    let hours = $user.hours || 1;
 
-    if ($userEntity.$rank == 1) {
+    if ($user.rank == 1) {
       encode = JsonWebToken.sign(payload, config.get("jwtConfig.secret"));
     } else {
       encode = JsonWebToken.sign(payload, config.get("jwtConfig.secret"), {
-        expiresIn: 120
+        expiresIn: 60 * 60 * hours
       });
     }
     return `Bearer ${encode}`;

@@ -18,16 +18,14 @@ import { BaseUseCase } from "../base/BaseUseCase";
 import { UserEntity } from "../../entity/user/UserEntity";
 import { ICredentials } from "../../entity/user/IAuthenticationParams";
 import { UserRepositoryImpl } from "../../../data/repository/user/UserRepositoryImpl";
+import { IUser } from "../../entity/user/IUser";
 
 /**
  * GetAuthenticationTask class performs remote authentication
  * class extends BaseUseCase {@Link ../base/BaseUseCase }
  */
 @injectable()
-export class GetAuthenticationTask extends BaseUseCase<
-  UserEntity,
-  ICredentials
-> {
+export class GetAuthenticationTask extends BaseUseCase<IUser, ICredentials> {
   private userRepository: UserRepository;
   /**
    * @constructor
@@ -37,9 +35,7 @@ export class GetAuthenticationTask extends BaseUseCase<
     super();
     this.userRepository = userRepository;
   }
-  protected generateUseCase(
-    input?: ICredentials | undefined
-  ): Promise<UserEntity> {
+  protected generateUseCase(input?: ICredentials | undefined): Promise<IUser> {
     if (input == null) throw new Error("credentials can't be null");
     return this.userRepository.getUserWithCredentials(
       input.username,

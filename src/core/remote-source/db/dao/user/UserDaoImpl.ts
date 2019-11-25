@@ -15,7 +15,11 @@
 import { MysqlDatabase } from "../../MysqlDatabase";
 import { UserDao } from "./UserDao";
 import { UserEntity } from "../../../../domain/entity/user/UserEntity";
-import { USER_TABLE, ACCESS_TABLE } from "../../../../../common/constants";
+import {
+  USER_TABLE,
+  ACCESS_TABLE,
+  EMPLOYEE_TABLE
+} from "../../../../../common/constants";
 import { injectable, inject, id } from "inversify";
 import { IUser } from "../../../../domain/entity/user/IUser";
 import { IAccess } from "../../../../domain/entity/access/IAccess";
@@ -28,29 +32,37 @@ export class UserDaoImpl implements UserDao {
     this.db = $db;
   }
 
-  getUserWithidentifier(identifier: string): Promise<UserEntity> {
-    let sql = `SELECT id,Name,Contact,Emp_ID,Username,Rank_ID FROM ${USER_TABLE} WHERE Emp_ID = ? `;
-    return this.db.query(sql, [identifier]).then(data => {
-      const {
-        id,
-        Name,
-        Username,
-        Contact,
-        Emp_ID,
-        Rank_ID,
-        Password
-      } = data[0];
+  getUsers(): Promise<IUser[]> {
+    let sql = `SELECT 
+    u.Name AS name,
+    u.Contact AS contact,
+    u.Emp_ID AS uuid,
+    u.Username AS username,
+    u.Password AS password,
+    u.Rank_ID AS rank,
+    e.Hours AS hours
 
-      const user = new UserEntity();
-      user.$id = id;
-      user.$name = Name;
-      user.$contactNo = Contact;
-      user.$uuid = Emp_ID;
-      user.$username = Username;
-      user.$rank = Rank_ID;
-      user.$password = Password;
-      return user;
-    });
+  FROM ${USER_TABLE} u
+  INNER JOIN ${EMPLOYEE_TABLE} e`;
+    return this.db.query(sql, []);
+  }
+
+  getUserWithidentifier(identifier: string): Promise<IUser[]> {
+    let sql = `SELECT 
+      u.Name AS name,
+      u.Contact AS contact,
+      u.Emp_ID AS uuid,
+      u.Username AS username,
+      u.Password AS password,
+      u.Rank_ID AS rank,
+      e.Hours AS hours
+  
+    FROM ${USER_TABLE} u
+    INNER JOIN ${EMPLOYEE_TABLE} e
+    WHERE u.Emp_ID = ?
+
+  `;
+    return this.db.query(sql, [identifier]);
   }
 
   addUserAccess(access: IAccess): Promise<any> {
@@ -65,43 +77,33 @@ export class UserDaoImpl implements UserDao {
     return this.db
       .query(sql, [
         user.name,
-        user.contactNo,
+        user.contact,
         user.uuid,
         user.username,
         user.password,
         user.rank
       ])
       .then(data => {
-        if (data.affectedRows > 0) `${user.name} account ready`;
-        return "0 record inserted";
+        return { message: `${data.affectedRows} record inserted` };
       });
   }
 
-  getUserWithCredentials(
-    username: string,
-    password: string
-  ): Promise<UserEntity> {
-    let sql = `SELECT id,Name,Contact,Emp_ID,Username,Rank_ID FROM ${USER_TABLE} WHERE Username = ? AND Password = ? `;
-    return this.db.query(sql, [username, password]).then(data => {
-      const {
-        id,
-        Name,
-        Username,
-        Contact,
-        Emp_ID,
-        Rank_ID,
-        Password
-      } = data[0];
-
-      const user = new UserEntity();
-      user.$id = id;
-      user.$name = Name;
-      user.$contactNo = Contact;
-      user.$uuid = Emp_ID;
-      user.$username = Username;
-      user.$rank = Rank_ID;
-      user.$password = Password;
-      return user;
+  getUserWithCredentials(username: string, password: string): Promise<IUser> {
+    let sql = `SELECT 
+      u.Name AS name,
+      u.Contact AS contact,
+      u.Emp_ID AS uuid,
+      u.Username AS username,
+      u.Password AS password,
+      u.Rank_ID AS rank,
+      e.Hours AS hours
+    
+    FROM users u
+    INNER JOIN employee e
+    WHERE u.Username = ? LIMIT 1
+    `;
+    return this.db.query(sql, [username]).then(data => {
+      return data[0];
     });
   }
 }

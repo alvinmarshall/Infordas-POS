@@ -11,7 +11,9 @@
 import { UserService } from "./user.service";
 import { Request, Response } from "express";
 import { inject, injectable } from "inversify";
-import { LoginData } from "../../model/LoginData";
+import { IUser } from "../../../core/domain/entity/user/IUser";
+import bcryptjs, { hash } from "bcryptjs";
+import { ICredentials } from "../../../core/domain/entity/user/IAuthenticationParams";
 
 @injectable()
 export class UserController {
@@ -23,24 +25,12 @@ export class UserController {
 
   async getAuthenticateUser(req: Request, res: Response) {
     try {
-      const {
-        uuid,
-        name,
-        token,
-        rank,
-        username
-      } = await this.userService.authenticateUser({
-        username: "owusu",
-        password: "1234"
-      });
-      const data: LoginData = {
-        message: "Login successful",
-        uuid,
-        name,
-        rank,
-        username,
-        token
-      };
+      const body: ICredentials = req.body;
+      const data = await this.userService.authenticateUser(body);
+      if (data == null)
+        return res
+          .status(401)
+          .send({ message: "Invalid credentials", status: 401 });
       return res.send({ data, status: 200 });
     } catch (e) {
       console.error(e);
@@ -55,25 +45,37 @@ export class UserController {
 
   async createUserAccount(req: Request, res: Response) {
     try {
-      const message = await this.userService.createUser({
-        id: 0,
-        username: "owusu",
-        password: "1234",
-        contactNo: "01222323",
-        name: "Owusu Georgina",
-        rank: 2,
-        uuid: "2b48d086-14a8-421e-a4b8-29e96c08a139"
-      });
-      return res.status(201).send({
-        message,
-        status: 201,
-        tillNo: "2b48d086-14a8-421e-a4b8-29e96c08a139"
-      });
+      const body: IUser = req.body;
+      console.log(body);
+      if (body.password != undefined) {
+        let password = body.password;
+        const salt = await bcryptjs.genSalt(10);
+        const hash = await bcryptjs.hash(password, salt);
+        body.password = hash;
+        const data = await this.userService.createUser(body);
+        return res.status(201).send({ data, status: 201 });
+      }
+      return res
+        .status(400)
+        .send({ message: "password can't be empty", status: 400 });
     } catch (error) {
       console.error(error);
       return res
         .status(500)
-        .send({ message: "something went wrong, try again" });
+        .send({ message: "Internal error occurred", status: 500 });
+    }
+  }
+
+  async getUsersCount(req: Request, res: Response) {
+    try {
+      const data = await this.userService.getUsers();
+      const count = data.length;
+      return res.send({ count, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "Internal error occurred", status: 500 });
     }
   }
 }

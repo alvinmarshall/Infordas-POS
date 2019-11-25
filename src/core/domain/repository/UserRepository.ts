@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { UserEntity } from "../entity/user/UserEntity";
 import { IUser } from "../entity/user/IUser";
 import { IAccess } from "../entity/access/IAccess";
 
@@ -20,11 +19,12 @@ export interface UserRepository {
   getUserWithCredentials(
     username: string,
     password: string
-  ): Promise<UserEntity>;
+  ): Promise<IUser>;
 
-  getUserWithIdentifier(identifier: string): Promise<UserEntity>;
+  getUserWithIdentifier(identifier: string): Promise<IUser[]>;
 
   addAUser(user: IUser): Promise<any>;
 
   setUserAccess(access: IAccess): Promise<any>;
+  getUsers():Promise<IUser[]>;
 }

@@ -145,10 +145,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   addNewUser(user: IUser): Promise<any> {
     return this.userDao.addUser(user);
   }
-  getUserWithCredentials(
-    username: string,
-    password: string
-  ): Promise<UserEntity> {
+  getUserWithCredentials(username: string, password: string): Promise<IUser> {
     return this.userDao.getUserWithCredentials(username, password);
   }
 
@@ -156,7 +153,10 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     return this.userDao.addUserAccess(access);
   }
 
-  getUserWithIdentifier(identifier: string): Promise<UserEntity> {
+  getUserWithIdentifier(identifier: string): Promise<IUser[]> {
     return this.userDao.getUserWithidentifier(identifier);
+  }
+  getUsers(): Promise<IUser[]> {
+    return this.userDao.getUsers();
   }
 }

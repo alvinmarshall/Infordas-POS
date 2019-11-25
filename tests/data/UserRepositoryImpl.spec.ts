@@ -31,11 +31,11 @@ describe("data.repository UserRepository UserRepositoryImpl test", () => {
   });
 
   it("Get user data with credentials success", async () => {
-    const actual = TestUserGeneratorTest.getUser();
-    let username = actual.$username;
-    let password = actual.$password;
+    const actual = TestUserGeneratorTest.getUserInfo();
+    let username = actual.username;
+    let password = actual.password;
     when(
-      remoteDataSource.getUserWithCredentials(username, password)
+      remoteDataSource.getUserWithCredentials(username,password)
     ).thenResolve(actual);
 
     const expected = await userRepositoryImpl.getUserWithCredentials(

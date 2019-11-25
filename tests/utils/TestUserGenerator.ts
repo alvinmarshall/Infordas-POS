@@ -12,28 +12,64 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { UserEntity } from "../../src/core/domain/entity/user/UserEntity";
 import { IUser } from "../../src/core/domain/entity/user/IUser";
 import { IAccess } from "../../src/core/domain/entity/access/IAccess";
 
 export class TestUserGeneratorTest {
-  static getUser(): UserEntity {
-    return new UserEntity({
+  static getUser(): IUser[] {
+    return [
+      {
+        id: 1,
+        username: "test username",
+        contact: "test contact",
+        rank: 1,
+        name: "test full name",
+        password: "test password",
+        uuid: "test till"
+      }
+    ];
+  }
+
+  static getUserInfo(): IUser {
+    return {
       id: 1,
       username: "test username",
-      contactNo: "test contact",
+      contact: "test contact",
       rank: 1,
       name: "test full name",
       password: "test password",
       uuid: "test till"
-    });
+    };
+  }
+
+  static getUserList(): IUser[] {
+    return [
+      {
+        id: 1,
+        username: "test username",
+        contact: "test contact",
+        rank: 1,
+        name: "test full name",
+        password: "test password",
+        uuid: "test till"
+      },
+      {
+        id: 2,
+        username: "test username",
+        contact: "test contact",
+        rank: 1,
+        name: "test full name",
+        password: "test password",
+        uuid: "test till"
+      }
+    ];
   }
 
   static createUser(): IUser {
     return {
       id: 1,
       username: "test username",
-      contactNo: "test contact",
+      contact: "test contact",
       rank: 1,
       name: "test full name",
       password: "test password",

@@ -31,9 +31,9 @@ describe("Domain.useCase.user GetAuthenticationTask test", () => {
   });
 
   it("Authenticate User with credentials return data success", async () => {
-    const results = TestUserGeneratorTest.getUser();
-    let username = results.$username;
-    let password = results.$password;
+    const results = TestUserGeneratorTest.getUserInfo();
+    let username = results.username;
+    let password = results.password;
     when(userRepository.getUserWithCredentials(username, password)).thenResolve(
       results
     );
