@@ -2,13 +2,14 @@
   "name": "infordas-pos",
   "description": "Infordas POS REST API",
   "version": "1.0.0-alpha",
-  "main": "index.js",
+  "main": "./dist/src/index.js",
+  "bin": "./dist/src/index.js",
   "author": "Kelvin Birikorang",
   "license": "Apache-2.0",
   "scripts": {
     "remove": "rimraf ./dist",
-    "build": "rimraf ./dist && tsc",
-    "start": "NODE_ENV=production&& node ./dist/src/index.js",
+    "build": "rimraf ./dist && tsc && pkg ./dist/src/index.js --target node8-win-x64 --debug",
+    "start": "NODE_ENV=development&& node ./dist/src/index.js",
     "serve": "npm run build&& node ./dist/src/index.js ",
     "start:dev": "set NODE_ENV=development&& nodemon",
     "dev": "set NODE_ENV=development&& ts-node ./src/index.ts",
@@ -51,9 +52,16 @@
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
     "nodemon": "^1.19.4",
+    "pkg": "4.3.0",
     "rimraf": "^3.0.0",
     "ts-mockito": "^2.5.0",
     "ts-node": "^8.5.0",
     "typescript": "^3.7.2"
+  },
+  "pkg": {
+    "assets": [
+      "config",
+      "./node_modules/config/**/*.*"
+    ]
   }
 }
