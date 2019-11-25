@@ -158,8 +158,8 @@ export class EmployeeDaoImpl implements EmployeeDao {
    */
   addEmployee(employee: IEmployee): Promise<any> {
     let sql = `INSERT INTO ${EMPLOYEE_TABLE} 
-    (Emp_ID,Name,DOB,Gender,Contact,Email,Address) 
-    VALUES (?,?,?,?,?,?,?)`;
+    (Emp_ID,Name,DOB,Gender,Contact,Email,Address,Hours) 
+    VALUES (?,?,?,?,?,?,?,?)`;
     return this.db
       .query(sql, [
         employee.empId,
@@ -168,7 +168,8 @@ export class EmployeeDaoImpl implements EmployeeDao {
         employee.gender,
         employee.contact,
         employee.email,
-        employee.address
+        employee.address,
+        employee.hours
       ])
       .then(data => {
         return { message: `${data.affectedRows} record inserted` };

@@ -129,8 +129,8 @@ export class CompanyController {
 
   async removeCompany(req: Request, res: Response) {
     try {
-      const body = req.body;
-      const data = await this.companyService.removeCompany(body);
+      const identifier = req.params.identifier;
+      const data = await this.companyService.removeCompany(identifier);
       return res.status(200).send({ data, status: 200 });
     } catch (error) {
       console.error(error);

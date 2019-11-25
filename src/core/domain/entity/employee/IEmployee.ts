@@ -22,5 +22,6 @@ export interface IEmployee {
   contact?: string;
   email?: string;
   address?: string;
+  hours?:number;
   imageUrl?: string;
 }

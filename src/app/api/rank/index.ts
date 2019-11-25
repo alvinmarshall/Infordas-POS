@@ -19,6 +19,7 @@ import "reflect-metadata";
 import express from "express";
 import DIContainer from "../../loc/di.container";
 import { RankController } from "./rank.controller";
+import passport from "passport";
 const router = express.Router();
 const controller = DIContainer.resolve<RankController>(RankController);
 
@@ -26,40 +27,60 @@ const controller = DIContainer.resolve<RankController>(RankController);
 // ─── CREATE RANK ────────────────────────────────────────────────────────────────
 //
 
-router.post("/create-rank", (req, res) => {
-  controller.addRank(req, res);
-});
+router.post(
+  "/create-rank",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.addRank(req, res);
+  }
+);
 
 //
 // ─── DELETE RANK ────────────────────────────────────────────────────────────────
 //
 
-router.delete("/delete-rank/:identifier", (req, res) => {
-  controller.removeRank(req, res);
-});
+router.delete(
+  "/delete-rank/:identifier",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.removeRank(req, res);
+  }
+);
 
 //
 // ─── UPDATE RANK ────────────────────────────────────────────────────────────────
 //
 
-router.put("/update-rank", (req, res) => {
-  controller.updateRank(req, res);
-});
+router.put(
+  "/update-rank",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.updateRank(req, res);
+  }
+);
 
 //
 // ─── GET ALL RANKS ──────────────────────────────────────────────────────────────
 //
 
-router.get("/", (req, res) => {
-  controller.getRanks(req, res);
-});
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getRanks(req, res);
+  }
+);
 
 //
 // ─── GET A RANK WITH IDENITIFIER ────────────────────────────────────────────────
 //
 
-router.get("/:identifier", (req, res) => {
-  controller.getRank(req, res);
-});
+router.get(
+  "/:identifier",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getRank(req, res);
+  }
+);
 
 export default router;

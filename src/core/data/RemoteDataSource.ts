@@ -42,17 +42,6 @@ export interface RemoteDataSource {
   getCompanyWithIdentifier(identifier: string): Promise<ICompany[]>;
 
   //
-  // ─── USER ───────────────────────────────────────────────────────────────────────
-  //
-
-  getUserWithCredentials(
-    username: string,
-    password: string
-  ): Promise<UserEntity>;
-
-  getUserWithIdentifier(identifier: string): Promise<UserEntity>;
-
-  //
   // ─── EMPLOYEE ───────────────────────────────────────────────────────────────────
   //
 
@@ -66,7 +55,7 @@ export interface RemoteDataSource {
   // ─── RANK ───────────────────────────────────────────────────────────────────────
   //
 
-  addRank(rank:IRank): Promise<any>;
+  addRank(rank: IRank): Promise<any>;
   removeRank(id: string): Promise<any>;
   updateRank(rank: IRank): Promise<any>;
   getRanks(): Promise<IRank[]>;
@@ -78,4 +67,7 @@ export interface RemoteDataSource {
 
   addNewUser(user: IUser): Promise<any>;
   setUserAccess(access: IAccess): Promise<any>;
+  getUserWithCredentials(username: string, password: string): Promise<IUser>;
+  getUserWithIdentifier(identifier: string): Promise<IUser[]>;
+  getUsers(): Promise<IUser[]>;
 }

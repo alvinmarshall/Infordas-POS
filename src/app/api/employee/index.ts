@@ -19,6 +19,7 @@ import "reflect-metadata";
 import express from "express";
 import DIContainer from "../../loc/di.container";
 import { EmployeeController } from "./employee.controller";
+import passport from "passport";
 const router = express.Router();
 
 const controller = DIContainer.resolve<EmployeeController>(EmployeeController);
@@ -27,39 +28,59 @@ const controller = DIContainer.resolve<EmployeeController>(EmployeeController);
 // ─── CREATE EMPLOYEE ────────────────────────────────────────────────────────────
 //
 
-router.post("/create-new", (req, res) => {
-  controller.addNewEmployee(req, res);
-});
+router.post(
+  "/create-new",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.addNewEmployee(req, res);
+  }
+);
 
 //
 // ─── GET ALL EMPLOYEES ──────────────────────────────────────────────────────────
 //
-router.get("/", (req, res) => {
-  controller.getEmployees(req, res);
-});
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getEmployees(req, res);
+  }
+);
 
 //
 // ─── GET EMPLOYEE WITH IDENTIFIER ───────────────────────────────────────────────
 //
 
-router.get("/:identifier", (req, res) => {
-  controller.getEmployee(req, res);
-});
+router.get(
+  "/:identifier",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getEmployee(req, res);
+  }
+);
 
 //
 // ─── CHANGE EMPLOYEE STATUS ─────────────────────────────────────────────────────
 //
 
-router.put("/change-status", (req, res) => {
-  controller.setAccountStatus(req, res);
-});
+router.put(
+  "/change-status",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.setAccountStatus(req, res);
+  }
+);
 
 //
 // ─── ADD DETAILS ────────────────────────────────────────────────────────────────
 //
 
-router.put("/update-details", (req, res) => {
-  controller.addEmployeeDetailInfo(req, res);
-});
+router.put(
+  "/update-details",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.addEmployeeDetailInfo(req, res);
+  }
+);
 
 export default router;
