@@ -85,8 +85,8 @@ export class CompanyController {
 
   async removeBranch(req: Request, res: Response) {
     try {
-      const body = req.body;
-      const data = await this.companyService.removeBranch(body);
+      const identifier = req.params.identifier;
+      const data = await this.companyService.removeBranch(identifier);
       return res.status(200).send({ data, status: 200 });
     } catch (error) {
       console.error(error);

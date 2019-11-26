@@ -8,7 +8,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "remove": "rimraf ./dist",
-    "build": "rimraf ./dist && tsc && pkg ./dist/src/index.js --target node8-win-x64 --debug",
+    "build": "rimraf ./dist && tsc",
     "start": "NODE_ENV=development&& node ./dist/src/index.js",
     "serve": "npm run build&& node ./dist/src/index.js ",
     "start:dev": "set NODE_ENV=development&& nodemon",

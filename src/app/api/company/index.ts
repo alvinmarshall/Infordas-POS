@@ -74,7 +74,7 @@ router.put(
 //
 
 router.delete(
-  "/delete-branch",
+  "/delete-branch/:identifier",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     controller.removeBranch(req, res);
