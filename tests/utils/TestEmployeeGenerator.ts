@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { EmployeeEntity } from "../../src/core/domain/entity/employee/EmployeeEntity";
 import { IEmployee } from "../../src/core/domain/entity/employee/IEmployee";
 import { IEmployeeOther } from "../../src/core/domain/entity/employee/IEmployeeOther";
 
@@ -20,8 +19,8 @@ import { IEmployeeOther } from "../../src/core/domain/entity/employee/IEmployeeO
  * TestEmployeeGenerator class
  */
 export class TestEmployeeGenerator {
-  static getEmployeeInfo(): EmployeeEntity {
-    return new EmployeeEntity({
+  static getEmployeeInfo(): IEmployee {
+    return {
       id: 1,
       status: 1,
       dob: "test dob",
@@ -31,7 +30,7 @@ export class TestEmployeeGenerator {
       empId: "test uuid",
       fullName: "test fullname",
       gender: "test gender"
-    });
+    };
   }
 
   static newEmployee(): IEmployee {
@@ -50,8 +49,7 @@ export class TestEmployeeGenerator {
 
   static createDetailInfo(): IEmployeeOther {
     return {
-      religion: "test religtion",
-      maritalStatus: "test marital status"
+      religion: "test religtion"
     };
   }
 

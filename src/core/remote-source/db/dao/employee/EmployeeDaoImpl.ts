@@ -73,7 +73,6 @@ export class EmployeeDaoImpl implements EmployeeDao {
     let sql = `UPDATE ${EMPLOYEE_TABLE} 
     SET SSN_ID = ?,
     Residence = ?, 
-    Maritalstatus = ?,
     Religion = ?,  
     Department = ?,
     Division = ?, 
@@ -104,7 +103,6 @@ export class EmployeeDaoImpl implements EmployeeDao {
       .query(sql, [
         employeeDetail.ssnId,
         employeeDetail.residence,
-        employeeDetail.maritalStatus,
         employeeDetail.religion,
         employeeDetail.department,
         employeeDetail.division,
@@ -158,8 +156,8 @@ export class EmployeeDaoImpl implements EmployeeDao {
    */
   addEmployee(employee: IEmployee): Promise<any> {
     let sql = `INSERT INTO ${EMPLOYEE_TABLE} 
-    (Emp_ID,Name,DOB,Gender,Contact,Email,Address,Hours) 
-    VALUES (?,?,?,?,?,?,?,?)`;
+    (Emp_ID,Name,DOB,Gender,Contact,Email,Address,Maritalstatus,Hours) 
+    VALUES (?,?,?,?,?,?,?,?,?)`;
     return this.db
       .query(sql, [
         employee.empId,
@@ -169,6 +167,7 @@ export class EmployeeDaoImpl implements EmployeeDao {
         employee.contact,
         employee.email,
         employee.address,
+        employee.maritalStatus,
         employee.hours
       ])
       .then(data => {

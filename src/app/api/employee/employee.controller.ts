@@ -1,9 +1,3 @@
-import { EmployeeService } from "./employee.service";
-import { injectable, inject } from "inversify";
-import { Request, Response } from "express";
-import uuidV4 from "uuid/v4";
-import { IEmployeeOther } from "../../../core/domain/entity/employee/IEmployeeOther";
-
 // Copyright 2019 Bik_krl
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +12,17 @@ import { IEmployeeOther } from "../../../core/domain/entity/employee/IEmployeeOt
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@injectable()
+import { EmployeeService } from "./employee.service";
+import { injectable, inject } from "inversify";
+import { Request, Response } from "express";
+import uuidV4 from "uuid/v4";
+import { IEmployeeOther } from "../../../core/domain/entity/employee/IEmployeeOther";
+import { IEmployee } from "../../../core/domain/entity/employee/IEmployee";
+
 /**
  * EmployeeController
  */
+@injectable()
 export class EmployeeController {
   private employeeService: EmployeeService;
 
@@ -31,18 +32,11 @@ export class EmployeeController {
 
   async addNewEmployee(req: Request, res: Response) {
     try {
-      const message = await this.employeeService.addNewEmployee({
-        id: 0,
-        email: "user@me.com",
-        empId: uuidV4(),
-        contact: "023235",
-        address: "kumasi",
-        dob: "1990-05-14",
-        fullName: "Owusu Georgina",
-        status: 1,
-        gender: "Female"
-      });
-      res.status(201).send({ status: 201, message });
+      const body: IEmployee = req.body;
+      body.empId = uuidV4();
+      const data = await this.employeeService.addNewEmployee(body);
+      data.uuid = body.empId;
+      res.status(201).send({ data, status: 201 });
     } catch (error) {
       console.error(error);
       return res.send("An error occured, try again");

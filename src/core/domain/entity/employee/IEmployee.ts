@@ -17,11 +17,12 @@ export interface IEmployee {
   empId?: string;
   fullName?: string;
   dob?: string;
-  status?: number;
+  status?: number|string;
   gender?: string;
   contact?: string;
   email?: string;
   address?: string;
+  maritalStatus?: string;
   hours?:number;
   imageUrl?: string;
 }

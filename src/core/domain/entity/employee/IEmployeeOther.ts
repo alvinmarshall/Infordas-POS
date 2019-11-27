@@ -18,7 +18,6 @@ export interface IEmployeeOther {
   uuid?:string
   ssnId?: string;
   residence?: string;
-  maritalStatus?: string;
   religion?: string;
   department?: string;
   division?: string;
