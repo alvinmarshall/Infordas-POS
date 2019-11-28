@@ -20,8 +20,14 @@ import { ICompany } from "../domain/entity/company/ICompany";
 import { IBranch } from "../domain/entity/branch/IBranch";
 import { IEmployeeOther } from "../domain/entity/employee/IEmployeeOther";
 import { IAccess } from "../domain/entity/access/IAccess";
+import { IFile } from "../domain/entity/files/IFile";
 
 export interface RemoteDataSource {
+  //
+  // ─── FILE ───────────────────────────────────────────────────────────────────────
+  //
+  saveFile(file:IFile):Promise<any>
+
   //
   // ─── BRANCH ─────────────────────────────────────────────────────────────────────
   //

@@ -1,3 +1,5 @@
+import { IFile } from "../../src/core/domain/entity/files/IFile";
+
 // Copyright 2019 Bik_krl
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +14,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Express } from "express";
-import userRoute from "./api/user";
-import employeeRoute from "./api/employee";
-import rankRoute from "./api/rank";
-import companyRoute from "./api/company";
-import fileRoute from "./api/files";
-
-export default (app: Express) => {
-  app.use("/users", userRoute);
-  app.use("/employee", employeeRoute);
-  app.use("/rank", rankRoute);
-  app.use("/company", companyRoute);
-  app.use("/files", fileRoute);
-};
+export class TestFileGenerator {
+  static saveFile(): IFile {
+    return {
+      identifier: "test identifier",
+      type: {
+        location: "test location",
+        name: "test name",
+        table: "test table",
+        saveFilePath: "test save path",
+        column:"test column"
+      }
+    };
+  }
+}

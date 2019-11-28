@@ -30,6 +30,9 @@ import { CompanyDaoImpl } from "../db/dao/company/CompanyDaoImpl";
 import { IBranch } from "../../domain/entity/branch/IBranch";
 import { IEmployeeOther } from "../../domain/entity/employee/IEmployeeOther";
 import { IAccess } from "../../domain/entity/access/IAccess";
+import { IFile } from "../../domain/entity/files/IFile";
+import { FileDao } from "../db/dao/files/FileDao";
+import { FileDaoImpl } from "../db/dao/files/FileDaoImpl";
 
 @injectable()
 export class RemoteDataSourceImpl implements RemoteDataSource {
@@ -37,7 +40,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   private employeeDao: EmployeeDao;
   private rankDao: RankDao;
   private companyDao: CompanyDao;
-
+  private fileDao: FileDao;
   /**
    * @constructor
    * @param $userDao require UserDao instance
@@ -48,12 +51,21 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     @inject(UserDaoImpl) $userDao: UserDao,
     @inject(EmployeeDaoImpl) $employeeDao: EmployeeDao,
     @inject(RankDaoImpl) $rankDao: RankDao,
-    @inject(CompanyDaoImpl) $companyDao: CompanyDao
+    @inject(CompanyDaoImpl) $companyDao: CompanyDao,
+    @inject(FileDaoImpl) $fileDao: FileDao
   ) {
     this.userDao = $userDao;
     this.employeeDao = $employeeDao;
     this.rankDao = $rankDao;
     this.companyDao = $companyDao;
+    this.fileDao = $fileDao;
+  }
+  //
+  // ─── FILE ───────────────────────────────────────────────────────────────────────
+  //
+
+  saveFile(file: IFile): Promise<any> {
+    return this.fileDao.saveFilePath(file);
   }
 
   //

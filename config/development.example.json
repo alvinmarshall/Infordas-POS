@@ -10,7 +10,7 @@
         "connectionLimit":100
     },
     "sqliteFile":"",
-    "assert":"",
+    "asset":"",
     "jwtConfig":{
         "secret":""
     }

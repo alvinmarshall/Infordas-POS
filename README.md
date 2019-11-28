@@ -33,3 +33,8 @@
 ### can add branch info
 ### can update branch info
 ### can remove branch info
+
+# Files use case
+
+### can upload a file
+### can download a file

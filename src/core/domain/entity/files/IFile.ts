@@ -12,17 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Express } from "express";
-import userRoute from "./api/user";
-import employeeRoute from "./api/employee";
-import rankRoute from "./api/rank";
-import companyRoute from "./api/company";
-import fileRoute from "./api/files";
-
-export default (app: Express) => {
-  app.use("/users", userRoute);
-  app.use("/employee", employeeRoute);
-  app.use("/rank", rankRoute);
-  app.use("/company", companyRoute);
-  app.use("/files", fileRoute);
-};
+export interface IFile {
+  identifier: string;
+  type: {
+    name: string;
+    table: string;
+    location: string;
+    saveFilePath?: string;
+    column:string
+  };
+}

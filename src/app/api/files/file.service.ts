@@ -12,17 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Express } from "express";
-import userRoute from "./api/user";
-import employeeRoute from "./api/employee";
-import rankRoute from "./api/rank";
-import companyRoute from "./api/company";
-import fileRoute from "./api/files";
+import { injectable, inject } from "inversify";
+import { IFileType } from "../../model/IFileType";
+import { SaveFileTask } from "../../../core/domain/useCase/files/SaveFileTask";
+import { IFile } from "../../../core/domain/entity/files/IFile";
 
-export default (app: Express) => {
-  app.use("/users", userRoute);
-  app.use("/employee", employeeRoute);
-  app.use("/rank", rankRoute);
-  app.use("/company", companyRoute);
-  app.use("/files", fileRoute);
-};
+@injectable()
+export class FileService {
+  private saveFileTask: SaveFileTask;
+
+  constructor(@inject(SaveFileTask) $saveFileTask: SaveFileTask) {
+    this.saveFileTask = $saveFileTask;
+  }
+
+  saveFilePath(fileType: IFile): Promise<any> {
+    return this.saveFileTask.buildUseCase(fileType);
+  }
+}

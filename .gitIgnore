@@ -7,3 +7,4 @@ config/development.json
 .yarn-error.log
 logs
 dist
+public

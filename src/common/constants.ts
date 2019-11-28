@@ -1,3 +1,5 @@
+import { IFileType } from "../app/model/IFileType";
+
 // Copyright 2019 Bik_krl
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,4 +19,13 @@ export const EMPLOYEE_TABLE: string = "employee";
 export const RANK_TABLE: string = "rank";
 export const COMPANY_TABLE: string = "company";
 export const BRANCH_TABLE: string = "branch";
-export const ACCESS_TABLE:string = "access"
+export const ACCESS_TABLE: string = "access";
+export const FILE_TYPE: IFileType[] = [
+  {
+    name: "profile",
+    format: "image",
+    location: "public/uploads/profile",
+    table: EMPLOYEE_TABLE,
+    column:"Emp_ID"
+  }
+];

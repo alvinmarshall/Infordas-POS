@@ -57,6 +57,12 @@ import { GetBranchTask } from "../../core/domain/useCase/branch/GetBranchTask";
 import { GetEmployeeTask } from "../../core/domain/useCase/employee/GetEmployeeTask";
 import { GetRankTask } from "../../core/domain/useCase/rank/GetRankTask";
 import { GetUsersTask } from "../../core/domain/useCase/user/GetUsersTask";
+import { FileUtils } from "../api/files/FileUtils";
+import { FileService } from "../api/files/file.service";
+import { FileController } from "../api/files/file.controller";
+import { SaveFileTask } from "../../core/domain/useCase/files/SaveFileTask";
+import { FileRepositoryImpl } from "../../core/data/repository/files/FileRepositoryImpl";
+import { FileDaoImpl } from "../../core/remote-source/db/dao/files/FileDaoImpl";
 
 let DIContainer = new Container();
 
@@ -66,8 +72,16 @@ let DIContainer = new Container();
 
 DIContainer.bind<JWTTokenService>(JWTTokenService).toSelf();
 //
+// ─── UTILS ──────────────────────────────────────────────────────────────────────
+//
+
+DIContainer.bind<FileUtils>(FileUtils).toSelf();
+
+//
 // ─── API ────────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<FileController>(FileController).toSelf();
+DIContainer.bind<FileService>(FileService).toSelf();
 DIContainer.bind<PassportService>(PassportService).toSelf();
 DIContainer.bind<CompanyController>(CompanyController).toSelf();
 DIContainer.bind<CompanyService>(CompanyService).toSelf();
@@ -80,6 +94,7 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<SaveFileTask>(SaveFileTask).toSelf();
 DIContainer.bind<GetUsersTask>(GetUsersTask).toSelf();
 DIContainer.bind<GetRankTask>(GetRankTask).toSelf();
 DIContainer.bind<GetEmployeeTask>(GetEmployeeTask).toSelf();
@@ -103,6 +118,7 @@ DIContainer.bind<AddEmployeeTask>(AddEmployeeTask).toSelf();
 //
 // ─── DATA ───────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<FileRepositoryImpl>(FileRepositoryImpl).toSelf();
 DIContainer.bind<CompanyRepositoryImpl>(CompanyRepositoryImpl).toSelf();
 DIContainer.bind<RankRepositoryImpl>(RankRepositoryImpl).toSelf();
 DIContainer.bind<EmployeeRepositoryImpl>(EmployeeRepositoryImpl).toSelf();
@@ -111,6 +127,7 @@ DIContainer.bind<RemoteDataSourceImpl>(RemoteDataSourceImpl).toSelf();
 //
 // ─── REMOTE ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<FileDaoImpl>(FileDaoImpl).toSelf();
 DIContainer.bind<CompanyDaoImpl>(CompanyDaoImpl).toSelf();
 DIContainer.bind<RankDaoImpl>(RankDaoImpl).toSelf();
 DIContainer.bind<EmployeeDaoImpl>(EmployeeDaoImpl).toSelf();
