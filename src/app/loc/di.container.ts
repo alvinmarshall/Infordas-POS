@@ -63,6 +63,8 @@ import { FileController } from "../api/files/file.controller";
 import { SaveFileTask } from "../../core/domain/useCase/files/SaveFileTask";
 import { FileRepositoryImpl } from "../../core/data/repository/files/FileRepositoryImpl";
 import { FileDaoImpl } from "../../core/remote-source/db/dao/files/FileDaoImpl";
+import { GetEmployeeInfoTask } from "../../core/domain/useCase/employee/GetEmployeeInfoTask";
+import { UpdateEmployeeTask } from "../../core/domain/useCase/employee/UpdateEmployeeTask";
 
 let DIContainer = new Container();
 
@@ -71,10 +73,6 @@ let DIContainer = new Container();
 //
 
 DIContainer.bind<JWTTokenService>(JWTTokenService).toSelf();
-//
-// ─── UTILS ──────────────────────────────────────────────────────────────────────
-//
-
 DIContainer.bind<FileUtils>(FileUtils).toSelf();
 
 //
@@ -94,6 +92,8 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<UpdateEmployeeTask>(UpdateEmployeeTask).toSelf();
+DIContainer.bind<GetEmployeeInfoTask>(GetEmployeeInfoTask).toSelf();
 DIContainer.bind<SaveFileTask>(SaveFileTask).toSelf();
 DIContainer.bind<GetUsersTask>(GetUsersTask).toSelf();
 DIContainer.bind<GetRankTask>(GetRankTask).toSelf();

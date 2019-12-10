@@ -33,6 +33,7 @@ import { IAccess } from "../../domain/entity/access/IAccess";
 import { IFile } from "../../domain/entity/files/IFile";
 import { FileDao } from "../db/dao/files/FileDao";
 import { FileDaoImpl } from "../db/dao/files/FileDaoImpl";
+import { IEmployeeInfo } from "../../domain/entity/employee/IEmployeeInfo";
 
 @injectable()
 export class RemoteDataSourceImpl implements RemoteDataSource {
@@ -149,6 +150,13 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   }
   getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]> {
     return this.employeeDao.getEmployeeWithIdentifier(identifier);
+  }
+
+  getEmployeeInfo(identifier?: string): Promise<IEmployeeInfo[]> {
+    return this.employeeDao.getEmployeeInfo(identifier);
+  }
+  updateEmployee(employee: IEmployeeInfo): Promise<any> {
+    return this.employeeDao.updateEmployee(employee);
   }
   //
   // ─── USERS ──────────────────────────────────────────────────────────────────────

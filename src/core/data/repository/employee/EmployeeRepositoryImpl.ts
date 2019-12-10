@@ -18,6 +18,7 @@ import { IEmployeeOther } from "../../../domain/entity/employee/IEmployeeOther";
 import { injectable, inject } from "inversify";
 import { RemoteDataSource } from "../../RemoteDataSource";
 import { RemoteDataSourceImpl } from "../../../remote-source/source/RemoteDataSourceImpl";
+import { IEmployeeInfo } from "../../../domain/entity/employee/IEmployeeInfo";
 
 /**
  * EmployeeRepositoryImpl class
@@ -51,5 +52,12 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
   }
   getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]> {
     return this.remoteDataSource.getEmployeeWithIdentifier(identifier);
+  }
+
+  getEmployeeInfo(identifier?: string): Promise<IEmployeeInfo[]> {
+    return this.remoteDataSource.getEmployeeInfo(identifier);
+  }
+  updateEmployee(employee: IEmployeeInfo): Promise<any> {
+    return this.remoteDataSource.updateEmployee(employee);
   }
 }

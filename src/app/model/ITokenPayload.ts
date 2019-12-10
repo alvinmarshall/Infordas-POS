@@ -18,4 +18,5 @@ export interface ITokenPayload {
   contact: string;
   username: string;
   rankId: number;
+  imageUrl: string;
 }

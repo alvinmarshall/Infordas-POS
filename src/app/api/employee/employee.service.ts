@@ -19,6 +19,9 @@ import { SetEmployeeActiveTask } from "../../../core/domain/useCase/employee/Set
 import { AddEmployeeDetailTask } from "../../../core/domain/useCase/employee/AddEmployeeDetailTask";
 import { IEmployeeOther } from "../../../core/domain/entity/employee/IEmployeeOther";
 import { GetEmployeeTask } from "../../../core/domain/useCase/employee/GetEmployeeTask";
+import { GetEmployeeInfoTask } from "../../../core/domain/useCase/employee/GetEmployeeInfoTask";
+import { IEmployeeInfo } from "../../../core/domain/entity/employee/IEmployeeInfo";
+import { UpdateEmployeeTask } from "../../../core/domain/useCase/employee/UpdateEmployeeTask";
 /**
  * EmployeeService class
  */
@@ -28,6 +31,8 @@ export class EmployeeService {
   private setEmployeeActiveTask: SetEmployeeActiveTask;
   private addEmployeeDetailTask: AddEmployeeDetailTask;
   private getEmloyeeTask: GetEmployeeTask;
+  private getEmployeeInfoTask: GetEmployeeInfoTask;
+  private updateEmployeeTask: UpdateEmployeeTask;
 
   /**
    * @constructor
@@ -35,6 +40,7 @@ export class EmployeeService {
    * @param $setEmployeeActiveTask provide SetEmployeeActiveTask instance
    * @param $addEmployeeDetailTask  provide AddEmployeeDetailTask instance
    * @param $getEmloyeeTask provide GetEmployeeTask instance
+   * @param $getEmployeeInfoTask provide GetEmployeeInfoTask instance
    */
   constructor(
     @inject(AddEmployeeTask) $addEmployeeTask: AddEmployeeTask,
@@ -42,12 +48,16 @@ export class EmployeeService {
     $setEmployeeActiveTask: SetEmployeeActiveTask,
     @inject(AddEmployeeDetailTask)
     $addEmployeeDetailTask: AddEmployeeDetailTask,
-    @inject(GetEmployeeTask) $getEmloyeeTask: GetEmployeeTask
+    @inject(GetEmployeeTask) $getEmloyeeTask: GetEmployeeTask,
+    @inject(GetEmployeeInfoTask) $getEmployeeInfoTask: GetEmployeeInfoTask,
+    @inject(UpdateEmployeeTask) $updateEmployeeTask: UpdateEmployeeTask
   ) {
     this.addEmployeeTask = $addEmployeeTask;
     this.setEmployeeActiveTask = $setEmployeeActiveTask;
     this.addEmployeeDetailTask = $addEmployeeDetailTask;
     this.getEmloyeeTask = $getEmloyeeTask;
+    this.getEmployeeInfoTask = $getEmployeeInfoTask;
+    this.updateEmployeeTask = $updateEmployeeTask;
   }
 
   /**
@@ -80,5 +90,12 @@ export class EmployeeService {
 
   getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]> {
     return this.getEmloyeeTask.buildUseCase(identifier);
+  }
+
+  getEmployeeInfo(identifier?: string): Promise<IEmployeeInfo[]> {
+    return this.getEmployeeInfoTask.buildUseCase(identifier);
+  }
+  updateEmployee(employee: IEmployeeInfo): Promise<any> {
+    return this.updateEmployeeTask.buildUseCase(employee);
   }
 }

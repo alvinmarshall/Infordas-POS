@@ -14,6 +14,7 @@
 
 import { IEmployee } from "../entity/employee/IEmployee";
 import { IEmployeeOther } from "../entity/employee/IEmployeeOther";
+import { IEmployeeInfo } from "../entity/employee/IEmployeeInfo";
 
 export interface EmployeeRepository {
   addEmployee(employeeInfo: IEmployee): Promise<any>;
@@ -21,4 +22,6 @@ export interface EmployeeRepository {
   setEmployeeActive(empId: string, status: number): Promise<any>;
   getEmployees(): Promise<IEmployee[]>;
   getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]>;
+  getEmployeeInfo(identifier?: string): Promise<IEmployeeInfo[]>;
+  updateEmployee(employee: IEmployeeInfo): Promise<any>;
 }

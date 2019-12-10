@@ -14,6 +14,7 @@
 
 import { IEmployee } from "../../src/core/domain/entity/employee/IEmployee";
 import { IEmployeeOther } from "../../src/core/domain/entity/employee/IEmployeeOther";
+import { IEmployeeInfo } from "../../src/core/domain/entity/employee/IEmployeeInfo";
 
 /**
  * TestEmployeeGenerator class
@@ -81,6 +82,22 @@ export class TestEmployeeGenerator {
   }
 
   static getEmployee(): IEmployee[] {
+    return [
+      {
+        id: 1,
+        status: 1,
+        dob: "test dob",
+        address: "test address",
+        contact: "test contact",
+        email: "test email",
+        empId: "test uuid",
+        fullName: "test fullname",
+        gender: "test gender"
+      }
+    ];
+  }
+
+  static getEmployeeInfoList(): IEmployeeInfo[] {
     return [
       {
         id: 1,

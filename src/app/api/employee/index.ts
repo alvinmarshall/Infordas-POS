@@ -51,11 +51,27 @@ router.get(
 // ─── GET EMPLOYEE WITH IDENTIFIER ───────────────────────────────────────────────
 //
 
+// router.get(
+//   "/:identifier",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     controller.g(req, res);
+//   }
+// );
+
 router.get(
-  "/:identifier",
+  "/info",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    controller.getEmployee(req, res);
+    controller.getEmployeeDetailInfo(req, res);
+  }
+);
+
+router.get(
+  "/infos",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getEmployeesDetailInfo(req, res);
   }
 );
 
@@ -80,6 +96,14 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     controller.addEmployeeDetailInfo(req, res);
+  }
+);
+
+router.put(
+  "/update-employee",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.updateEmployee(req, res);
   }
 );
 

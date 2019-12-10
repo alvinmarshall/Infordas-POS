@@ -21,12 +21,16 @@ import { IBranch } from "../domain/entity/branch/IBranch";
 import { IEmployeeOther } from "../domain/entity/employee/IEmployeeOther";
 import { IAccess } from "../domain/entity/access/IAccess";
 import { IFile } from "../domain/entity/files/IFile";
+import { IEmployeeInfo } from "../domain/entity/employee/IEmployeeInfo";
 
 export interface RemoteDataSource {
+  addRank(rank: IRank): Promise<any>;
+  removeRank(rankId: string): Promise<any>;
+  updateRank(rank: IRank): Promise<any>;
   //
   // ─── FILE ───────────────────────────────────────────────────────────────────────
   //
-  saveFile(file:IFile):Promise<any>
+  saveFile(file: IFile): Promise<any>;
 
   //
   // ─── BRANCH ─────────────────────────────────────────────────────────────────────
@@ -56,6 +60,8 @@ export interface RemoteDataSource {
   addEmployeeOtherInfo(employeeDetail: IEmployeeOther): Promise<any>;
   getEmployees(): Promise<IEmployee[]>;
   getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]>;
+  getEmployeeInfo(identifier?: string): Promise<IEmployeeInfo[]>;
+  updateEmployee(employee: IEmployeeInfo): Promise<any>;
 
   //
   // ─── RANK ───────────────────────────────────────────────────────────────────────

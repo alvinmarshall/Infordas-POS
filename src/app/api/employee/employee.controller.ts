@@ -18,6 +18,8 @@ import { Request, Response } from "express";
 import uuidV4 from "uuid/v4";
 import { IEmployeeOther } from "../../../core/domain/entity/employee/IEmployeeOther";
 import { IEmployee } from "../../../core/domain/entity/employee/IEmployee";
+import { ITokenPayload } from "../../model/ITokenPayload";
+import { IEmployeeInfo } from "../../../core/domain/entity/employee/IEmployeeInfo";
 
 /**
  * EmployeeController
@@ -81,10 +83,41 @@ export class EmployeeController {
         .send({ message: "An error occurred, try again", status: 500 });
     }
   }
-  async getEmployee(req: Request, res: Response) {
+
+  async getEmployeeDetailInfo(req: Request, res: Response) {
     try {
-      const params = req.params.identifier;
-      const data = await this.employeeService.getEmployeeWithIdentifier(params);
+      //@ts-ignore
+      const { uuid } = req.user;
+      console.log("uuid", uuid);
+
+      const data = await this.employeeService.getEmployeeInfo(uuid);
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  async getEmployeesDetailInfo(req: Request, res: Response) {
+    try {
+
+      const data = await this.employeeService.getEmployeeInfo();
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+
+  async updateEmployee(req: Request, res: Response) {
+    try {
+      const body: IEmployeeInfo = req.body;
+      const data = await this.employeeService.updateEmployee(body);
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);

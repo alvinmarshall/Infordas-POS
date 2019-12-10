@@ -14,6 +14,7 @@
 
 import { IEmployee } from "../../../../domain/entity/employee/IEmployee";
 import { IEmployeeOther } from "../../../../domain/entity/employee/IEmployeeOther";
+import { IEmployeeInfo } from "../../../../domain/entity/employee/IEmployeeInfo";
 
 export interface EmployeeDao {
   addEmployee(employee: IEmployee): Promise<any>;
@@ -21,4 +22,6 @@ export interface EmployeeDao {
   addEmployeeDetailInfo(employeeDetail: IEmployeeOther): Promise<any>;
   getEmployees(): Promise<IEmployee[]>;
   getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]>;
+  getEmployeeInfo(identifier?: string): Promise<IEmployeeInfo[]>;
+  updateEmployee(employee: IEmployeeInfo): Promise<any>;
 }

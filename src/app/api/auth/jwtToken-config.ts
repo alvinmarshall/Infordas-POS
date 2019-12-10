@@ -26,7 +26,8 @@ export class JWTTokenService implements IJwtToken {
       name: $user.name || "",
       contact: $user.contact || "",
       rankId: $user.rank || -1,
-      username: $user.username
+      username: $user.username,
+      imageUrl:$user.imageUrl || ""
     };
     console.log(payload)
     let encode;
@@ -39,6 +40,6 @@ export class JWTTokenService implements IJwtToken {
         expiresIn: 60 * 60 * hours
       });
     }
-    return `Bearer ${encode}`;
+    return encode;
   }
 }

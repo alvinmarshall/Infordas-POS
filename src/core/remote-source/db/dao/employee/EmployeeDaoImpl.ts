@@ -18,6 +18,7 @@ import { MysqlDatabase } from "../../MysqlDatabase";
 import { EMPLOYEE_TABLE } from "../../../../../common/constants";
 import { injectable, inject } from "inversify";
 import { IEmployeeOther } from "../../../../domain/entity/employee/IEmployeeOther";
+import { IEmployeeInfo } from "../../../../domain/entity/employee/IEmployeeInfo";
 
 /**
  * EmployeeDaoImpl class
@@ -35,7 +36,142 @@ export class EmployeeDaoImpl implements EmployeeDao {
   constructor(@inject(MysqlDatabase) $db: MysqlDatabase) {
     this.db = $db;
   }
+  updateEmployee(employee: IEmployeeInfo): Promise<any> {
+    let sql = `UPDATE ${EMPLOYEE_TABLE} 
+        SET 
+        Name = ?,
+        DOB = ?,
+        Gender = ?,
+        Contact = ?,
+        Email = ?,
+        Address = ?,
+        Maritalstatus = ?,
+        Hours = ?,
+        SSN_ID = ?,
+        Residence = ?, 
+        Religion = ?,  
+        Department = ?,
+        Division = ?, 
+        Position = ?,
+        Category = ?,  
+        SalaryLevel = ?,
+        UserGroup = ?,
+        Currency = ?, 
+        Bank = ?,
+        AccountNo = ?, 
+        SalaryStep = ?,
+        Rate = ?,
+        RateType = ?, 
+        LastRate = ?,
+        MonthlyRate = ?, 
+        BeginDate = ?, 
+        EndDate = ?, 
+        ApplySSN = ?,
+        ApplyTax = ?, 
+        ApplyPF = ?, 
+        NextOfKin = ?, 
+        Guarantor = ?, 
+        ReferedBy = ?, 
+        Relation = ?, 
+        Children = ?
+    WHERE Emp_ID = ?`;
+    return this.db
+      .query(sql, [
+        employee.fullName,
+        employee.dob,
+        employee.gender,
+        employee.contact,
+        employee.email,
+        employee.address,
+        employee.maritalStatus,
+        employee.hours,
+        employee.ssnId,
+        employee.residence,
+        employee.religion,
+        employee.department,
+        employee.division,
+        employee.position,
+        employee.category,
+        employee.salary,
+        employee.userGroup,
+        employee.currency,
+        employee.bank,
+        employee.accountNo,
+        employee.salaryStep,
+        employee.rate,
+        employee.rateType,
+        employee.lastRate,
+        employee.monthlyRate,
+        employee.beginDate,
+        employee.endDate,
+        employee.applySSN,
+        employee.applyTax,
+        employee.applyPF,
+        employee.nextOfKin,
+        employee.guarantor,
+        employee.referenceBy,
+        employee.relation,
+        employee.children,
+        employee.uuid
+      ])
+      .then(data => {
+        return { message: `${data.affectedRows} record modified` };
+      });
+  }
 
+  getEmployeeInfo(identifier?: string | undefined): Promise<IEmployeeInfo[]> {
+    let sql;
+    console.log("empid", identifier);
+    if (identifier) {
+      sql = `SELECT
+      Emp_ID AS uuid,
+      Name AS fullName,
+      DOB AS dob,
+      Status AS status,
+      Gender AS gender,
+      Contact AS contact,
+      Email AS email,
+      Address AS address,
+      Maritalstatus AS maritalStatus,
+      Hours AS hours,
+      Image As imageUrl,
+      Status AS status,
+      Position AS position,
+      Department AS department,
+      Division AS division,
+      SSN_ID AS ssnId,
+      Religion AS religion,
+      SalaryLevel AS salary,
+      AccountNo AS accountNo,
+      Children AS children,
+      Residence AS residence
+   FROM ${EMPLOYEE_TABLE} WHERE Emp_ID = ?`;
+    } else {
+      sql = `SELECT
+     Emp_ID AS uuid,
+     Name AS fullName,
+     DOB AS dob,
+     Status AS status,
+     Gender AS gender,
+     Contact AS contact,
+     Email AS email,
+     Address AS address,
+     Maritalstatus AS maritalStatus,
+     Hours AS hours,
+     Status AS status,
+     Image As imageUrl,
+     Position AS position,
+     Department AS department,
+     Division AS division,
+     SSN_ID AS ssnId,
+     Religion AS religion,
+     SalaryLevel AS salary,
+     AccountNo AS accountNo,
+     Children AS children
+   FROM ${EMPLOYEE_TABLE}`;
+    }
+    return this.db.query(sql, [identifier]);
+  }
   getEmployees(): Promise<IEmployee[]> {
     let sql = `SELECT
       Emp_ID AS uuid,

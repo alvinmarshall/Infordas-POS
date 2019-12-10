@@ -96,7 +96,8 @@ export class UserDaoImpl implements UserDao {
       u.Username AS username,
       u.Password AS password,
       u.Rank_ID AS rank,
-      e.Hours AS hours
+      e.Hours AS hours,
+      e.Image AS imageUrl
     
     FROM users u
     INNER JOIN employee e

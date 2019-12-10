@@ -139,8 +139,8 @@ export class CompanyDaoImpl implements CompanyDao {
         company.location,
         company.address,
         company.contact,
-        company.email,
-        company.website
+        company.email || "",
+        company.website || ""
       ])
       .then(data => {
         return { message: `${data.affectedRows} record inserted` };

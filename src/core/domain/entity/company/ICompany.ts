@@ -18,6 +18,6 @@ export interface ICompany {
   location: string;
   address: string;
   contact: string;
-  email: string;
-  website: string;
+  email?: string;
+  website?: string;
 }
