@@ -42,5 +42,5 @@
 # Product use case
 ### can add product
 ### can get / get all product
-### can delete product
+### can update product
 ### can remove product
