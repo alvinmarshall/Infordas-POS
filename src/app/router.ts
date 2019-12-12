@@ -18,6 +18,7 @@ import employeeRoute from "./api/employee";
 import rankRoute from "./api/rank";
 import companyRoute from "./api/company";
 import fileRoute from "./api/files";
+import productRoute from "./api/product"
 
 export default (app: Express) => {
   app.use("/users", userRoute);
@@ -25,4 +26,5 @@ export default (app: Express) => {
   app.use("/rank", rankRoute);
   app.use("/company", companyRoute);
   app.use("/files", fileRoute);
+  app.use("/product",productRoute)
 };

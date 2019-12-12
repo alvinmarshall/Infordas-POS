@@ -34,6 +34,9 @@ import { IFile } from "../../domain/entity/files/IFile";
 import { FileDao } from "../db/dao/files/FileDao";
 import { FileDaoImpl } from "../db/dao/files/FileDaoImpl";
 import { IEmployeeInfo } from "../../domain/entity/employee/IEmployeeInfo";
+import { IProduct } from "../../domain/entity/product/IProduct";
+import { ProductDao } from "../db/dao/product/ProductDao";
+import { ProductDaoImpl } from "../db/dao/product/ProductDaoImpl";
 
 @injectable()
 export class RemoteDataSourceImpl implements RemoteDataSource {
@@ -42,6 +45,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   private rankDao: RankDao;
   private companyDao: CompanyDao;
   private fileDao: FileDao;
+  private productDao: ProductDao;
   /**
    * @constructor
    * @param $userDao require UserDao instance
@@ -53,13 +57,35 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     @inject(EmployeeDaoImpl) $employeeDao: EmployeeDao,
     @inject(RankDaoImpl) $rankDao: RankDao,
     @inject(CompanyDaoImpl) $companyDao: CompanyDao,
-    @inject(FileDaoImpl) $fileDao: FileDao
+    @inject(FileDaoImpl) $fileDao: FileDao,
+    @inject(ProductDaoImpl) $productDao: ProductDao
   ) {
     this.userDao = $userDao;
     this.employeeDao = $employeeDao;
     this.rankDao = $rankDao;
     this.companyDao = $companyDao;
     this.fileDao = $fileDao;
+    this.productDao = $productDao;
+  }
+
+  //
+  // ─── PRODUCT ────────────────────────────────────────────────────────────────────
+  //
+
+  addProduct(product: IProduct): Promise<any> {
+    return this.productDao.addProduct(product);
+  }
+  getProducts(): Promise<IProduct[]> {
+    return this.productDao.getProducts();
+  }
+  getProductWithIdentifier(identifier: string): Promise<IProduct[]> {
+    return this.productDao.getProductWithIdentifier(identifier);
+  }
+  updateProduct(product: IProduct): Promise<any> {
+    return this.productDao.updateProduct(product);
+  }
+  removeProduct(identifier: string): Promise<any> {
+    return this.productDao.removeProduct(identifier);
   }
   //
   // ─── FILE ───────────────────────────────────────────────────────────────────────

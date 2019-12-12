@@ -65,6 +65,14 @@ import { FileRepositoryImpl } from "../../core/data/repository/files/FileReposit
 import { FileDaoImpl } from "../../core/remote-source/db/dao/files/FileDaoImpl";
 import { GetEmployeeInfoTask } from "../../core/domain/useCase/employee/GetEmployeeInfoTask";
 import { UpdateEmployeeTask } from "../../core/domain/useCase/employee/UpdateEmployeeTask";
+import { AddProductTask } from "../../core/domain/useCase/product/AddProductTask";
+import { ProductRepositoryImpl } from "../../core/data/repository/product/ProductRepositoryImpl";
+import { ProductDaoImpl } from "../../core/remote-source/db/dao/product/ProductDaoImpl";
+import { ProductService } from "../api/product/product.service";
+import { ProductController } from "../api/product/product.controller";
+import { GetProductTask } from "../../core/domain/useCase/product/GetProductTask";
+import { UpdateProductTask } from "../../core/domain/useCase/product/UpdateProductTask";
+import { RemoveProductTask } from "../../core/domain/useCase/product/RemoveProductTask";
 
 let DIContainer = new Container();
 
@@ -78,6 +86,8 @@ DIContainer.bind<FileUtils>(FileUtils).toSelf();
 //
 // ─── API ────────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<ProductController>(ProductController).toSelf();
+DIContainer.bind<ProductService>(ProductService).toSelf();
 DIContainer.bind<FileController>(FileController).toSelf();
 DIContainer.bind<FileService>(FileService).toSelf();
 DIContainer.bind<PassportService>(PassportService).toSelf();
@@ -92,6 +102,10 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<RemoveProductTask>(RemoveProductTask).toSelf();
+DIContainer.bind<UpdateProductTask>(UpdateProductTask).toSelf();
+DIContainer.bind<GetProductTask>(GetProductTask).toSelf();
+DIContainer.bind<AddProductTask>(AddProductTask).toSelf();
 DIContainer.bind<UpdateEmployeeTask>(UpdateEmployeeTask).toSelf();
 DIContainer.bind<GetEmployeeInfoTask>(GetEmployeeInfoTask).toSelf();
 DIContainer.bind<SaveFileTask>(SaveFileTask).toSelf();
@@ -118,6 +132,7 @@ DIContainer.bind<AddEmployeeTask>(AddEmployeeTask).toSelf();
 //
 // ─── DATA ───────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<ProductRepositoryImpl>(ProductRepositoryImpl).toSelf();
 DIContainer.bind<FileRepositoryImpl>(FileRepositoryImpl).toSelf();
 DIContainer.bind<CompanyRepositoryImpl>(CompanyRepositoryImpl).toSelf();
 DIContainer.bind<RankRepositoryImpl>(RankRepositoryImpl).toSelf();
@@ -127,6 +142,7 @@ DIContainer.bind<RemoteDataSourceImpl>(RemoteDataSourceImpl).toSelf();
 //
 // ─── REMOTE ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<ProductDaoImpl>(ProductDaoImpl).toSelf();
 DIContainer.bind<FileDaoImpl>(FileDaoImpl).toSelf();
 DIContainer.bind<CompanyDaoImpl>(CompanyDaoImpl).toSelf();
 DIContainer.bind<RankDaoImpl>(RankDaoImpl).toSelf();

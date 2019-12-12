@@ -38,3 +38,9 @@
 
 ### can upload a file
 ### can download a file
+
+# Product use case
+### can add product
+### can get / get all product
+### can delete product
+### can remove product

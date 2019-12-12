@@ -22,8 +22,20 @@ import { IEmployeeOther } from "../domain/entity/employee/IEmployeeOther";
 import { IAccess } from "../domain/entity/access/IAccess";
 import { IFile } from "../domain/entity/files/IFile";
 import { IEmployeeInfo } from "../domain/entity/employee/IEmployeeInfo";
+import { IProduct } from "../domain/entity/product/IProduct";
 
 export interface RemoteDataSource {
+  //
+  // ─── PRODUCT ────────────────────────────────────────────────────────────────────
+  //
+
+  addProduct(product: IProduct): Promise<any>;
+  getProducts(): Promise<IProduct[]>;
+  getProductWithIdentifier(identifier:string): Promise<IProduct[]>;
+  updateProduct(product: IProduct): Promise<any>;
+  removeProduct(identifier: string): Promise<any>;
+
+
   addRank(rank: IRank): Promise<any>;
   removeRank(rankId: string): Promise<any>;
   updateRank(rank: IRank): Promise<any>;
