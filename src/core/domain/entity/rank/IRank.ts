@@ -15,4 +15,5 @@
 export interface IRank {
   id?: number;
   position?: string;
+  count?:number;
 }

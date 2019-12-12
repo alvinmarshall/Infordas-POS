@@ -17,6 +17,7 @@ import { injectable, inject } from "inversify";
 import { MysqlDatabase } from "../../MysqlDatabase";
 import { RANK_TABLE } from "../../../../../common/constants";
 import { IRank } from "../../../../domain/entity/rank/IRank";
+import { USER_TABLE } from "../../../../../../dist/src/common/constants";
 /**
  * RankDaoImpl
  * class implements RankDao {@Link ./RankDao}
@@ -34,11 +35,32 @@ export class RankDaoImpl implements RankDao {
   }
 
   getRanks(): Promise<IRank[]> {
-    let sql = `SELECT id, Position AS position FROM ${RANK_TABLE}`;
-    return this.db.query(sql, []);
+    return new Promise(async (resolve, reject) => {
+      let sql = `SELECT id, Position AS position FROM ${RANK_TABLE}`;
+      try {
+        const rank: IRank[] = await this.db.query(sql, []);
+        sql = `
+       SELECT  r.id,r.Position AS position,COUNT(u.Rank_ID) AS count FROM 
+       ${RANK_TABLE} r INNER JOIN ${USER_TABLE} u WHERE r.id = u.Rank_ID  GROUP BY r.Position;
+       `;
+        const newRank: IRank[] = await this.db.query(sql, []);
+        for (let i = 0; i < rank.length; i++) {
+          let match = false;
+          let count = 0;
+          for (let j = 0; j < newRank.length; j++) {
+            if (rank[i].position === newRank[j].position) {
+              rank[i].count = newRank[j].count;
+            }
+          }
+        }
+        resolve(rank);
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
   getRankWithIdentifier(identifier: string): Promise<IRank[]> {
-    let sql = `SELECT id, Position AS position FROM rank WHERE id = ?`;
+    let sql = `SELECT id, Position AS position FROM ${RANK_TABLE} WHERE id = ?`;
     return this.db.query(sql, [identifier]);
   }
 
@@ -48,13 +70,18 @@ export class RankDaoImpl implements RankDao {
    * @returns Promise<{obj}>
    */
   addRank(rank: IRank): Promise<any> {
-    let sql = `INSERT INTO ${RANK_TABLE} (Position) VALUES (?)`;
+    let sql = `SELECT id FROM ${RANK_TABLE} WHERE Position = ? LIMIT 1`;
     return this.db.query(sql, [rank.position]).then(data => {
-      if (data.affectedRows > 0) {
-        const insertedId = data.insertId;
-        return { message: "Rank added", rankId: insertedId };
+      if (data[0] && data[0].id > 0) {
+        return { message: `${rank.position} position already exist` };
+      } else {
+        sql = `INSERT INTO ${RANK_TABLE} (Position) VALUES (?)`;
+        return this.db.query(sql, [rank.position]).then(data => {
+          if (data.affectedRows > 0) {
+            return { message: `${data.affectedRows} Rank added` };
+          }
+        });
       }
-      return { message: "0 record inserted" };
     });
   }
 
