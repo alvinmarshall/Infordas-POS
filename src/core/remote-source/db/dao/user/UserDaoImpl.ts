@@ -34,16 +34,16 @@ export class UserDaoImpl implements UserDao {
 
   getUsers(): Promise<IUser[]> {
     let sql = `SELECT 
-    u.Name AS name,
-    u.Contact AS contact,
-    u.Emp_ID AS uuid,
-    u.Username AS username,
-    u.Password AS password,
-    u.Rank_ID AS rank,
-    e.Hours AS hours
+      u.Name AS name,
+      u.Contact AS contact,
+      u.Emp_ID AS uuid,
+      u.Username AS username,
+      u.Password AS password,
+      u.Rank_ID AS rank,
+      e.Hours AS hours
 
-  FROM ${USER_TABLE} u
-  INNER JOIN ${EMPLOYEE_TABLE} e`;
+    FROM ${USER_TABLE} u
+    INNER JOIN ${EMPLOYEE_TABLE} e WHERE u.Emp_ID = e.Emp_ID`;
     return this.db.query(sql, []);
   }
 
