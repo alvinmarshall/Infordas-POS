@@ -15,27 +15,49 @@
 import express from "express";
 import DIContainer from "../../loc/di.container";
 import { ProductController } from "./product.controller";
+import passport from "passport";
+
 const router = express.Router();
 const controller = DIContainer.resolve<ProductController>(ProductController);
 
-router.post("/create-product", (req, res) => {
-  controller.addProduct(req, res);
-});
+router.post(
+  "/create-product",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.addProduct(req, res);
+  }
+);
 
-router.get("/products", (req, res) => {
-  controller.getProducts(req, res);
-});
+router.get(
+  "/products",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getProducts(req, res);
+  }
+);
 
-router.get("/product/:identifier", (req, res) => {
-  controller.getProduct(req, res);
-});
+router.get(
+  "/product/:identifier",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getProduct(req, res);
+  }
+);
 
-router.put("/update-product", (req, res) => {
-  controller.updateProduct(req, res);
-});
+router.put(
+  "/update-product",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.updateProduct(req, res);
+  }
+);
 
-router.delete("/product/:identifier", (req, res) => {
-  controller.removeProduct(req, res);
-});
+router.delete(
+  "/product/:identifier",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.removeProduct(req, res);
+  }
+);
 
 export default router;

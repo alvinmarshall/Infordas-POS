@@ -61,6 +61,7 @@ export class ProductDaoImpl implements ProductDao {
   getProducts(): Promise<IProduct[]> {
     const sql = `
     SELECT
+      Name AS name,
       Prod_ID AS uuid,
       Buy_Price AS buyPrice,
       Retail_Price AS retailPrice,
@@ -77,6 +78,7 @@ export class ProductDaoImpl implements ProductDao {
   getProductWithIdentifier(identifier: string): Promise<IProduct[]> {
     const sql = `
     SELECT
+      Name AS name,
       Prod_ID AS uuid,
       Buy_Price AS buyPrice,
       Retail_Price AS retailPrice,
