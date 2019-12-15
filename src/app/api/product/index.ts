@@ -20,6 +20,10 @@ import passport from "passport";
 const router = express.Router();
 const controller = DIContainer.resolve<ProductController>(ProductController);
 
+//
+// ─── PRODUCT ────────────────────────────────────────────────────────────────────
+//
+
 router.post(
   "/create-product",
   passport.authenticate("jwt", { session: false }),
@@ -57,6 +61,47 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     controller.removeProduct(req, res);
+  }
+);
+
+//
+// ─── CATEGORY ───────────────────────────────────────────────────────────────────
+//
+router.post(
+  "/create-category",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.addCategory(req, res);
+  }
+);
+
+router.put(
+  "/update-category",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.updateCategory(req, res);
+  }
+);
+
+router.get(
+  "/categories",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getCategories(req, res);
+  }
+);
+router.get(
+  "/category/:identifier",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getCategoryWithIdentifier(req, res);
+  }
+);
+router.delete(
+  "/category/:identifier",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.removeCategory(req, res);
   }
 );
 

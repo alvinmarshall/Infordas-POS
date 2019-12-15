@@ -23,6 +23,7 @@ import { IAccess } from "../domain/entity/access/IAccess";
 import { IFile } from "../domain/entity/files/IFile";
 import { IEmployeeInfo } from "../domain/entity/employee/IEmployeeInfo";
 import { IProduct } from "../domain/entity/product/IProduct";
+import { ICategory } from "../domain/entity/product/ICategory";
 
 export interface RemoteDataSource {
   //
@@ -31,9 +32,14 @@ export interface RemoteDataSource {
 
   addProduct(product: IProduct): Promise<any>;
   getProducts(): Promise<IProduct[]>;
-  getProductWithIdentifier(identifier:string): Promise<IProduct[]>;
+  getProductWithIdentifier(identifier: string): Promise<IProduct[]>;
   updateProduct(product: IProduct): Promise<any>;
   removeProduct(identifier: string): Promise<any>;
+  addCategory(category: ICategory): Promise<any>;
+  updateCategory(category: ICategory): Promise<any>;
+  getCategories(): Promise<ICategory[]>;
+  getCategoryWithIdentifier(identifier: string): Promise<ICategory[]>;
+  removeCategory(identifier: string): Promise<any>;
 
 
   addRank(rank: IRank): Promise<any>;

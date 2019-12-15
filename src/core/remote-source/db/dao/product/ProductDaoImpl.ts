@@ -16,7 +16,8 @@ import { MysqlDatabase } from "../../MysqlDatabase";
 import { ProductDao } from "./ProductDao";
 import { IProduct } from "../../../../domain/entity/product/IProduct";
 import { injectable, inject } from "inversify";
-import { PRODUCT_TABLE } from "../../../../../common/constants";
+import { PRODUCT_TABLE, CATEGORY_TABLE } from "../../../../../common/constants";
+import { ICategory } from "../../../../domain/entity/product/ICategory";
 /**
  * ProductDaoImpl
  */
@@ -27,6 +28,65 @@ export class ProductDaoImpl implements ProductDao {
   constructor(@inject(MysqlDatabase) $db: MysqlDatabase) {
     this.db = $db;
   }
+  removeCategory(identifier: string): Promise<any> {
+    const sql = `DELETE FROM ${CATEGORY_TABLE} WHERE id = ? `;
+    return this.db.query(sql, [identifier]).then(data => {
+      return { message: `${data.affectedRows} item removed` };
+    });
+  }
+  getCategories(): Promise<ICategory[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let sql = `SELECT NAME AS name, Description AS description FROM ${CATEGORY_TABLE}`;
+        const category: ICategory[] = await this.db.query(sql, []);
+        sql = `SELECT c.Name AS name,c.Description AS description, COUNT(p.Category_ID) as count FROM ${CATEGORY_TABLE} c 
+        INNER JOIN ${PRODUCT_TABLE} p WHERE c.id = p.Category_ID GROUP BY c.id`;
+        const newCategory: ICategory[] = await this.db.query(sql, []);
+        for (let i = 0; i < category.length; i++) {
+          for (let j = 0; j < newCategory.length; j++) {
+            if (category[i].name === newCategory[j].name) {
+              category[i].count = newCategory[j].count;
+            }
+          }
+        }
+        resolve(category);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  getCategoryWithIdentifier(identifier: string): Promise<ICategory[]> {
+    const sql = `SELECT NAME AS name, Description AS description FROM ${CATEGORY_TABLE} WHERE id = ?`;
+    return this.db.query(sql, [identifier]);
+  }
+  updateCategory(category: ICategory): Promise<any> {
+    const sql = `UPDATE ${CATEGORY_TABLE} SET 
+    Name = ?, Description = ? WHERE id = ?`;
+    return this.db
+      .query(sql, [category.name, category.description, category.id])
+      .then(data => {
+        return { message: `${data.affectedRows} item modified` };
+      });
+  }
+
+  addCategory(category: ICategory): Promise<any> {
+    let sql = `SELECT id FROM ${CATEGORY_TABLE} WHERE Name = ?`;
+    return this.db.query(sql, [category.name]).then(data => {
+      if (data[0] && data[0].id > 0)
+        return { message: `${category.name} already exist` };
+      sql = `INSERT INTO ${CATEGORY_TABLE} (Name,Description) VALUES (?,?)`;
+      return this.db
+        .query(sql, [category.name, category.description])
+        .then(data => {
+          return { message: `${data.affectedRows} item inserted` };
+        });
+    });
+  }
+
+  //
+  // PRODUCT
+  //
+
   removeProduct(identifier: string): Promise<any> {
     const sql = `DELETE FROM ${PRODUCT_TABLE} WHERE Prod_ID = ?`;
     return this.db.query(sql, [identifier]).then(data => {

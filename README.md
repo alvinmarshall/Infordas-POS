@@ -44,3 +44,4 @@
 ### can get / get all product
 ### can delete product
 ### can remove product
+### can have a category

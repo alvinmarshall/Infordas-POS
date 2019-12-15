@@ -37,6 +37,7 @@ import { IEmployeeInfo } from "../../domain/entity/employee/IEmployeeInfo";
 import { IProduct } from "../../domain/entity/product/IProduct";
 import { ProductDao } from "../db/dao/product/ProductDao";
 import { ProductDaoImpl } from "../db/dao/product/ProductDaoImpl";
+import { ICategory } from "../../domain/entity/product/ICategory";
 
 @injectable()
 export class RemoteDataSourceImpl implements RemoteDataSource {
@@ -86,6 +87,21 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   }
   removeProduct(identifier: string): Promise<any> {
     return this.productDao.removeProduct(identifier);
+  }
+  addCategory(category: ICategory): Promise<any> {
+    return this.productDao.addCategory(category);
+  }
+  updateCategory(category: ICategory): Promise<any> {
+    return this.productDao.updateCategory(category);
+  }
+  getCategories(): Promise<ICategory[]> {
+    return this.productDao.getCategories();
+  }
+  getCategoryWithIdentifier(identifier: string): Promise<ICategory[]> {
+    return this.productDao.getCategoryWithIdentifier(identifier);
+  }
+  removeCategory(identifier: string): Promise<any> {
+    return this.productDao.removeCategory(identifier);
   }
   //
   // ─── FILE ───────────────────────────────────────────────────────────────────────

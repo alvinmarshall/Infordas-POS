@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { IProduct } from "../entity/product/IProduct";
+import { ICategory } from "../entity/product/ICategory";
 
 export interface ProductRepository {
   addProduct(product: IProduct): Promise<any>;
@@ -20,4 +21,9 @@ export interface ProductRepository {
   getProductWithIdentifier(identifier: string): Promise<IProduct[]>;
   updateProduct(product: IProduct): Promise<any>;
   removeProduct(identifier: string): Promise<any>;
+  addCategory(category: ICategory): Promise<any>;
+  updateCategory(category: ICategory): Promise<any>;
+  getCategories(): Promise<ICategory[]>;
+  getCategoryWithIdentifier(identifier: string): Promise<ICategory[]>;
+  removeCategory(identifier: string): Promise<any>;
 }

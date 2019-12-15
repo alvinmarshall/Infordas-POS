@@ -73,6 +73,10 @@ import { ProductController } from "../api/product/product.controller";
 import { GetProductTask } from "../../core/domain/useCase/product/GetProductTask";
 import { UpdateProductTask } from "../../core/domain/useCase/product/UpdateProductTask";
 import { RemoveProductTask } from "../../core/domain/useCase/product/RemoveProductTask";
+import { AddCategoryTask } from "../../core/domain/useCase/product/AddCategoryTask";
+import { UpdateCategoryTask } from "../../core/domain/useCase/product/UpdateCategoryTask";
+import { GetCategoryTask } from "../../core/domain/useCase/product/GetCategoryTask";
+import { RemoveCategoryTask } from "../../core/domain/useCase/product/RemoveCategoryTask";
 
 let DIContainer = new Container();
 
@@ -102,6 +106,10 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<RemoveCategoryTask>(RemoveCategoryTask).toSelf();
+DIContainer.bind<GetCategoryTask>(GetCategoryTask).toSelf();
+DIContainer.bind<UpdateCategoryTask>(UpdateCategoryTask).toSelf();
+DIContainer.bind<AddCategoryTask>(AddCategoryTask).toSelf();
 DIContainer.bind<RemoveProductTask>(RemoveProductTask).toSelf();
 DIContainer.bind<UpdateProductTask>(UpdateProductTask).toSelf();
 DIContainer.bind<GetProductTask>(GetProductTask).toSelf();

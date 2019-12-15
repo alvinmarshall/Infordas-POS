@@ -18,6 +18,11 @@ import { injectable, inject } from "inversify";
 import { GetProductTask } from "../../../core/domain/useCase/product/GetProductTask";
 import { UpdateProductTask } from "../../../core/domain/useCase/product/UpdateProductTask";
 import { RemoveProductTask } from "../../../core/domain/useCase/product/RemoveProductTask";
+import { AddCategoryTask } from "../../../core/domain/useCase/product/AddCategoryTask";
+import { ICategory } from "../../../core/domain/entity/product/ICategory";
+import { UpdateCategoryTask } from "../../../core/domain/useCase/product/UpdateCategoryTask";
+import { GetCategoryTask } from "../../../core/domain/useCase/product/GetCategoryTask";
+import { RemoveCategoryTask } from "../../../core/domain/useCase/product/RemoveCategoryTask";
 
 /**
  * ProductService
@@ -28,6 +33,10 @@ export class ProductService {
   private getProductTask: GetProductTask;
   private updateProductTask: UpdateProductTask;
   private removeProductTask: RemoveProductTask;
+  private addCategoryTask: AddCategoryTask;
+  private updateCategoryTask: UpdateCategoryTask;
+  private getCategoryTask: GetCategoryTask;
+  private removeCategoryTask: RemoveCategoryTask;
 
   /**
    * @constructor
@@ -40,13 +49,25 @@ export class ProductService {
     @inject(AddProductTask) $addProductTask: AddProductTask,
     @inject(GetProductTask) $getProductTask: GetProductTask,
     @inject(UpdateProductTask) $updateProductTask: UpdateProductTask,
-    @inject(RemoveProductTask) $removeProductTask: RemoveProductTask
+    @inject(RemoveProductTask) $removeProductTask: RemoveProductTask,
+    @inject(AddCategoryTask) $addCategoryTask: AddCategoryTask,
+    @inject(UpdateCategoryTask) $updateCategoryTask: UpdateCategoryTask,
+    @inject(GetCategoryTask) $getCategoryTask: GetCategoryTask,
+    @inject(RemoveCategoryTask) $removeCategoryTask: RemoveCategoryTask
   ) {
     this.addProductTask = $addProductTask;
     this.getProductTask = $getProductTask;
     this.updateProductTask = $updateProductTask;
     this.removeProductTask = $removeProductTask;
+    this.addCategoryTask = $addCategoryTask;
+    this.updateCategoryTask = $updateCategoryTask;
+    this.getCategoryTask = $getCategoryTask;
+    this.removeCategoryTask = $removeCategoryTask;
   }
+
+  //
+  // ─── PRODUCT ────────────────────────────────────────────────────────────────────
+  //
 
   addProduct(product: IProduct): Promise<any> {
     return this.addProductTask.buildUseCase(product);
@@ -66,5 +87,25 @@ export class ProductService {
 
   removeProduct(identifier: string): Promise<any> {
     return this.removeProductTask.buildUseCase(identifier);
+  }
+
+  //
+  // ─── CATEORY ────────────────────────────────────────────────────────────────────
+  //
+
+  addCategory(cateory: ICategory): Promise<any> {
+    return this.addCategoryTask.buildUseCase(cateory);
+  }
+  updateCategory(cateory: ICategory): Promise<any> {
+    return this.updateCategoryTask.buildUseCase(cateory);
+  }
+  getCategories(): Promise<ICategory[]> {
+    return this.getCategoryTask.buildUseCase();
+  }
+  getCategoryWithIdenfier(identifier: string): Promise<ICategory[]> {
+    return this.getCategoryTask.buildUseCase(identifier);
+  }
+  removeCategory(identifier: string): Promise<any> {
+    return this.removeCategoryTask.buildUseCase(identifier);
   }
 }

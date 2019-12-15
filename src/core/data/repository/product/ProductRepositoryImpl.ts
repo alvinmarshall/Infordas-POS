@@ -17,6 +17,7 @@ import { IProduct } from "../../../domain/entity/product/IProduct";
 import { RemoteDataSource } from "../../RemoteDataSource";
 import { injectable, inject } from "inversify";
 import { RemoteDataSourceImpl } from "../../../remote-source/source/RemoteDataSourceImpl";
+import { ICategory } from "../../../domain/entity/product/ICategory";
 
 @injectable()
 export class ProductRepositoryImpl implements ProductRepository {
@@ -29,6 +30,10 @@ export class ProductRepositoryImpl implements ProductRepository {
   constructor(@inject(RemoteDataSourceImpl) $remoteSource: RemoteDataSource) {
     this.remoteSource = $remoteSource;
   }
+
+  //
+  // ─── PRODUCT ────────────────────────────────────────────────────────────────────
+  //
 
   addProduct(product: IProduct): Promise<any> {
     return this.remoteSource.addProduct(product);
@@ -44,5 +49,25 @@ export class ProductRepositoryImpl implements ProductRepository {
   }
   removeProduct(identifier: string): Promise<any> {
     return this.remoteSource.removeProduct(identifier);
+  }
+  removeCategory(identifier: string): Promise<any> {
+    return this.remoteSource.removeCategory(identifier);
+  }
+
+  //
+  // ─── CATEGORY ───────────────────────────────────────────────────────────────────
+  //
+
+  addCategory(category: ICategory): Promise<any> {
+    return this.remoteSource.addCategory(category);
+  }
+  updateCategory(category: ICategory): Promise<any> {
+    return this.remoteSource.updateCategory(category);
+  }
+  getCategories(): Promise<ICategory[]> {
+    return this.remoteSource.getCategories();
+  }
+  getCategoryWithIdentifier(identifier: string): Promise<ICategory[]> {
+    return this.remoteSource.getCategoryWithIdentifier(identifier);
   }
 }

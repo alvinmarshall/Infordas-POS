@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { IProduct } from "../../../../domain/entity/product/IProduct";
+import { ICategory } from "../../../../domain/entity/product/ICategory";
 
 export interface ProductDao {
   addProduct(product: IProduct): Promise<any>;
@@ -20,6 +21,12 @@ export interface ProductDao {
   getProductWithIdentifier(identifier: string): Promise<IProduct[]>;
   updateProduct(product: IProduct): Promise<any>;
   removeProduct(identifier: string): Promise<any>;
+  addCategory(category: ICategory): Promise<any>;
+  updateCategory(category: ICategory): Promise<any>;
+  getCategories(): Promise<ICategory[]>;
+  getCategoryWithIdentifier(identifier: string): Promise<ICategory[]>;
+  removeCategory(identifier: string): Promise<any>;
+
 
 
 }

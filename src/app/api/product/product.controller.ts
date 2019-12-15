@@ -17,6 +17,8 @@ import { injectable, inject } from "inversify";
 import { Request, Response } from "express";
 import { IProduct } from "../../../core/domain/entity/product/IProduct";
 import uuidV4 from "uuid/v4";
+import { ICategory } from "../../../core/domain/entity/product/ICategory";
+import valueStrExists from "../../../common/utils/item-exist";
 
 @injectable()
 export class ProductController {
@@ -25,6 +27,10 @@ export class ProductController {
   constructor(@inject(ProductService) $productService: ProductService) {
     this.productService = $productService;
   }
+
+  //
+  // ─── PRODUCT ────────────────────────────────────────────────────────────────────
+  //
 
   async addProduct(req: Request, res: Response) {
     try {
@@ -82,8 +88,79 @@ export class ProductController {
 
   async removeProduct(req: Request, res: Response) {
     try {
-      const identifier:string = req.params.identifier;
+      const identifier: string = req.params.identifier;
       const data = await this.productService.removeProduct(identifier);
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  //
+  // ─── CATEGORY ───────────────────────────────────────────────────────────────────
+  //
+  async addCategory(req: Request, res: Response) {
+    try {
+      const body: ICategory = req.body;
+      const data = await this.productService.addCategory(body);
+      if (valueStrExists(data.message, "already exist"))
+        return res.send({ data, status: 200 });
+      return res.status(201).send({ data, status: 201 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  async updateCategory(req: Request, res: Response) {
+    try {
+      const body: ICategory = req.body;
+      const data = await this.productService.updateCategory(body);
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  async getCategories(req: Request, res: Response) {
+    try {
+      const data = await this.productService.getCategories();
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  async getCategoryWithIdentifier(req: Request, res: Response) {
+    try {
+      const identifier: string = req.params.identifier;
+      const data = await this.productService.getCategoryWithIdenfier(
+        identifier
+      );
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  async removeCategory(req: Request, res: Response) {
+    try {
+      const identifier: string = req.params.identifier;
+      const data = await this.productService.removeCategory(identifier);
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
