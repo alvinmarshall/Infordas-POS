@@ -22,6 +22,7 @@ export const BRANCH_TABLE: string = "branch";
 export const ACCESS_TABLE: string = "access";
 export const PRODUCT_TABLE: string = "product";
 export const CATEGORY_TABLE: string = "category";
+export const BRAND_TABLE: string = "brand";
 export const FILE_TYPE: IFileType[] = [
   {
     name: "profile",

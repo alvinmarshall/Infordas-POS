@@ -16,7 +16,7 @@ import { MysqlDatabase } from "../../MysqlDatabase";
 import { ProductDao } from "./ProductDao";
 import { IProduct } from "../../../../domain/entity/product/IProduct";
 import { injectable, inject } from "inversify";
-import { PRODUCT_TABLE, CATEGORY_TABLE } from "../../../../../common/constants";
+import { PRODUCT_TABLE, CATEGORY_TABLE, BRAND_TABLE } from "../../../../../common/constants";
 import { ICategory } from "../../../../domain/entity/product/ICategory";
 /**
  * ProductDaoImpl
@@ -37,7 +37,7 @@ export class ProductDaoImpl implements ProductDao {
   getCategories(): Promise<ICategory[]> {
     return new Promise(async (resolve, reject) => {
       try {
-        let sql = `SELECT NAME AS name, Description AS description FROM ${CATEGORY_TABLE}`;
+        let sql = `SELECT id,NAME AS name, Description AS description FROM ${CATEGORY_TABLE}`;
         const category: ICategory[] = await this.db.query(sql, []);
         sql = `SELECT c.Name AS name,c.Description AS description, COUNT(p.Category_ID) as count FROM ${CATEGORY_TABLE} c 
         INNER JOIN ${PRODUCT_TABLE} p WHERE c.id = p.Category_ID GROUP BY c.id`;
@@ -56,7 +56,7 @@ export class ProductDaoImpl implements ProductDao {
     });
   }
   getCategoryWithIdentifier(identifier: string): Promise<ICategory[]> {
-    const sql = `SELECT NAME AS name, Description AS description FROM ${CATEGORY_TABLE} WHERE id = ?`;
+    const sql = `SELECT id,NAME AS name, Description AS description FROM ${CATEGORY_TABLE} WHERE id = ?`;
     return this.db.query(sql, [identifier]);
   }
   updateCategory(category: ICategory): Promise<any> {
@@ -97,7 +97,7 @@ export class ProductDaoImpl implements ProductDao {
     const sql = `
     UPDATE ${PRODUCT_TABLE} 
     SET
-      Name = ?,Buy_Price = ?,Retail_Price = ?,Stock = ?,Unit = ?,Barcode = ?
+      Name = ?,Buy_Price = ?,Retail_Price = ?,Stock = ?,Unit = ?,Barcode = ?, Category_ID = ?, Brand_ID = ?
     WHERE Prod_ID = ?`;
 
     return this.db
@@ -108,6 +108,8 @@ export class ProductDaoImpl implements ProductDao {
         product.stock,
         product.unit,
         product.barcode,
+        product.category,
+        product.brand,
         product.uuid
       ])
       .then(data => {
@@ -121,14 +123,18 @@ export class ProductDaoImpl implements ProductDao {
   getProducts(): Promise<IProduct[]> {
     const sql = `
     SELECT
-      Name AS name,
-      Prod_ID AS uuid,
-      Buy_Price AS buyPrice,
-      Retail_Price AS retailPrice,
-      Stock AS stock,
-      Unit AS unit,
-      Barcode AS barcode
-     FROM ${PRODUCT_TABLE}`;
+      p.Name AS name,
+      p.Prod_ID AS uuid,
+      p.Buy_Price AS buyPrice,
+      p.Retail_Price AS retailPrice,
+      p.Stock AS stock,
+      p.Unit AS unit,
+      p.Barcode AS barcode,
+      c.Name AS category,
+      b.Name AS brand
+     FROM ${PRODUCT_TABLE} p 
+     LEFT OUTER JOIN ${CATEGORY_TABLE} c ON p.Category_ID = c.id
+     LEFT OUTER JOIN ${BRAND_TABLE} b ON p.Brand_ID = b.id`;
     return this.db.query(sql, []);
   }
   //
@@ -138,14 +144,19 @@ export class ProductDaoImpl implements ProductDao {
   getProductWithIdentifier(identifier: string): Promise<IProduct[]> {
     const sql = `
     SELECT
-      Name AS name,
-      Prod_ID AS uuid,
-      Buy_Price AS buyPrice,
-      Retail_Price AS retailPrice,
-      Stock AS stock,
-      Unit AS unit,
-      Barcode AS barcode
-     FROM ${PRODUCT_TABLE} WHERE Prod_ID = ?`;
+      p.Name AS name,
+      p.Prod_ID AS uuid,
+      p.Buy_Price AS buyPrice,
+      p.Retail_Price AS retailPrice,
+      p.Stock AS stock,
+      p.Unit AS unit,
+      p.Barcode AS barcode,
+      c.Name AS category,
+      b.Name AS brand
+    FROM ${PRODUCT_TABLE} p
+    LEFT OUTER JOIN ${CATEGORY_TABLE} c ON p.Category_ID = c.id
+    LEFT OUTER JOIN ${BRAND_TABLE} b ON p.Brand_ID = b.id
+    WHERE Prod_ID = ?`;
     return this.db.query(sql, [identifier]);
   }
   //
@@ -154,7 +165,7 @@ export class ProductDaoImpl implements ProductDao {
 
   addProduct(product: IProduct): Promise<any> {
     const sql = `INSERT INTO ${PRODUCT_TABLE} 
-    (Prod_ID,Name,Buy_Price,Retail_Price,Stock,Unit,Barcode) VALUES(?,?,?,?,?,?,?)`;
+    (Prod_ID,Name,Buy_Price,Retail_Price,Stock,Unit,Barcode,Category_ID,Brand_ID) VALUES(?,?,?,?,?,?,?,?,?)`;
 
     return this.db
       .query(sql, [
@@ -164,7 +175,9 @@ export class ProductDaoImpl implements ProductDao {
         product.retailPrice,
         product.stock,
         product.unit,
-        product.barcode
+        product.barcode,
+        product.category,
+        product.brand
       ])
       .then(data => {
         return { message: `${data.affectedRows} item inserted` };
