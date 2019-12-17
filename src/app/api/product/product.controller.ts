@@ -19,6 +19,7 @@ import { IProduct } from "../../../core/domain/entity/product/IProduct";
 import uuidV4 from "uuid/v4";
 import { ICategory } from "../../../core/domain/entity/product/ICategory";
 import valueStrExists from "../../../common/utils/item-exist";
+import { IBrand } from "../../../core/domain/entity/product/IBrand";
 
 @injectable()
 export class ProductController {
@@ -169,4 +170,78 @@ export class ProductController {
         .send({ message: "An error occurred, try again", status: 500 });
     }
   }
+
+  //
+  // ─── BRAND ──────────────────────────────────────────────────────────────────────
+  //
+
+  async addBrand(req: Request, res: Response) {
+    try {
+      const body: IBrand = req.body;
+      const data = await this.productService.addBrand(body);
+      if (valueStrExists(data.message, "already exist"))
+        return res.send({ data, status: 200 });
+      return res.status(201).send({ data, status: 201 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  async getBrands(req: Request, res: Response) {
+    try {
+      const data = await this.productService.getBrands();
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  async getBrandWithIdentifier(req: Request, res: Response) {
+    try {
+      const identifier: string = req.params.identifier;
+      const data = await this.productService.getBrandWithIdenfier(
+        identifier
+      );
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  async updateBrand(req: Request, res: Response) {
+    try {
+      const body: IBrand = req.body;
+      const data = await this.productService.updateBrand(body);
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  async removeBrand(req: Request, res: Response) {
+    try {
+      const identifier: string = req.params.identifier;
+      const data = await this.productService.removeBrand(identifier);
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+ 
+
 }

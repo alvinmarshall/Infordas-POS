@@ -14,6 +14,7 @@
 
 import { IProduct } from "../../src/core/domain/entity/product/IProduct";
 import { ICategory } from "../../src/core/domain/entity/product/ICategory";
+import { IBrand } from "../../src/core/domain/entity/product/IBrand";
 
 export class TestProductGenerator {
   static product(): IProduct {
@@ -91,4 +92,37 @@ export class TestProductGenerator {
       }
     ];
   }
+
+  static brand(): IBrand {
+    return {
+      id: 1,
+      name: "test name",
+      description: "test description"
+    };
+  }
+
+  static getBrand(): IBrand[] {
+    return[{
+      id: 1,
+      name: "test name",
+      description: "test description"
+    }];
+  }
+
+  static getBrandList(): IBrand[] {
+    return [
+      {
+        id: 1,
+        name: "test name",
+        description: "test description"
+      },
+      {
+        id: 2,
+        name: "test name2",
+        description: "test description2"
+      }
+    ];
+  }
+
+
 }

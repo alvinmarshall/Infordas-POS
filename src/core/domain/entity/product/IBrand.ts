@@ -12,9 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export interface ICategory{
-    id:number;
-    name:string;
-    description?:string;
-    count?:number;
-}
+import { ICategory } from "./ICategory";
+
+export interface IBrand extends ICategory {}

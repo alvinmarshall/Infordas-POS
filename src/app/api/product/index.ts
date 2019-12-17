@@ -105,4 +105,45 @@ router.delete(
   }
 );
 
+//
+// ─── BRAND ──────────────────────────────────────────────────────────────────────
+//
+router.post(
+  "/create-brand",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.addBrand(req, res);
+  }
+);
+router.get(
+  "/brands",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getBrands(req, res);
+  }
+);
+router.get(
+  "/brand/:identifier",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.getBrandWithIdentifier(req, res);
+  }
+);
+
+router.put(
+  "/update-brand",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.updateBrand(req, res);
+  }
+);
+
+router.delete(
+  "/brand/:identifier",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.removeBrand(req, res);
+  }
+);
+
 export default router;

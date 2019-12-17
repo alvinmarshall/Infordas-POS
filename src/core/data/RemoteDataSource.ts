@@ -24,6 +24,7 @@ import { IFile } from "../domain/entity/files/IFile";
 import { IEmployeeInfo } from "../domain/entity/employee/IEmployeeInfo";
 import { IProduct } from "../domain/entity/product/IProduct";
 import { ICategory } from "../domain/entity/product/ICategory";
+import { IBrand } from "../domain/entity/product/IBrand";
 
 export interface RemoteDataSource {
   //
@@ -35,16 +36,21 @@ export interface RemoteDataSource {
   getProductWithIdentifier(identifier: string): Promise<IProduct[]>;
   updateProduct(product: IProduct): Promise<any>;
   removeProduct(identifier: string): Promise<any>;
+
   addCategory(category: ICategory): Promise<any>;
   updateCategory(category: ICategory): Promise<any>;
   getCategories(): Promise<ICategory[]>;
   getCategoryWithIdentifier(identifier: string): Promise<ICategory[]>;
   removeCategory(identifier: string): Promise<any>;
 
+  addBrand(brand: IBrand): Promise<any>;
+  getBrands(): Promise<IBrand[]>;
+  getBrandWithIdentifier(identifier: string): Promise<IBrand[]>;
+  updateBrand(brand: IBrand): Promise<any>;
+  removeBrand(identifier: string): Promise<any>;
 
-  addRank(rank: IRank): Promise<any>;
-  removeRank(rankId: string): Promise<any>;
-  updateRank(rank: IRank): Promise<any>;
+
+  
   //
   // ─── FILE ───────────────────────────────────────────────────────────────────────
   //
@@ -90,6 +96,7 @@ export interface RemoteDataSource {
   updateRank(rank: IRank): Promise<any>;
   getRanks(): Promise<IRank[]>;
   getRankWithIdentifier(identifier: string): Promise<IRank[]>;
+  
 
   //
   // ─── USER ───────────────────────────────────────────────────────────────────────

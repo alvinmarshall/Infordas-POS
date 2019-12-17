@@ -16,8 +16,13 @@ import { MysqlDatabase } from "../../MysqlDatabase";
 import { ProductDao } from "./ProductDao";
 import { IProduct } from "../../../../domain/entity/product/IProduct";
 import { injectable, inject } from "inversify";
-import { PRODUCT_TABLE, CATEGORY_TABLE, BRAND_TABLE } from "../../../../../common/constants";
+import {
+  PRODUCT_TABLE,
+  CATEGORY_TABLE,
+  BRAND_TABLE
+} from "../../../../../common/constants";
 import { ICategory } from "../../../../domain/entity/product/ICategory";
+import { IBrand } from "../../../../domain/entity/product/IBrand";
 /**
  * ProductDaoImpl
  */
@@ -28,6 +33,70 @@ export class ProductDaoImpl implements ProductDao {
   constructor(@inject(MysqlDatabase) $db: MysqlDatabase) {
     this.db = $db;
   }
+  //
+  // ─── BRAND ──────────────────────────────────────────────────────────────────────
+  //
+  removeBrand(identifier: string): Promise<any> {
+    const sql = `DELETE FROM ${BRAND_TABLE} WHERE id = ?`;
+    return this.db.query(sql, [identifier]).then(data => {
+      return { message: `${data.affectedRows} item removed` };
+    });
+  }
+
+  updateBrand(brand: IBrand): Promise<any> {
+    const sql = `UPDATE ${BRAND_TABLE} SET Name = ?, Description = ? WHERE id = ?`;
+    return this.db
+      .query(sql, [brand.name, brand.description, brand.id])
+      .then(data => {
+        return { message: `${data.affectedRows} item modified` };
+      });
+  }
+
+  getBrands(): Promise<IBrand[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let sql = `SELECT id,NAME AS name, Description AS description FROM ${BRAND_TABLE}`;
+        const brand: IBrand[] = await this.db.query(sql, []);
+        sql = `
+        SELECT 
+          b.Name AS name,
+          b.Description AS description,
+          COUNT(p.Brand_ID) as count
+        FROM ${BRAND_TABLE} b 
+        LEFT OUTER JOIN ${PRODUCT_TABLE} p ON p.Brand_ID = b.id`;
+        const newBrand: IBrand[] = await this.db.query(sql, []);
+        for (let i = 0; i < brand.length; i++) {
+          for (let j = 0; j < newBrand.length; j++) {
+            if (brand[i].name === newBrand[j].name) {
+              brand[i].count = newBrand[j].count;
+            }
+          }
+        }
+        resolve(brand);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  getBrandWithIdentifier(identifier: string): Promise<IBrand[]> {
+    const sql = `SELECT id,Name AS name,Description AS description FROM ${BRAND_TABLE} WHERE id = ? LIMIT 1`;
+    return this.db.query(sql, [identifier]);
+  }
+  addBrand(brand: IBrand): Promise<any> {
+    let sql = `SELECT id FROM ${BRAND_TABLE} WHERE Name = ?`;
+    return this.db.query(sql, [brand.name]).then(data => {
+      if (data[0] && data[0].id > 0)
+        return { message: `${brand.name} already exist` };
+      sql = `INSERT INTO ${BRAND_TABLE} (Name,Description) VALUES (?,?)`;
+      return this.db.query(sql, [brand.name, brand.description]).then(data => {
+        return { message: `${data.affectedRows} item inserted` };
+      });
+    });
+  }
+  //
+  // ─── CATEGORY ───────────────────────────────────────────────────────────────────
+  //
+
   removeCategory(identifier: string): Promise<any> {
     const sql = `DELETE FROM ${CATEGORY_TABLE} WHERE id = ? `;
     return this.db.query(sql, [identifier]).then(data => {

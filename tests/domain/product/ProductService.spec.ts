@@ -1,3 +1,17 @@
+// Copyright 2019 Bik_krl
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import { ProductService } from "../../../src/app/api/product/product.service";
 import { mock, instance, when, verify } from "ts-mockito";
 import { ProductRepository } from "../../../src/core/domain/repository/ProductRepository";
@@ -11,6 +25,10 @@ import { GetCategoryTask } from "../../../src/core/domain/useCase/product/GetCat
 import { RemoveCategoryTask } from "../../../src/core/domain/useCase/product/RemoveCategoryTask";
 import { TestProductGenerator } from "../../utils/TestProductGenerator";
 import { assert } from "chai";
+import { AddBrandTask } from "../../../src/core/domain/useCase/product/AddBrandTask";
+import { GetBrandTask } from "../../../src/core/domain/useCase/product/GetBrandTask";
+import { UpdateBrandTask } from "../../../src/core/domain/useCase/product/UpdateBrandTask";
+import { RemoveBrandTask } from "../../../src/core/domain/useCase/product/RemoveBrandTask";
 
 describe("app.product productController test", () => {
   let productRepository: ProductRepository;
@@ -24,12 +42,28 @@ describe("app.product productController test", () => {
   let updateCategoryTask: UpdateCategoryTask;
   let getCategoryTask: GetCategoryTask;
   let removeCategoryTask: RemoveCategoryTask;
+  let addBrandTask: AddBrandTask;
+  let getBrandTask: GetBrandTask;
+  let updatBrandTask: UpdateBrandTask;
+  let removeBrandTask: RemoveBrandTask;
 
   beforeEach(() => {
     productRepository = mock<ProductRepository>();
     productRepositoryInstance = instance(productRepository);
+    addProduct = new AddProductTask(productRepositoryInstance);
+    getProductTask = new GetProductTask(productRepositoryInstance);
+    updateProductTask = new UpdateProductTask(productRepositoryInstance);
+    removeProductTask = new RemoveProductTask(productRepositoryInstance);
+
     addCategoryTask = new AddCategoryTask(productRepositoryInstance);
     getCategoryTask = new GetCategoryTask(productRepositoryInstance);
+    updateCategoryTask = new UpdateCategoryTask(productRepositoryInstance);
+    removeCategoryTask = new RemoveCategoryTask(productRepositoryInstance);
+
+    addBrandTask = new AddBrandTask(productRepositoryInstance);
+    getBrandTask = new GetBrandTask(productRepositoryInstance);
+    updatBrandTask = new UpdateBrandTask(productRepositoryInstance);
+    removeBrandTask = new RemoveBrandTask(productRepositoryInstance);
     service = new ProductService(
       addProduct,
       getProductTask,
@@ -38,9 +72,74 @@ describe("app.product productController test", () => {
       addCategoryTask,
       updateCategoryTask,
       getCategoryTask,
-      removeCategoryTask
+      removeCategoryTask,
+      addBrandTask,
+      getBrandTask,
+      updatBrandTask,
+      removeBrandTask
     );
   });
+
+  //
+  // ─── PRODUCT ────────────────────────────────────────────────────────────────────
+  //
+
+  describe("Product service test", () => {});
+
+  it("Add Product success", async () => {
+    const product = TestProductGenerator.product();
+    const actual = { message: "1 item inserted" };
+    when(productRepository.addProduct(product)).thenResolve(actual);
+    const expected = await service.addProduct(product);
+    assert.equal(expected, actual);
+    verify(productRepository.addProduct(product)).times(1);
+  });
+
+  it("Get all product", async () => {
+    const actual = TestProductGenerator.getProductList();
+    when(productRepository.getProducts()).thenResolve(actual);
+    const expected = await service.getProducts();
+    assert.equal(expected, actual);
+    verify(productRepository.getProducts()).times(1);
+    verify(productRepository.getProductWithIdentifier("")).never();
+  });
+
+  it("Get product", async () => {
+    const identifier = "1";
+    const actual = TestProductGenerator.getProduct();
+    when(productRepository.getProductWithIdentifier(identifier)).thenResolve(
+      actual
+    );
+    const expected = await service.getProductWithIdentifier(identifier);
+    assert.equal(expected, actual);
+    verify(productRepository.getProductWithIdentifier(identifier)).times(1);
+    verify(productRepository.getProducts()).never();
+  });
+
+  it("Update Product success", async () => {
+    const product = TestProductGenerator.product();
+    product.name = "update name";
+    const actual = { message: "1 item modified" };
+    when(productRepository.updateProduct(product)).thenResolve(actual);
+    const expected = await service.updateProduct(product);
+    assert.equal(expected, actual);
+    verify(productRepository.updateProduct(product)).times(1);
+  });
+
+  it("Remove product with params", async () => {
+    const identifier = "1";
+    const actual = { message: "1 item removed" };
+    when(productRepository.removeProduct(identifier)).thenResolve(actual);
+    const expected = await service.removeProduct(identifier);
+    assert.equal(expected, actual);
+    verify(productRepository.removeProduct(identifier)).times(1);
+  });
+
+  //
+  // ─── CATEGORY ───────────────────────────────────────────────────────────────────
+  //
+
+  describe("Category service test", () => {});
 
   it("Add Category success", async () => {
     const category = TestProductGenerator.category();
@@ -57,5 +156,88 @@ describe("app.product productController test", () => {
     const expected = await service.getCategories();
     assert.equal(expected, actual);
     verify(productRepository.getCategories()).times(1);
+  });
+
+  it("Get category", async () => {
+    const identifier = "1";
+    const actual = TestProductGenerator.getcategory();
+    when(productRepository.getCategoryWithIdentifier(identifier)).thenResolve(
+      actual
+    );
+    const expected = await service.getCategoryWithIdenfier(identifier);
+    assert.equal(expected, actual);
+    verify(productRepository.getCategoryWithIdentifier(identifier)).times(1);
+    verify(productRepository.getCategories()).never();
+  });
+
+  it("Update Category success", async () => {
+    const category = TestProductGenerator.category();
+    category.name = "update name";
+    const actual = { message: "1 item modified" };
+    when(productRepository.updateCategory(category)).thenResolve(actual);
+    const expected = await service.updateCategory(category);
+    assert.equal(expected, actual);
+    verify(productRepository.updateCategory(category)).times(1);
+  });
+
+  it("Remove category with params", async () => {
+    const identifier = "1";
+    const actual = { message: "1 item removed" };
+    when(productRepository.removeCategory(identifier)).thenResolve(actual);
+    const expected = await service.removeCategory(identifier);
+    assert.equal(expected, actual);
+    verify(productRepository.removeCategory(identifier)).times(1);
+  });
+
+  //
+  // ─── BRAND ──────────────────────────────────────────────────────────────────────
+  //
+  describe("Brand service test", () => {
+    it("Add Brand success", async () => {
+      const brand = TestProductGenerator.brand();
+      const actual = { message: "1 item inserted" };
+      when(productRepository.addBrand(brand)).thenResolve(actual);
+      const expected = await service.addBrand(brand);
+      assert.equal(expected, actual);
+      verify(productRepository.addBrand(brand)).times(1);
+    });
+  });
+
+  it("Get all brand success", async () => {
+    const actual = TestProductGenerator.getBrandList();
+    when(productRepository.getBrands()).thenResolve(actual);
+    const expected = await service.getBrands();
+    assert.equal(expected, actual);
+    verify(productRepository.getBrands()).times(1);
+    verify(productRepository.getBrandWithIdentifier("")).times(0);
+  });
+
+  it("Get brand success", async () => {
+    const identifier = "1";
+    const actual = TestProductGenerator.getBrand();
+    when(productRepository.getBrandWithIdentifier(identifier)).thenResolve(
+      actual
+    );
+    const expected = await service.getBrandWithIdenfier(identifier);
+    assert.equal(expected, actual);
+    verify(productRepository.getBrandWithIdentifier(identifier)).times(1);
+    verify(productRepository.getBrands()).never();
+  });
+  it("Update Brand success", async () => {
+    const brand = TestProductGenerator.brand();
+    brand.name = "update name";
+    const actual = { message: "1 item modified" };
+    when(productRepository.updateBrand(brand)).thenResolve(actual);
+    const expected = await service.updateBrand(brand);
+    assert.equal(expected, actual);
+    verify(productRepository.updateBrand(brand)).times(1);
+  });
+  it("Remove brand with params", async () => {
+    const identifier = "1";
+    const actual = { message: "1 item removed" };
+    when(productRepository.removeBrand(identifier)).thenResolve(actual);
+    const expected = await service.removeBrand(identifier);
+    assert.equal(expected, actual);
+    verify(productRepository.removeBrand(identifier)).times(1);
   });
 });

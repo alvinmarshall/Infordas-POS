@@ -18,6 +18,7 @@ import { RemoteDataSource } from "../../RemoteDataSource";
 import { injectable, inject } from "inversify";
 import { RemoteDataSourceImpl } from "../../../remote-source/source/RemoteDataSourceImpl";
 import { ICategory } from "../../../domain/entity/product/ICategory";
+import { IBrand } from "../../../domain/entity/product/IBrand";
 
 @injectable()
 export class ProductRepositoryImpl implements ProductRepository {
@@ -69,5 +70,25 @@ export class ProductRepositoryImpl implements ProductRepository {
   }
   getCategoryWithIdentifier(identifier: string): Promise<ICategory[]> {
     return this.remoteSource.getCategoryWithIdentifier(identifier);
+  }
+
+  //
+  // ─── BRAND ──────────────────────────────────────────────────────────────────────
+  //
+
+  addBrand(brand: IBrand): Promise<any> {
+    return this.remoteSource.addBrand(brand);
+  }
+  getBrands(): Promise<IBrand[]> {
+    return this.remoteSource.getBrands();
+  }
+  getBrandWithIdentifier(identifier: string): Promise<IBrand[]> {
+    return this.remoteSource.getBrandWithIdentifier(identifier);
+  }
+  updateBrand(brand: IBrand): Promise<any> {
+    return this.remoteSource.updateBrand(brand);
+  }
+  removeBrand(identifier: string): Promise<any> {
+    return this.remoteSource.removeBrand(identifier);
   }
 }

@@ -23,6 +23,11 @@ import { ICategory } from "../../../core/domain/entity/product/ICategory";
 import { UpdateCategoryTask } from "../../../core/domain/useCase/product/UpdateCategoryTask";
 import { GetCategoryTask } from "../../../core/domain/useCase/product/GetCategoryTask";
 import { RemoveCategoryTask } from "../../../core/domain/useCase/product/RemoveCategoryTask";
+import { AddBrandTask } from "../../../core/domain/useCase/product/AddBrandTask";
+import { IBrand } from "../../../core/domain/entity/product/IBrand";
+import { GetBrandTask } from "../../../core/domain/useCase/product/GetBrandTask";
+import { UpdateBrandTask } from "../../../core/domain/useCase/product/UpdateBrandTask";
+import { RemoveBrandTask } from "../../../core/domain/useCase/product/RemoveBrandTask";
 
 /**
  * ProductService
@@ -37,6 +42,10 @@ export class ProductService {
   private updateCategoryTask: UpdateCategoryTask;
   private getCategoryTask: GetCategoryTask;
   private removeCategoryTask: RemoveCategoryTask;
+  private addBrandTask: AddBrandTask;
+  private getBrandTask: GetBrandTask;
+  private updateBrandTask:UpdateBrandTask;
+  private removeBrandTask:RemoveBrandTask;
 
   /**
    * @constructor
@@ -44,6 +53,14 @@ export class ProductService {
    * @param $getProductTask requires GetProductTask instance
    * @param $updateProductTask requires UpdateProductTask instance
    * @param $removeProductTask requires RemoveProductTask instance
+   * @param $addCategoryTask requires AddCategoryTask instance
+   * @param $updateCategoryTask requires updateCategoryTask instance
+   * @param $getCategoryTask requires GetCategoryTask instance
+   * @param $removeCategoryTask requires RemoveCategoryTask instance
+   * @param $addBrandTask requires AddBrandTask instance
+   * @param $getBrandTask requires GetBrandTask instance
+   * @param $updateBrandTask requires UpdateBrandTask instance
+   * @param $removeBrandTask requires RemoveBrandTask instance
    */
   constructor(
     @inject(AddProductTask) $addProductTask: AddProductTask,
@@ -53,7 +70,12 @@ export class ProductService {
     @inject(AddCategoryTask) $addCategoryTask: AddCategoryTask,
     @inject(UpdateCategoryTask) $updateCategoryTask: UpdateCategoryTask,
     @inject(GetCategoryTask) $getCategoryTask: GetCategoryTask,
-    @inject(RemoveCategoryTask) $removeCategoryTask: RemoveCategoryTask
+    @inject(RemoveCategoryTask) $removeCategoryTask: RemoveCategoryTask,
+    @inject(AddBrandTask) $addBrandTask: AddBrandTask,
+    @inject(GetBrandTask) $getBrandTask: GetBrandTask,
+    @inject(UpdateBrandTask) $updateBrandTask:UpdateBrandTask,
+    @inject(RemoveBrandTask) $removeBrandTask:RemoveBrandTask
+
   ) {
     this.addProductTask = $addProductTask;
     this.getProductTask = $getProductTask;
@@ -63,6 +85,10 @@ export class ProductService {
     this.updateCategoryTask = $updateCategoryTask;
     this.getCategoryTask = $getCategoryTask;
     this.removeCategoryTask = $removeCategoryTask;
+    this.addBrandTask = $addBrandTask;
+    this.getBrandTask = $getBrandTask;
+    this.updateBrandTask = $updateBrandTask;
+    this.removeBrandTask = $removeBrandTask;
   }
 
   //
@@ -107,5 +133,24 @@ export class ProductService {
   }
   removeCategory(identifier: string): Promise<any> {
     return this.removeCategoryTask.buildUseCase(identifier);
+  }
+
+  //
+  // ─── BRAMD ──────────────────────────────────────────────────────────────────────
+  //
+  addBrand(brand: IBrand): Promise<any> {
+    return this.addBrandTask.buildUseCase(brand);
+  }
+  getBrands(): Promise<IBrand[]> {
+    return this.getBrandTask.buildUseCase();
+  }
+  getBrandWithIdenfier(identifier: string): Promise<IBrand[]> {
+    return this.getBrandTask.buildUseCase(identifier);
+  }
+  updateBrand(cateory: IBrand): Promise<any> {
+    return this.updateBrandTask.buildUseCase(cateory);
+  }
+  removeBrand(identifier: string): Promise<any> {
+    return this.removeBrandTask.buildUseCase(identifier);
   }
 }

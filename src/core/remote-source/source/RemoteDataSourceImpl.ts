@@ -14,7 +14,6 @@
 
 import { UserDao } from "../db/dao/user/UserDao";
 import { RemoteDataSource } from "../../data/RemoteDataSource";
-import { UserEntity } from "../../domain/entity/user/UserEntity";
 import { injectable, inject } from "inversify";
 import { UserDaoImpl } from "../db/dao/user/UserDaoImpl";
 import { IEmployee } from "../../domain/entity/employee/IEmployee";
@@ -38,6 +37,7 @@ import { IProduct } from "../../domain/entity/product/IProduct";
 import { ProductDao } from "../db/dao/product/ProductDao";
 import { ProductDaoImpl } from "../db/dao/product/ProductDaoImpl";
 import { ICategory } from "../../domain/entity/product/ICategory";
+import { IBrand } from "../../domain/entity/product/IBrand";
 
 @injectable()
 export class RemoteDataSourceImpl implements RemoteDataSource {
@@ -88,6 +88,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   removeProduct(identifier: string): Promise<any> {
     return this.productDao.removeProduct(identifier);
   }
+
   addCategory(category: ICategory): Promise<any> {
     return this.productDao.addCategory(category);
   }
@@ -102,6 +103,22 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   }
   removeCategory(identifier: string): Promise<any> {
     return this.productDao.removeCategory(identifier);
+  }
+
+  addBrand(brand: IBrand): Promise<any> {
+    return this.productDao.addBrand(brand);
+  }
+  getBrands(): Promise<IBrand[]> {
+    return this.productDao.getBrands();
+  }
+  getBrandWithIdentifier(identifier: string): Promise<IBrand[]> {
+    return this.productDao.getBrandWithIdentifier(identifier);
+  }
+  updateBrand(brand: IBrand): Promise<any> {
+    return this.productDao.updateBrand(brand);
+  }
+  removeBrand(identifier: string): Promise<any> {
+    return this.productDao.removeBrand(identifier);
   }
   //
   // ─── FILE ───────────────────────────────────────────────────────────────────────

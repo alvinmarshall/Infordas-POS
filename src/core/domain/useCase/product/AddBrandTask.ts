@@ -1,4 +1,3 @@
-
 // Copyright 2019 Bik_krl
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,23 +13,29 @@
 // limitations under the License.
 
 import { BaseUseCase } from "../base/BaseUseCase";
-import { ICategory } from "../../entity/product/ICategory";
+import { IBrand } from "../../entity/product/IBrand";
+import { ProductRepositoryImpl } from "../../../data/repository/product/ProductRepositoryImpl";
 import { ProductRepository } from "../../repository/ProductRepository";
 import { injectable, inject } from "inversify";
-import { ProductRepositoryImpl } from "../../../data/repository/product/ProductRepositoryImpl";
 
+/**
+ * AddBrandTask
+ * super class {@Link ../base/BaseUseCase}
+ */
 @injectable()
-export class AddCategoryTask extends BaseUseCase<any, ICategory> {
+export class AddBrandTask extends BaseUseCase<any, IBrand> {
   private productRepository: ProductRepository;
-
-  constructor(
-    @inject(ProductRepositoryImpl) $productRepository: ProductRepository
-  ) {
+ 
+  /**
+   * @constructor
+   * @param $productRepository requires ProductRepository instance
+   */
+  constructor(@inject(ProductRepositoryImpl) $productRepository: ProductRepository) {
     super();
     this.productRepository = $productRepository;
   }
-  protected generateUseCase(input?: ICategory | undefined): Promise<any> {
-    if (input == null) throw new Error("category params can't be null");
-    return this.productRepository.addCategory(input);
+  protected generateUseCase(input?: IBrand | undefined): Promise<any> {
+    if (input == null) throw new Error("brand params can't be null");
+    return this.productRepository.addBrand(input);
   }
 }
