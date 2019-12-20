@@ -33,7 +33,7 @@ export class FileDaoImpl implements FileDao {
   }
 
   saveFilePath(file: IFile): Promise<any> {
-    let sql = `UPDATE ${file.type.table} SET Image = ? WHERE ${file.type.column}`;
+    let sql = `UPDATE ${file.type.table} SET Image = ? WHERE ${file.type.column} = ?`;
     return this.db
       .query(sql, [file.type.saveFilePath, file.identifier])
       .then(data => {

@@ -15,9 +15,8 @@
 import { RankDao } from "./RankDao";
 import { injectable, inject } from "inversify";
 import { MysqlDatabase } from "../../MysqlDatabase";
-import { RANK_TABLE } from "../../../../../common/constants";
 import { IRank } from "../../../../domain/entity/rank/IRank";
-import { USER_TABLE } from "../../../../../../dist/src/common/constants";
+import { RANK_TABLE, USER_TABLE } from "../../../../../common/constants";
 /**
  * RankDaoImpl
  * class implements RankDao {@Link ./RankDao}

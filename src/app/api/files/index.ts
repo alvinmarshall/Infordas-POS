@@ -20,7 +20,8 @@ const router = express.Router();
 const controller = DIContainer.resolve<FileController>(FileController);
 //
 // ─── UPLOAD ANY FILE ────────────────────────────────────────────────────────────
-//
+//body -- file (upload file),identifier (uuid),type (location dir)
+
 
 router.post("/upload", (req, res) => {
   controller.uploadFiles(req, res);

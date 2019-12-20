@@ -14,8 +14,8 @@
 import { mock, instance, when, verify } from "ts-mockito";
 import { GetEmployeeInfoTask } from "../../../src/core/domain/useCase/employee/GetEmployeeInfoTask";
 import { EmployeeRepository } from "../../../src/core/domain/repository/EmployeeRepository";
-import { TestEmployeeGenerator } from "../../../dist/tests/utils/TestEmployeeGenerator";
 import { assert } from "chai";
+import { TestEmployeeGenerator } from "../../utils/TestEmployeeGenerator";
 
 describe("domain.useCase.employee GetEmployeeInfoTask test", () => {
   let getEmployeeInfoTask: GetEmployeeInfoTask;

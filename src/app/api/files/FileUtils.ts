@@ -14,49 +14,43 @@
 
 import { FILE_TYPE } from "../../../common/constants";
 import { Request } from "express";
-import uploadUtils from "./upload-file";
 import { IFileType } from "../../model/IFileType";
 import { injectable } from "inversify";
+import uploadFileUtils from "./uploadFileUtils";
 
 @injectable()
 export class FileUtils {
   private req!: Request;
 
+  /**
+   * Getter $req
+   * @return {Request}
+   */
+  public get $req(): Request {
+    return this.req;
+  }
 
-    /**
-     * Getter $req
-     * @return {Request}
-     */
-	public get $req(): Request {
-		return this.req;
-	}
-
-    /**
-     * Setter $req
-     * @param {Request} value
-     */
-	public set $req(value: Request) {
-		this.req = value;
-	}
-  
+  /**
+   * Setter $req
+   * @param {Request} value
+   */
+  public set $req(value: Request) {
+    this.req = value;
+  }
 
   getFileUploadInfo() {
     const { type } = this.req.body;
-    const fileType = FILE_TYPE.filter(data => {
-      return data.name == type;
+    const fileType = FILE_TYPE.find(data => {
+      return data.name === type;
     });
-    return fileType[0];
+    return fileType;
   }
 
   uploadFileStatus(): Promise<IFileType> {
     const fileType = this.getFileUploadInfo();
-    return new Promise((resolve, reject) => {
-      uploadUtils(this.req.files, fileType, (err: any, result: IFileType) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(result);
-      });
-    });
+    if (fileType) {
+      return uploadFileUtils(this.req.files, fileType);
+    }
+    throw new Error("the specified type is unkown");
   }
 }

@@ -51,7 +51,7 @@ import { RemoveBranchTask } from "../../core/domain/useCase/branch/RemoveBranchT
 import { AddEmployeeDetailTask } from "../../core/domain/useCase/employee/AddEmployeeDetailTask";
 import { AccessTask } from "../../core/domain/useCase/access/AccessTask";
 import PassportService from "../api/auth/passport-config";
-import { JWTTokenService } from "../api/auth/jwtToken-config";
+import { JWTTokenService } from "../api/auth/JWTTokenService";
 import { GetCompanyTask } from "../../core/domain/useCase/company/GetCompanyTask";
 import { GetBranchTask } from "../../core/domain/useCase/branch/GetBranchTask";
 import { GetEmployeeTask } from "../../core/domain/useCase/employee/GetEmployeeTask";

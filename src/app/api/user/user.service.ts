@@ -13,7 +13,7 @@ import { ICredentials } from "../../../core/domain/entity/user/IAuthenticationPa
 import { injectable, inject } from "inversify";
 import { IUser } from "../../../core/domain/entity/user/IUser";
 import { AddAUserTask } from "../../../core/domain/useCase/user/AddAUserTask";
-import { JWTTokenService } from "../auth/jwtToken-config";
+import { JWTTokenService } from "../auth/JWTTokenService";
 import { AccessTask } from "../../../core/domain/useCase/access/AccessTask";
 import bcryptjs from "bcryptjs";
 import { GetUsersTask } from "../../../core/domain/useCase/user/GetUsersTask";
