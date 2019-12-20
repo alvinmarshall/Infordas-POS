@@ -63,7 +63,8 @@ export class ProductDaoImpl implements ProductDao {
           b.Description AS description,
           COUNT(p.Brand_ID) as count
         FROM ${BRAND_TABLE} b 
-        LEFT OUTER JOIN ${PRODUCT_TABLE} p ON p.Brand_ID = b.id`;
+        LEFT OUTER JOIN ${PRODUCT_TABLE} p ON p.Brand_ID = b.id
+        GROUP BY b.id`;
         const newBrand: IBrand[] = await this.db.query(sql, []);
         for (let i = 0; i < brand.length; i++) {
           for (let j = 0; j < newBrand.length; j++) {

@@ -20,6 +20,7 @@ import uuidV4 from "uuid/v4";
 import { ICategory } from "../../../core/domain/entity/product/ICategory";
 import valueStrExists from "../../../common/utils/item-exist";
 import { IBrand } from "../../../core/domain/entity/product/IBrand";
+import { paginateRequest } from "../../../common/utils/pagination-request";
 
 @injectable()
 export class ProductController {
@@ -49,8 +50,9 @@ export class ProductController {
 
   async getProducts(req: Request, res: Response) {
     try {
-      const data = await this.productService.getProducts();
-      return res.send({ data, status: 200 });
+      const products = await this.productService.getProducts();
+      const result = await paginateRequest(req, res, products);
+      return res.send({ result, status: 200 });
     } catch (error) {
       console.error(error);
       return res
@@ -205,9 +207,7 @@ export class ProductController {
   async getBrandWithIdentifier(req: Request, res: Response) {
     try {
       const identifier: string = req.params.identifier;
-      const data = await this.productService.getBrandWithIdenfier(
-        identifier
-      );
+      const data = await this.productService.getBrandWithIdenfier(identifier);
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
@@ -242,6 +242,4 @@ export class ProductController {
         .send({ message: "An error occurred, try again", status: 500 });
     }
   }
- 
-
 }
