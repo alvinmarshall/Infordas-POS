@@ -37,6 +37,7 @@ export class EmployeeDaoImpl implements EmployeeDao {
     this.db = $db;
   }
   updateEmployee(employee: IEmployeeInfo): Promise<any> {
+    console.log("imep", employee);
     let sql = `UPDATE ${EMPLOYEE_TABLE} 
         SET 
         Name = ?,
@@ -47,6 +48,7 @@ export class EmployeeDaoImpl implements EmployeeDao {
         Address = ?,
         Maritalstatus = ?,
         Hours = ?,
+        Status = ?,
         SSN_ID = ?,
         Residence = ?, 
         Religion = ?,  
@@ -85,6 +87,7 @@ export class EmployeeDaoImpl implements EmployeeDao {
         employee.address,
         employee.maritalStatus,
         employee.hours,
+        employee.status,
         employee.ssnId,
         employee.residence,
         employee.religion,
@@ -293,7 +296,7 @@ export class EmployeeDaoImpl implements EmployeeDao {
   addEmployee(employee: IEmployee): Promise<any> {
     let sql = `INSERT INTO ${EMPLOYEE_TABLE} 
     (Emp_ID,Name,DOB,Gender,Contact,Email,Address,Maritalstatus,Hours) 
-    VALUES (?,?,?,?,?,?,?,?,?)`;
+    VALUES (REPLACE(?,'-',''),?,?,?,?,?,?,?,?)`;
     return this.db
       .query(sql, [
         employee.empId,

@@ -235,7 +235,8 @@ export class ProductDaoImpl implements ProductDao {
 
   addProduct(product: IProduct): Promise<any> {
     const sql = `INSERT INTO ${PRODUCT_TABLE} 
-    (Prod_ID,Name,Buy_Price,Retail_Price,Stock,Unit,Barcode,Category_ID,Brand_ID) VALUES(?,?,?,?,?,?,?,?,?)`;
+    (Prod_ID,Name,Buy_Price,Retail_Price,Stock,Unit,Barcode,Category_ID,Brand_ID) 
+    VALUES(REPLACE(?,'-',''),?,?,?,?,?,?,?,?)`;
 
     return this.db
       .query(sql, [

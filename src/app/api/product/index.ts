@@ -34,7 +34,7 @@ router.post(
 
 router.get(
   "/products",
-  // passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     controller.getProducts(req, res);
   }

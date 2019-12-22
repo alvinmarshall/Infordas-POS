@@ -73,7 +73,8 @@ export class UserDaoImpl implements UserDao {
   }
 
   addUser(user: IUser): Promise<any> {
-    let sql = `INSERT INTO ${USER_TABLE} (Name,Contact,Emp_ID,Username,Password,Rank_ID) VALUES(?,?,?,?,?,?)`;
+    let sql = `INSERT INTO ${USER_TABLE} (Name,Contact,Emp_ID,Username,Password,Rank_ID) 
+    VALUES(?,?,REPLACE(?,'-',''),?,?,?)`;
     return this.db
       .query(sql, [
         user.name,

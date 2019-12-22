@@ -109,7 +109,8 @@ export class CompanyDaoImpl implements CompanyDao {
   }
 
   addBranch(branch: IBranch): Promise<any> {
-    let sql = `INSERT INTO ${BRANCH_TABLE} (Branch_ID,Emp_ID,Comp_ID,Name,Location,Address,Contact,Email,Website) VALUES (?,?,?,?,?,?,?,?,?)`;
+    let sql = `INSERT INTO ${BRANCH_TABLE} (Branch_ID,Emp_ID,Comp_ID,Name,Location,Address,Contact,Email,Website) 
+    VALUES (REPLACE(?,'-',''),?,?,?,?,?,?,?,?)`;
     return this.db
       .query(sql, [
         branch.uuid,
