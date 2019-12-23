@@ -21,6 +21,7 @@ import { ICategory } from "../../../core/domain/entity/product/ICategory";
 import valueStrExists from "../../../common/utils/item-exist";
 import { IBrand } from "../../../core/domain/entity/product/IBrand";
 import { paginateRequest } from "../../../common/utils/pagination-request";
+import { IPurchase } from "../../../core/domain/entity/product/IPurchase";
 
 @injectable()
 export class ProductController {
@@ -235,6 +236,24 @@ export class ProductController {
       const identifier: string = req.params.identifier;
       const data = await this.productService.removeBrand(identifier);
       return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "An error occurred, try again", status: 500 });
+    }
+  }
+
+  //
+  // ─── PURCHASE ───────────────────────────────────────────────────────────────────
+  //
+  async addPurchase(req: Request, res: Response) {
+    try {
+      const body: IPurchase = req.body;
+      //@ts-ignore
+      body.empId = req.user.uuid;
+      const data = await this.productService.addPurchase(body);
+      return res.status(201).send({ data, status: 201 });
     } catch (error) {
       console.error(error);
       return res

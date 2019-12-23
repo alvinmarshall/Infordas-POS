@@ -12,15 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export interface IProduct {
-  id?: number;
-  uuid: string;
-  name: string;
-  buyPrice?: number;
-  retailPrice?: number;
-  stock: number;
-  unit?: string;
-  barcode?: string;
-  category?: string;
-  brand?: string;
+import { IProduct } from "./IProduct";
+
+export interface IPurchase extends IProduct {
+  invoiceNo: string;
+  supplierName: string;
+  empId:string;
+  date?:string;
 }

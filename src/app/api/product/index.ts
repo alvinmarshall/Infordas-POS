@@ -146,4 +146,15 @@ router.delete(
   }
 );
 
+//
+// ─── PURCHASE ───────────────────────────────────────────────────────────────────
+//
+router.post(
+  "/purchase/create-purchase",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.addPurchase(req, res);
+  }
+);
+
 export default router;

@@ -19,6 +19,7 @@ import { injectable, inject } from "inversify";
 import { RemoteDataSourceImpl } from "../../../remote-source/source/RemoteDataSourceImpl";
 import { ICategory } from "../../../domain/entity/product/ICategory";
 import { IBrand } from "../../../domain/entity/product/IBrand";
+import { IPurchase } from "../../../domain/entity/product/IPurchase";
 
 @injectable()
 export class ProductRepositoryImpl implements ProductRepository {
@@ -90,5 +91,15 @@ export class ProductRepositoryImpl implements ProductRepository {
   }
   removeBrand(identifier: string): Promise<any> {
     return this.remoteSource.removeBrand(identifier);
+  }
+
+  //
+  // ─── PURCHASE ───────────────────────────────────────────────────────────────────
+  //
+
+  addPurchase(
+    purchase: IPurchase
+  ): Promise<any> {
+    return this.remoteSource.addPurchase(purchase)
   }
 }

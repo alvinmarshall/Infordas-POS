@@ -15,6 +15,7 @@
 import { IProduct } from "../entity/product/IProduct";
 import { ICategory } from "../entity/product/ICategory";
 import { IBrand } from "../entity/product/IBrand";
+import { IPurchase } from "../entity/product/IPurchase";
 
 export interface ProductRepository {
   addProduct(product: IProduct): Promise<any>;
@@ -35,4 +36,5 @@ export interface ProductRepository {
   updateBrand(brand: IBrand): Promise<any>;
   removeBrand(identifier: string): Promise<any>;
 
+  addPurchase(purchase: IPurchase): Promise<any>;
 }

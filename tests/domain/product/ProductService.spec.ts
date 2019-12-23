@@ -29,6 +29,7 @@ import { AddBrandTask } from "../../../src/core/domain/useCase/product/AddBrandT
 import { GetBrandTask } from "../../../src/core/domain/useCase/product/GetBrandTask";
 import { UpdateBrandTask } from "../../../src/core/domain/useCase/product/UpdateBrandTask";
 import { RemoveBrandTask } from "../../../src/core/domain/useCase/product/RemoveBrandTask";
+import { AddPurchaseTask } from "../../../src/core/domain/useCase/product/AddPurchaseTask";
 
 describe("app.product productController test", () => {
   let productRepository: ProductRepository;
@@ -46,6 +47,7 @@ describe("app.product productController test", () => {
   let getBrandTask: GetBrandTask;
   let updatBrandTask: UpdateBrandTask;
   let removeBrandTask: RemoveBrandTask;
+  let addPurchaseTask: AddPurchaseTask;
 
   beforeEach(() => {
     productRepository = mock<ProductRepository>();
@@ -64,6 +66,8 @@ describe("app.product productController test", () => {
     getBrandTask = new GetBrandTask(productRepositoryInstance);
     updatBrandTask = new UpdateBrandTask(productRepositoryInstance);
     removeBrandTask = new RemoveBrandTask(productRepositoryInstance);
+
+    addPurchaseTask = new AddPurchaseTask(productRepositoryInstance);
     service = new ProductService(
       addProduct,
       getProductTask,
@@ -76,7 +80,8 @@ describe("app.product productController test", () => {
       addBrandTask,
       getBrandTask,
       updatBrandTask,
-      removeBrandTask
+      removeBrandTask,
+      addPurchaseTask
     );
   });
 
@@ -240,4 +245,19 @@ describe("app.product productController test", () => {
     assert.equal(expected, actual);
     verify(productRepository.removeBrand(identifier)).times(1);
   });
+
+  //
+  // ─── PURCHASE ───────────────────────────────────────────────────────────────────
+  //
+  describe("Purchase service test", () => {
+    it("Add Purchase success", async () => {
+      const purchase = TestProductGenerator.purchase();
+      const actual = { message: "1 item inserted" };
+      when(productRepository.addPurchase(purchase)).thenResolve(actual);
+      const expected = await service.addPurchase(purchase);
+      assert.equal(expected, actual);
+      verify(productRepository.addPurchase(purchase)).times(1);
+    });
+  });
+    
 });

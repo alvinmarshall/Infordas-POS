@@ -38,6 +38,7 @@ import { ProductDao } from "../db/dao/product/ProductDao";
 import { ProductDaoImpl } from "../db/dao/product/ProductDaoImpl";
 import { ICategory } from "../../domain/entity/product/ICategory";
 import { IBrand } from "../../domain/entity/product/IBrand";
+import { IPurchase } from "../../domain/entity/product/IPurchase";
 
 @injectable()
 export class RemoteDataSourceImpl implements RemoteDataSource {
@@ -119,6 +120,9 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   }
   removeBrand(identifier: string): Promise<any> {
     return this.productDao.removeBrand(identifier);
+  }
+  addPurchase(purchase: IPurchase): Promise<any> {
+    return this.productDao.addPurchase(purchase)
   }
   //
   // ─── FILE ───────────────────────────────────────────────────────────────────────

@@ -19,10 +19,12 @@ import { injectable, inject } from "inversify";
 import {
   PRODUCT_TABLE,
   CATEGORY_TABLE,
-  BRAND_TABLE
+  BRAND_TABLE,
+  PURCHASE_TABLE
 } from "../../../../../common/constants";
 import { ICategory } from "../../../../domain/entity/product/ICategory";
 import { IBrand } from "../../../../domain/entity/product/IBrand";
+import { IPurchase } from "../../../../domain/entity/product/IPurchase";
 /**
  * ProductDaoImpl
  */
@@ -32,6 +34,46 @@ export class ProductDaoImpl implements ProductDao {
 
   constructor(@inject(MysqlDatabase) $db: MysqlDatabase) {
     this.db = $db;
+  }
+  //
+  // ─── PURCHASE ───────────────────────────────────────────────────────────────────
+  //
+
+  addPurchase(purchase: IPurchase): Promise<any> {
+    let sql = `INSERT INTO ${PURCHASE_TABLE} 
+    (Invoice_No,Supplier_Name,Prod_ID,Emp_ID,Buy_Price,Retail_Price,Barcode,Stock) 
+    VALUES (?,?,?,?,?,?,?,?)`;
+    return this.db
+      .query(sql, [
+        purchase.invoiceNo,
+        purchase.supplierName,
+        purchase.uuid,
+        purchase.empId,
+        purchase.buyPrice,
+        purchase.retailPrice,
+        purchase.barcode,
+        purchase.stock
+      ])
+      .then(data => {
+        if (data.affectedRows > 0) {
+          sql = `UPDATE ${PRODUCT_TABLE} 
+          SET Buy_Price = ?,Retail_Price = ?,Stock = ?
+          WHERE Prod_ID = ?`;
+          return this.db
+            .query(sql, [
+              purchase.buyPrice,
+              purchase.retailPrice,
+              purchase.stock,
+              purchase.uuid
+            ])
+            .then(data => {
+              return {
+                message: `${data.affectedRows} item from ${purchase.name} got updated`
+              };
+            });
+        }
+        return { message: `${data.affectedRows} item inserted` };
+      });
   }
   //
   // ─── BRAND ──────────────────────────────────────────────────────────────────────
@@ -234,24 +276,26 @@ export class ProductDaoImpl implements ProductDao {
   //
 
   addProduct(product: IProduct): Promise<any> {
-    const sql = `INSERT INTO ${PRODUCT_TABLE} 
-    (Prod_ID,Name,Buy_Price,Retail_Price,Stock,Unit,Barcode,Category_ID,Brand_ID) 
-    VALUES(REPLACE(?,'-',''),?,?,?,?,?,?,?,?)`;
-
-    return this.db
-      .query(sql, [
-        product.uuid,
-        product.name,
-        product.buyPrice,
-        product.retailPrice,
-        product.stock,
-        product.unit,
-        product.barcode,
-        product.category,
-        product.brand
-      ])
-      .then(data => {
-        return { message: `${data.affectedRows} item inserted` };
-      });
+    let sql = `SELECT id FROM ${PRODUCT_TABLE} WHERE Name = ?`;
+    return this.db.query(sql, [product.name]).then(data => {
+      if (data[0] && data[0].id > 0) {
+        return { message: `${product.name} already exist` };
+      }
+      sql = `INSERT INTO ${PRODUCT_TABLE} 
+     (Prod_ID,Name,Unit,Barcode,Category_ID,Brand_ID) 
+     VALUES(REPLACE(?,'-',''),?,?,?,?,?)`;
+      return this.db
+        .query(sql, [
+          product.uuid,
+          product.name,
+          product.unit,
+          product.barcode,
+          product.category,
+          product.brand
+        ])
+        .then(data => {
+          return { message: `${data.affectedRows} item inserted` };
+        });
+    });
   }
 }

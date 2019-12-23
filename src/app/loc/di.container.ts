@@ -81,6 +81,7 @@ import { AddBrandTask } from "../../core/domain/useCase/product/AddBrandTask";
 import { GetBrandTask } from "../../core/domain/useCase/product/GetBrandTask";
 import { UpdateBrandTask } from "../../core/domain/useCase/product/UpdateBrandTask";
 import { RemoveBrandTask } from "../../core/domain/useCase/product/RemoveBrandTask";
+import { AddPurchaseTask } from "../../core/domain/useCase/product/AddPurchaseTask";
 
 let DIContainer = new Container();
 
@@ -110,6 +111,7 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<AddPurchaseTask>(AddPurchaseTask).toSelf();
 DIContainer.bind<RemoveBrandTask>(RemoveBrandTask).toSelf();
 DIContainer.bind<UpdateBrandTask>(UpdateBrandTask).toSelf();
 DIContainer.bind<GetBrandTask>(GetBrandTask).toSelf();

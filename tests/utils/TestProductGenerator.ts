@@ -15,6 +15,7 @@
 import { IProduct } from "../../src/core/domain/entity/product/IProduct";
 import { ICategory } from "../../src/core/domain/entity/product/ICategory";
 import { IBrand } from "../../src/core/domain/entity/product/IBrand";
+import { IPurchase } from "../../src/core/domain/entity/product/IPurchase";
 
 export class TestProductGenerator {
   static product(): IProduct {
@@ -71,11 +72,13 @@ export class TestProductGenerator {
   }
 
   static getcategory(): ICategory[] {
-    return[{
-      id: 1,
-      name: "test name",
-      description: "test description"
-    }];
+    return [
+      {
+        id: 1,
+        name: "test name",
+        description: "test description"
+      }
+    ];
   }
 
   static getcategoryList(): ICategory[] {
@@ -102,11 +105,13 @@ export class TestProductGenerator {
   }
 
   static getBrand(): IBrand[] {
-    return[{
-      id: 1,
-      name: "test name",
-      description: "test description"
-    }];
+    return [
+      {
+        id: 1,
+        name: "test name",
+        description: "test description"
+      }
+    ];
   }
 
   static getBrandList(): IBrand[] {
@@ -124,5 +129,56 @@ export class TestProductGenerator {
     ];
   }
 
+  static purchase(): IPurchase {
+    return {
+      invoiceNo: "test invoice no",
+      supplierName: "test supplier name",
+      name: "test product name",
+      stock: 10,
+      buyPrice: 12,
+      retailPrice: 15,
+      uuid: "test uuid",
+      empId: "test empid"
+    };
+  }
 
+  static getPurchase(): IPurchase[] {
+    return [
+      {
+        invoiceNo: "test invoice no",
+        supplierName: "test supplier name",
+        name: "test product name",
+        stock: 10,
+        buyPrice: 12,
+        retailPrice: 15,
+        uuid: "test uuid",
+        empId: "test empid"
+      }
+    ];
+  }
+
+  static getPurchaseList(): IPurchase[] {
+    return [
+      {
+        invoiceNo: "test invoice no1",
+        supplierName: "test supplier name",
+        name: "test product name1",
+        stock: 10,
+        buyPrice: 12,
+        retailPrice: 15,
+        uuid: "test uuid",
+        empId: "test empid"
+      },
+      {
+        invoiceNo: "test invoice no2",
+        supplierName: "test supplier name",
+        name: "test product name2",
+        stock: 4,
+        buyPrice: 3,
+        retailPrice: 5,
+        uuid: "test uuid",
+        empId: "test empid"
+      }
+    ];
+  }
 }

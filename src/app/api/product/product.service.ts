@@ -28,6 +28,8 @@ import { IBrand } from "../../../core/domain/entity/product/IBrand";
 import { GetBrandTask } from "../../../core/domain/useCase/product/GetBrandTask";
 import { UpdateBrandTask } from "../../../core/domain/useCase/product/UpdateBrandTask";
 import { RemoveBrandTask } from "../../../core/domain/useCase/product/RemoveBrandTask";
+import { AddPurchaseTask } from "../../../core/domain/useCase/product/AddPurchaseTask";
+import { IPurchase } from "../../../core/domain/entity/product/IPurchase";
 
 /**
  * ProductService
@@ -44,8 +46,9 @@ export class ProductService {
   private removeCategoryTask: RemoveCategoryTask;
   private addBrandTask: AddBrandTask;
   private getBrandTask: GetBrandTask;
-  private updateBrandTask:UpdateBrandTask;
-  private removeBrandTask:RemoveBrandTask;
+  private updateBrandTask: UpdateBrandTask;
+  private removeBrandTask: RemoveBrandTask;
+  private addPurchaseTask: AddPurchaseTask;
 
   /**
    * @constructor
@@ -73,9 +76,9 @@ export class ProductService {
     @inject(RemoveCategoryTask) $removeCategoryTask: RemoveCategoryTask,
     @inject(AddBrandTask) $addBrandTask: AddBrandTask,
     @inject(GetBrandTask) $getBrandTask: GetBrandTask,
-    @inject(UpdateBrandTask) $updateBrandTask:UpdateBrandTask,
-    @inject(RemoveBrandTask) $removeBrandTask:RemoveBrandTask
-
+    @inject(UpdateBrandTask) $updateBrandTask: UpdateBrandTask,
+    @inject(RemoveBrandTask) $removeBrandTask: RemoveBrandTask,
+    @inject(AddPurchaseTask) $addPurchaseTask: AddPurchaseTask
   ) {
     this.addProductTask = $addProductTask;
     this.getProductTask = $getProductTask;
@@ -89,6 +92,7 @@ export class ProductService {
     this.getBrandTask = $getBrandTask;
     this.updateBrandTask = $updateBrandTask;
     this.removeBrandTask = $removeBrandTask;
+    this.addPurchaseTask = $addPurchaseTask;
   }
 
   //
@@ -152,5 +156,12 @@ export class ProductService {
   }
   removeBrand(identifier: string): Promise<any> {
     return this.removeBrandTask.buildUseCase(identifier);
+  }
+
+  //
+  // ─── PURCHASE ───────────────────────────────────────────────────────────────────
+  //
+  addPurchase(purchase: IPurchase): Promise<any> {
+    return this.addPurchaseTask.buildUseCase(purchase);
   }
 }

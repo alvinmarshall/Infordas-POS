@@ -25,6 +25,7 @@ import { IEmployeeInfo } from "../domain/entity/employee/IEmployeeInfo";
 import { IProduct } from "../domain/entity/product/IProduct";
 import { ICategory } from "../domain/entity/product/ICategory";
 import { IBrand } from "../domain/entity/product/IBrand";
+import { IPurchase } from "../domain/entity/product/IPurchase";
 
 export interface RemoteDataSource {
   //
@@ -49,8 +50,8 @@ export interface RemoteDataSource {
   updateBrand(brand: IBrand): Promise<any>;
   removeBrand(identifier: string): Promise<any>;
 
+  addPurchase(purchase: IPurchase): Promise<any>;
 
-  
   //
   // ─── FILE ───────────────────────────────────────────────────────────────────────
   //
@@ -96,7 +97,6 @@ export interface RemoteDataSource {
   updateRank(rank: IRank): Promise<any>;
   getRanks(): Promise<IRank[]>;
   getRankWithIdentifier(identifier: string): Promise<IRank[]>;
-  
 
   //
   // ─── USER ───────────────────────────────────────────────────────────────────────

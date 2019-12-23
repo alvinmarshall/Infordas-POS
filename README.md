@@ -46,3 +46,4 @@
 ### can remove product
 ### can have a category
 ### can have a brand
+### can add purchases
