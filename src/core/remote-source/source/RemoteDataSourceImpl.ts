@@ -39,6 +39,9 @@ import { ProductDaoImpl } from "../db/dao/product/ProductDaoImpl";
 import { ICategory } from "../../domain/entity/product/ICategory";
 import { IBrand } from "../../domain/entity/product/IBrand";
 import { IPurchase } from "../../domain/entity/product/IPurchase";
+import { IClient } from "../../domain/entity/crm/IClient";
+import { CrmDao } from "../db/dao/crm/CrmDao";
+import { CrmDaoImpl } from "../db/dao/crm/CrmDaoImpl";
 
 @injectable()
 export class RemoteDataSourceImpl implements RemoteDataSource {
@@ -48,6 +51,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   private companyDao: CompanyDao;
   private fileDao: FileDao;
   private productDao: ProductDao;
+  private crmDao: CrmDao;
   /**
    * @constructor
    * @param $userDao require UserDao instance
@@ -60,7 +64,8 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     @inject(RankDaoImpl) $rankDao: RankDao,
     @inject(CompanyDaoImpl) $companyDao: CompanyDao,
     @inject(FileDaoImpl) $fileDao: FileDao,
-    @inject(ProductDaoImpl) $productDao: ProductDao
+    @inject(ProductDaoImpl) $productDao: ProductDao,
+    @inject(CrmDaoImpl) $crmDao: CrmDao
   ) {
     this.userDao = $userDao;
     this.employeeDao = $employeeDao;
@@ -68,8 +73,31 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     this.companyDao = $companyDao;
     this.fileDao = $fileDao;
     this.productDao = $productDao;
+    this.crmDao = $crmDao;
   }
 
+  //
+  // ─── CRM ────────────────────────────────────────────────────────────────────────
+  //
+
+  addCustomer(customer: IClient): Promise<any> {
+    return this.crmDao.addCustomer(customer);
+  }
+  addSupplier(supplier: IClient): Promise<any> {
+    return this.crmDao.addSupplier(supplier);
+  }
+  getCustomer(): Promise<IClient[]> {
+    return this.crmDao.getCustomer();
+  }
+  getCustomerWithIdentifier(identifier: string): Promise<IClient[]> {
+    return this.crmDao.getCustomerWithIdentifier(identifier);
+  }
+  getSupplier(): Promise<IClient[]> {
+    return this.crmDao.getSupplier();
+  }
+  getSupplierWithIdentifier(identifier: string): Promise<IClient[]> {
+    return this.crmDao.getSupplierWithIdentifier(identifier);
+  }
   //
   // ─── PRODUCT ────────────────────────────────────────────────────────────────────
   //
@@ -122,7 +150,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     return this.productDao.removeBrand(identifier);
   }
   addPurchase(purchase: IPurchase): Promise<any> {
-    return this.productDao.addPurchase(purchase)
+    return this.productDao.addPurchase(purchase);
   }
   //
   // ─── FILE ───────────────────────────────────────────────────────────────────────

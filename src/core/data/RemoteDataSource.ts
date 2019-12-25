@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { UserEntity } from "../domain/entity/user/UserEntity";
 import { IEmployee } from "../domain/entity/employee/IEmployee";
 import { IUser } from "../domain/entity/user/IUser";
 import { IRank } from "../domain/entity/rank/IRank";
@@ -26,8 +25,20 @@ import { IProduct } from "../domain/entity/product/IProduct";
 import { ICategory } from "../domain/entity/product/ICategory";
 import { IBrand } from "../domain/entity/product/IBrand";
 import { IPurchase } from "../domain/entity/product/IPurchase";
+import { IClient } from "../domain/entity/crm/IClient";
 
 export interface RemoteDataSource {
+  //
+  // ─── CRM ────────────────────────────────────────────────────────────────────────
+  //
+
+  addCustomer(customer: IClient): Promise<any>;
+  addSupplier(supplier: IClient): Promise<any>;
+  getCustomer(): Promise<IClient[]>;
+  getCustomerWithIdentifier(identifier: string): Promise<IClient[]>;
+  getSupplier(): Promise<IClient[]>;
+  getSupplierWithIdentifier(identifier: string): Promise<IClient[]>;
+
   //
   // ─── PRODUCT ────────────────────────────────────────────────────────────────────
   //

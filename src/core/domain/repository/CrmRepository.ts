@@ -12,21 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Express } from "express";
-import userRoute from "./api/user";
-import employeeRoute from "./api/employee";
-import rankRoute from "./api/rank";
-import companyRoute from "./api/company";
-import fileRoute from "./api/files";
-import productRoute from "./api/product";
-import crmRoute from "./api/crm";
+import { IClient } from "../entity/crm/IClient";
 
-export default (app: Express) => {
-  app.use("/users", userRoute);
-  app.use("/employee", employeeRoute);
-  app.use("/rank", rankRoute);
-  app.use("/company", companyRoute);
-  app.use("/files", fileRoute);
-  app.use("/product", productRoute);
-  app.use("/crm", crmRoute);
-};
+export interface CrmRepository {
+  addCustomer(customer: IClient): Promise<any>;
+  addSupplier(supplier: IClient): Promise<any>;
+  getCustomer(): Promise<IClient[]>;
+  getCustomerWithIdentifier(identifier: string): Promise<IClient[]>;
+  getSupplier(): Promise<IClient[]>;
+  getSupplierWithIdentifier(identifier: string): Promise<IClient[]>;
+}

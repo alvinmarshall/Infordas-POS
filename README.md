@@ -47,3 +47,7 @@
 ### can have a category
 ### can have a brand
 ### can add purchases
+
+# Customer Relation management (CRM)
+### can add crm (customer/supplier)
+### can get all crm (customer/supplier)

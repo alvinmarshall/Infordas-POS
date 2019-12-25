@@ -24,6 +24,8 @@ export const PRODUCT_TABLE: string = "product";
 export const CATEGORY_TABLE: string = "category";
 export const BRAND_TABLE: string = "brand";
 export const PURCHASE_TABLE: string = "purchase";
+export const CUSTOMER_TABLE: string = "customer";
+export const SUPPLIER_TABLE: string = "supplier";
 export const FILE_TYPE: IFileType[] = [
   {
     name: "profile",
@@ -33,3 +35,8 @@ export const FILE_TYPE: IFileType[] = [
     column: "Emp_ID"
   }
 ];
+
+export enum Client_Type {
+  CUSTOMER = "CUSTOMER",
+  SUPPLIER = "SUPPLIER"
+}

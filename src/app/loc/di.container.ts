@@ -82,6 +82,12 @@ import { GetBrandTask } from "../../core/domain/useCase/product/GetBrandTask";
 import { UpdateBrandTask } from "../../core/domain/useCase/product/UpdateBrandTask";
 import { RemoveBrandTask } from "../../core/domain/useCase/product/RemoveBrandTask";
 import { AddPurchaseTask } from "../../core/domain/useCase/product/AddPurchaseTask";
+import { CrmDaoImpl } from "../../core/remote-source/db/dao/crm/CrmDaoImpl";
+import { CrmRepositoryImpl } from "../../core/data/repository/crm/CrmRepositoryImpl";
+import { AddClientTask } from "../../core/domain/useCase/crm/AddClientTask";
+import { CrmService } from "../api/crm/crm.service";
+import { CrmController } from "../api/crm/crm.controller";
+import { GetClientTask } from "../../core/domain/useCase/crm/GetClientTask";
 
 let DIContainer = new Container();
 
@@ -95,6 +101,8 @@ DIContainer.bind<FileUtils>(FileUtils).toSelf();
 //
 // ─── API ────────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<CrmController>(CrmController).toSelf();
+DIContainer.bind<CrmService>(CrmService).toSelf();
 DIContainer.bind<ProductController>(ProductController).toSelf();
 DIContainer.bind<ProductService>(ProductService).toSelf();
 DIContainer.bind<FileController>(FileController).toSelf();
@@ -111,6 +119,8 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<GetClientTask>(GetClientTask).toSelf();
+DIContainer.bind<AddClientTask>(AddClientTask).toSelf();
 DIContainer.bind<AddPurchaseTask>(AddPurchaseTask).toSelf();
 DIContainer.bind<RemoveBrandTask>(RemoveBrandTask).toSelf();
 DIContainer.bind<UpdateBrandTask>(UpdateBrandTask).toSelf();
@@ -150,6 +160,7 @@ DIContainer.bind<AddEmployeeTask>(AddEmployeeTask).toSelf();
 //
 // ─── DATA ───────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<CrmRepositoryImpl>(CrmRepositoryImpl).toSelf();
 DIContainer.bind<ProductRepositoryImpl>(ProductRepositoryImpl).toSelf();
 DIContainer.bind<FileRepositoryImpl>(FileRepositoryImpl).toSelf();
 DIContainer.bind<CompanyRepositoryImpl>(CompanyRepositoryImpl).toSelf();
@@ -160,6 +171,7 @@ DIContainer.bind<RemoteDataSourceImpl>(RemoteDataSourceImpl).toSelf();
 //
 // ─── REMOTE ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<CrmDaoImpl>(CrmDaoImpl).toSelf();
 DIContainer.bind<ProductDaoImpl>(ProductDaoImpl).toSelf();
 DIContainer.bind<FileDaoImpl>(FileDaoImpl).toSelf();
 DIContainer.bind<CompanyDaoImpl>(CompanyDaoImpl).toSelf();
