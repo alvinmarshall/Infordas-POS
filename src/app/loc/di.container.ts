@@ -89,6 +89,9 @@ import { CrmService } from "../api/crm/crm.service";
 import { CrmController } from "../api/crm/crm.controller";
 import { GetClientTask } from "../../core/domain/useCase/crm/GetClientTask";
 import { BranchService } from "../api/company/branch.service";
+import { BrandService } from "../api/product/brand.service";
+import { CategoryService } from "../api/product/category.service";
+import { PurchaseService } from "../api/product/purchase.service";
 
 let DIContainer = new Container();
 
@@ -105,6 +108,9 @@ DIContainer.bind<FileUtils>(FileUtils).toSelf();
 DIContainer.bind<CrmController>(CrmController).toSelf();
 DIContainer.bind<CrmService>(CrmService).toSelf();
 DIContainer.bind<ProductController>(ProductController).toSelf();
+DIContainer.bind<PurchaseService>(PurchaseService).toSelf();
+DIContainer.bind<CategoryService>(CategoryService).toSelf();
+DIContainer.bind<BrandService>(BrandService).toSelf();
 DIContainer.bind<ProductService>(ProductService).toSelf();
 DIContainer.bind<FileController>(FileController).toSelf();
 DIContainer.bind<FileService>(FileService).toSelf();

@@ -30,11 +30,13 @@ import { GetBrandTask } from "../../../src/core/domain/useCase/product/GetBrandT
 import { UpdateBrandTask } from "../../../src/core/domain/useCase/product/UpdateBrandTask";
 import { RemoveBrandTask } from "../../../src/core/domain/useCase/product/RemoveBrandTask";
 import { AddPurchaseTask } from "../../../src/core/domain/useCase/product/AddPurchaseTask";
+import { BrandService } from "../../../src/app/api/product/brand.service";
+import { CategoryService } from "../../../src/app/api/product/category.service";
+import { PurchaseService } from "../../../src/app/api/product/purchase.service";
 
 describe("app.product productController test", () => {
   let productRepository: ProductRepository;
   let productRepositoryInstance: ProductRepository;
-  let service: ProductService;
   let addProduct: AddProductTask;
   let getProductTask: GetProductTask;
   let updateProductTask: UpdateProductTask;
@@ -48,6 +50,11 @@ describe("app.product productController test", () => {
   let updatBrandTask: UpdateBrandTask;
   let removeBrandTask: RemoveBrandTask;
   let addPurchaseTask: AddPurchaseTask;
+
+  let productService: ProductService;
+  let purchaseService: PurchaseService;
+  let brandService: BrandService;
+  let categoryService: CategoryService;
 
   beforeEach(() => {
     productRepository = mock<ProductRepository>();
@@ -66,23 +73,27 @@ describe("app.product productController test", () => {
     getBrandTask = new GetBrandTask(productRepositoryInstance);
     updatBrandTask = new UpdateBrandTask(productRepositoryInstance);
     removeBrandTask = new RemoveBrandTask(productRepositoryInstance);
-
     addPurchaseTask = new AddPurchaseTask(productRepositoryInstance);
-    service = new ProductService(
+
+    productService = new ProductService(
       addProduct,
       getProductTask,
       updateProductTask,
-      removeProductTask,
-      addCategoryTask,
-      updateCategoryTask,
-      getCategoryTask,
-      removeCategoryTask,
+      removeProductTask
+    );
+    brandService = new BrandService(
       addBrandTask,
       getBrandTask,
       updatBrandTask,
-      removeBrandTask,
-      addPurchaseTask
+      removeBrandTask
     );
+    categoryService = new CategoryService(
+      addCategoryTask,
+      updateCategoryTask,
+      getCategoryTask,
+      removeCategoryTask
+    );
+    purchaseService = new PurchaseService(addPurchaseTask);
   });
 
   //
@@ -95,7 +106,7 @@ describe("app.product productController test", () => {
     const product = TestProductGenerator.product();
     const actual = { message: "1 item inserted" };
     when(productRepository.addProduct(product)).thenResolve(actual);
-    const expected = await service.addProduct(product);
+    const expected = await productService.addProduct(product);
     assert.equal(expected, actual);
     verify(productRepository.addProduct(product)).times(1);
   });
@@ -103,7 +114,7 @@ describe("app.product productController test", () => {
   it("Get all product", async () => {
     const actual = TestProductGenerator.getProductList();
     when(productRepository.getProducts()).thenResolve(actual);
-    const expected = await service.getProducts();
+    const expected = await productService.getProducts();
     assert.equal(expected, actual);
     verify(productRepository.getProducts()).times(1);
     verify(productRepository.getProductWithIdentifier("")).never();
@@ -115,7 +126,7 @@ describe("app.product productController test", () => {
     when(productRepository.getProductWithIdentifier(identifier)).thenResolve(
       actual
     );
-    const expected = await service.getProductWithIdentifier(identifier);
+    const expected = await productService.getProductWithIdentifier(identifier);
     assert.equal(expected, actual);
     verify(productRepository.getProductWithIdentifier(identifier)).times(1);
     verify(productRepository.getProducts()).never();
@@ -126,7 +137,7 @@ describe("app.product productController test", () => {
     product.name = "update name";
     const actual = { message: "1 item modified" };
     when(productRepository.updateProduct(product)).thenResolve(actual);
-    const expected = await service.updateProduct(product);
+    const expected = await productService.updateProduct(product);
     assert.equal(expected, actual);
     verify(productRepository.updateProduct(product)).times(1);
   });
@@ -135,7 +146,7 @@ describe("app.product productController test", () => {
     const identifier = "1";
     const actual = { message: "1 item removed" };
     when(productRepository.removeProduct(identifier)).thenResolve(actual);
-    const expected = await service.removeProduct(identifier);
+    const expected = await productService.removeProduct(identifier);
     assert.equal(expected, actual);
     verify(productRepository.removeProduct(identifier)).times(1);
   });
@@ -150,7 +161,7 @@ describe("app.product productController test", () => {
     const category = TestProductGenerator.category();
     const actual = { message: "1 item inserted" };
     when(productRepository.addCategory(category)).thenResolve(actual);
-    const expected = await service.addCategory(category);
+    const expected = await categoryService.addCategory(category);
     assert.equal(expected, actual);
     verify(productRepository.addCategory(category)).times(1);
   });
@@ -158,7 +169,7 @@ describe("app.product productController test", () => {
   it("Get all categories", async () => {
     const actual = TestProductGenerator.getcategoryList();
     when(productRepository.getCategories()).thenResolve(actual);
-    const expected = await service.getCategories();
+    const expected = await categoryService.getCategories();
     assert.equal(expected, actual);
     verify(productRepository.getCategories()).times(1);
   });
@@ -169,7 +180,7 @@ describe("app.product productController test", () => {
     when(productRepository.getCategoryWithIdentifier(identifier)).thenResolve(
       actual
     );
-    const expected = await service.getCategoryWithIdenfier(identifier);
+    const expected = await categoryService.getCategoryWithIdenfier(identifier);
     assert.equal(expected, actual);
     verify(productRepository.getCategoryWithIdentifier(identifier)).times(1);
     verify(productRepository.getCategories()).never();
@@ -180,7 +191,7 @@ describe("app.product productController test", () => {
     category.name = "update name";
     const actual = { message: "1 item modified" };
     when(productRepository.updateCategory(category)).thenResolve(actual);
-    const expected = await service.updateCategory(category);
+    const expected = await categoryService.updateCategory(category);
     assert.equal(expected, actual);
     verify(productRepository.updateCategory(category)).times(1);
   });
@@ -189,7 +200,7 @@ describe("app.product productController test", () => {
     const identifier = "1";
     const actual = { message: "1 item removed" };
     when(productRepository.removeCategory(identifier)).thenResolve(actual);
-    const expected = await service.removeCategory(identifier);
+    const expected = await categoryService.removeCategory(identifier);
     assert.equal(expected, actual);
     verify(productRepository.removeCategory(identifier)).times(1);
   });
@@ -202,7 +213,7 @@ describe("app.product productController test", () => {
       const brand = TestProductGenerator.brand();
       const actual = { message: "1 item inserted" };
       when(productRepository.addBrand(brand)).thenResolve(actual);
-      const expected = await service.addBrand(brand);
+      const expected = await brandService.addBrand(brand);
       assert.equal(expected, actual);
       verify(productRepository.addBrand(brand)).times(1);
     });
@@ -211,7 +222,7 @@ describe("app.product productController test", () => {
   it("Get all brand success", async () => {
     const actual = TestProductGenerator.getBrandList();
     when(productRepository.getBrands()).thenResolve(actual);
-    const expected = await service.getBrands();
+    const expected = await brandService.getBrands();
     assert.equal(expected, actual);
     verify(productRepository.getBrands()).times(1);
     verify(productRepository.getBrandWithIdentifier("")).times(0);
@@ -223,7 +234,7 @@ describe("app.product productController test", () => {
     when(productRepository.getBrandWithIdentifier(identifier)).thenResolve(
       actual
     );
-    const expected = await service.getBrandWithIdenfier(identifier);
+    const expected = await brandService.getBrandWithIdenfier(identifier);
     assert.equal(expected, actual);
     verify(productRepository.getBrandWithIdentifier(identifier)).times(1);
     verify(productRepository.getBrands()).never();
@@ -233,7 +244,7 @@ describe("app.product productController test", () => {
     brand.name = "update name";
     const actual = { message: "1 item modified" };
     when(productRepository.updateBrand(brand)).thenResolve(actual);
-    const expected = await service.updateBrand(brand);
+    const expected = await brandService.updateBrand(brand);
     assert.equal(expected, actual);
     verify(productRepository.updateBrand(brand)).times(1);
   });
@@ -241,7 +252,7 @@ describe("app.product productController test", () => {
     const identifier = "1";
     const actual = { message: "1 item removed" };
     when(productRepository.removeBrand(identifier)).thenResolve(actual);
-    const expected = await service.removeBrand(identifier);
+    const expected = await brandService.removeBrand(identifier);
     assert.equal(expected, actual);
     verify(productRepository.removeBrand(identifier)).times(1);
   });
@@ -254,10 +265,9 @@ describe("app.product productController test", () => {
       const purchase = TestProductGenerator.purchase();
       const actual = { message: "1 item inserted" };
       when(productRepository.addPurchase(purchase)).thenResolve(actual);
-      const expected = await service.addPurchase(purchase);
+      const expected = await purchaseService.addPurchase(purchase);
       assert.equal(expected, actual);
       verify(productRepository.addPurchase(purchase)).times(1);
     });
   });
-    
 });

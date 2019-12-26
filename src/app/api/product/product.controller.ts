@@ -22,13 +22,27 @@ import valueStrExists from "../../../common/utils/item-exist";
 import { IBrand } from "../../../core/domain/entity/product/IBrand";
 import { paginateRequest } from "../../../common/utils/pagination-request";
 import { IPurchase } from "../../../core/domain/entity/product/IPurchase";
+import { BrandService } from "./brand.service";
+import { CategoryService } from "./category.service";
+import { PurchaseService } from "./purchase.service";
 
 @injectable()
 export class ProductController {
   private productService: ProductService;
+  private brandService: BrandService;
+  private categoryService: CategoryService;
+  private purchaseService: PurchaseService;
 
-  constructor(@inject(ProductService) $productService: ProductService) {
+  constructor(
+    @inject(ProductService) $productService: ProductService,
+    @inject(BrandService) $brandService: BrandService,
+    @inject(CategoryService) $categoryService: CategoryService,
+    @inject(PurchaseService) $purchaseService: PurchaseService
+  ) {
     this.productService = $productService;
+    this.brandService = $brandService;
+    this.categoryService = $categoryService;
+    this.purchaseService = $purchaseService;
   }
 
   //
@@ -109,7 +123,7 @@ export class ProductController {
   async addCategory(req: Request, res: Response) {
     try {
       const body: ICategory = req.body;
-      const data = await this.productService.addCategory(body);
+      const data = await this.categoryService.addCategory(body);
       if (valueStrExists(data.message, "already exist"))
         return res.send({ data, status: 200 });
       return res.status(201).send({ data, status: 201 });
@@ -124,7 +138,7 @@ export class ProductController {
   async updateCategory(req: Request, res: Response) {
     try {
       const body: ICategory = req.body;
-      const data = await this.productService.updateCategory(body);
+      const data = await this.categoryService.updateCategory(body);
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
@@ -136,7 +150,7 @@ export class ProductController {
 
   async getCategories(req: Request, res: Response) {
     try {
-      const data = await this.productService.getCategories();
+      const data = await this.categoryService.getCategories();
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
@@ -149,7 +163,7 @@ export class ProductController {
   async getCategoryWithIdentifier(req: Request, res: Response) {
     try {
       const identifier: string = req.params.identifier;
-      const data = await this.productService.getCategoryWithIdenfier(
+      const data = await this.categoryService.getCategoryWithIdenfier(
         identifier
       );
       return res.send({ data, status: 200 });
@@ -164,7 +178,7 @@ export class ProductController {
   async removeCategory(req: Request, res: Response) {
     try {
       const identifier: string = req.params.identifier;
-      const data = await this.productService.removeCategory(identifier);
+      const data = await this.categoryService.removeCategory(identifier);
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
@@ -181,7 +195,7 @@ export class ProductController {
   async addBrand(req: Request, res: Response) {
     try {
       const body: IBrand = req.body;
-      const data = await this.productService.addBrand(body);
+      const data = await this.brandService.addBrand(body);
       if (valueStrExists(data.message, "already exist"))
         return res.send({ data, status: 200 });
       return res.status(201).send({ data, status: 201 });
@@ -195,7 +209,7 @@ export class ProductController {
 
   async getBrands(req: Request, res: Response) {
     try {
-      const data = await this.productService.getBrands();
+      const data = await this.brandService.getBrands();
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
@@ -208,7 +222,7 @@ export class ProductController {
   async getBrandWithIdentifier(req: Request, res: Response) {
     try {
       const identifier: string = req.params.identifier;
-      const data = await this.productService.getBrandWithIdenfier(identifier);
+      const data = await this.brandService.getBrandWithIdenfier(identifier);
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
@@ -221,7 +235,7 @@ export class ProductController {
   async updateBrand(req: Request, res: Response) {
     try {
       const body: IBrand = req.body;
-      const data = await this.productService.updateBrand(body);
+      const data = await this.brandService.updateBrand(body);
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
@@ -234,7 +248,7 @@ export class ProductController {
   async removeBrand(req: Request, res: Response) {
     try {
       const identifier: string = req.params.identifier;
-      const data = await this.productService.removeBrand(identifier);
+      const data = await this.brandService.removeBrand(identifier);
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
@@ -252,7 +266,7 @@ export class ProductController {
       const body: IPurchase = req.body;
       //@ts-ignore
       body.empId = req.user.uuid;
-      const data = await this.productService.addPurchase(body);
+      const data = await this.purchaseService.addPurchase(body);
       return res.status(201).send({ data, status: 201 });
     } catch (error) {
       console.error(error);
