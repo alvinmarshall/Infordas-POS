@@ -88,6 +88,7 @@ import { AddClientTask } from "../../core/domain/useCase/crm/AddClientTask";
 import { CrmService } from "../api/crm/crm.service";
 import { CrmController } from "../api/crm/crm.controller";
 import { GetClientTask } from "../../core/domain/useCase/crm/GetClientTask";
+import { BranchService } from "../api/company/branch.service";
 
 let DIContainer = new Container();
 
@@ -109,6 +110,7 @@ DIContainer.bind<FileController>(FileController).toSelf();
 DIContainer.bind<FileService>(FileService).toSelf();
 DIContainer.bind<PassportService>(PassportService).toSelf();
 DIContainer.bind<CompanyController>(CompanyController).toSelf();
+DIContainer.bind<BranchService>(BranchService).toSelf();
 DIContainer.bind<CompanyService>(CompanyService).toSelf();
 DIContainer.bind<RankController>(RankController).toSelf();
 DIContainer.bind<RankService>(RankService).toSelf();

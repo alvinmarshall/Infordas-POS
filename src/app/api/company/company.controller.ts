@@ -18,15 +18,21 @@ import { Request, Response } from "express";
 import { ICompany } from "../../../core/domain/entity/company/ICompany";
 import { IBranch } from "../../../core/domain/entity/branch/IBranch";
 import v4 from "uuid/v4";
+import { BranchService } from "./branch.service";
 /**
  * CompanyController class
  */
 @injectable()
 export class CompanyController {
   private companyService: CompanyService;
+  private branchService: BranchService;
 
-  constructor(@inject(CompanyService) $companyService: CompanyService) {
+  constructor(
+    @inject(CompanyService) $companyService: CompanyService,
+    @inject(BranchService) $branchService: BranchService
+  ) {
     this.companyService = $companyService;
+    this.branchService = $branchService;
   }
 
   //
@@ -37,7 +43,7 @@ export class CompanyController {
     try {
       const body: IBranch = req.body;
       body.uuid = v4();
-      const data = await this.companyService.addBranch(body);
+      const data = await this.branchService.addBranch(body);
       return res.status(201).send({ data, status: 201 });
     } catch (error) {
       return res
@@ -48,7 +54,7 @@ export class CompanyController {
 
   async getBranches(req: Request, res: Response) {
     try {
-      const data = await this.companyService.getBranches();
+      const data = await this.branchService.getBranches();
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
@@ -61,7 +67,7 @@ export class CompanyController {
   async getBranch(req: Request, res: Response) {
     try {
       const identifier: string = req.params.identifier;
-      const data = await this.companyService.getBranchWithIdentifer(identifier);
+      const data = await this.branchService.getBranchWithIdentifer(identifier);
       return res.send({ data, status: 200 });
     } catch (error) {
       console.error(error);
@@ -74,7 +80,7 @@ export class CompanyController {
   async updateBranch(req: Request, res: Response) {
     try {
       const body = req.body;
-      const data = await this.companyService.updateBranch(body);
+      const data = await this.branchService.updateBranch(body);
       return res.status(200).send({ data, status: 200 });
     } catch (error) {
       return res
@@ -86,7 +92,7 @@ export class CompanyController {
   async removeBranch(req: Request, res: Response) {
     try {
       const identifier = req.params.identifier;
-      const data = await this.companyService.removeBranch(identifier);
+      const data = await this.branchService.removeBranch(identifier);
       return res.status(200).send({ data, status: 200 });
     } catch (error) {
       console.error(error);

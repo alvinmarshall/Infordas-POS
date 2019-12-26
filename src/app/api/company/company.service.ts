@@ -17,12 +17,7 @@ import { AddCompanyTask } from "../../../core/domain/useCase/company/AddCompanyT
 import { ICompany } from "../../../core/domain/entity/company/ICompany";
 import { UpdateCompanyTask } from "../../../core/domain/useCase/company/UpdateCompanyTask";
 import { RemoveCompanyTask } from "../../../core/domain/useCase/company/RemoveCompanyTask";
-import { AddBranchTask } from "../../../core/domain/useCase/branch/AddBranchTask";
-import { IBranch } from "../../../core/domain/entity/branch/IBranch";
-import { UpdateBranchTask } from "../../../core/domain/useCase/branch/UpdateBranchTask";
-import { RemoveBranchTask } from "../../../core/domain/useCase/branch/RemoveBranchTask";
 import { GetCompanyTask } from "../../../core/domain/useCase/company/GetCompanyTask";
-import { GetBranchTask } from "../../../core/domain/useCase/branch/GetBranchTask";
 /**
  * CompanyService class
  */
@@ -31,78 +26,28 @@ export class CompanyService {
   private addCompanyTask: AddCompanyTask;
   private updateCompanyTask: UpdateCompanyTask;
   private removeCompanyTask: RemoveCompanyTask;
-  private addBranchTask: AddBranchTask;
-  private updateBranchTask: UpdateBranchTask;
-  private removeBranchTask: RemoveBranchTask;
   private getCompanyTask: GetCompanyTask;
-  private getBranchTask: GetBranchTask;
 
   /**
    *@constructor
    * @param $addCompanyTask require AddCompanyTask instance
    * @param $updateCompanyTask require UpdateCompanyTask instance
    * @param $removeCompanyTask require RemoveCompanyTask instance
-   * @param $addBranchTask require AddBranchTask instance
-   * @param $updateBranchTask require UpdateBranchTask instance
-   * @param $removeBranchTask require RemoveBranchTask instance
    * @param $getCompanyTask require GetCompanyTask instance
-   * @param $getBranchTask require GetBranchTask instance
    */
   constructor(
     @inject(AddCompanyTask) $addCompanyTask: AddCompanyTask,
     @inject(UpdateCompanyTask) $updateCompanyTask: UpdateCompanyTask,
     @inject(RemoveCompanyTask) $removeCompanyTask: RemoveCompanyTask,
-    @inject(AddBranchTask) $addBranchTask: AddBranchTask,
-    @inject(UpdateBranchTask) $updateBranchTask: UpdateBranchTask,
-    @inject(RemoveBranchTask) $removeBranchTask: RemoveBranchTask,
     @inject(GetCompanyTask) $getCompanyTask: GetCompanyTask,
-    @inject(GetBranchTask) $getBranchTask: GetBranchTask
   ) {
     this.addCompanyTask = $addCompanyTask;
     this.updateCompanyTask = $updateCompanyTask;
     this.removeCompanyTask = $removeCompanyTask;
-    this.addBranchTask = $addBranchTask;
-    this.updateBranchTask = $updateBranchTask;
-    this.removeBranchTask = $removeBranchTask;
     this.getCompanyTask = $getCompanyTask;
-    this.getBranchTask = $getBranchTask;
   }
 
-  //
-  // ─── BRANCH ─────────────────────────────────────────────────────────────────────
-  //
-
-  /**
-   * addBranch
-   * @param branch require type IBranch
-   */
-  addBranch(branch: IBranch): Promise<any> {
-    return this.addBranchTask.buildUseCase(branch);
-  }
-  /**
-   * updateBranch
-   * @param branch require type IBranch
-   */
-  updateBranch(branch: IBranch): Promise<any> {
-    return this.updateBranchTask.buildUseCase(branch);
-  }
-
-  /**
-   * removeBranch
-   * @param identifier require branch uuid
-   */
-  removeBranch(identifier: string): Promise<any> {
-    return this.removeBranchTask.buildUseCase(identifier);
-  }
-
-  getBranches(): Promise<IBranch[]> {
-    return this.getBranchTask.buildUseCase();
-  }
-
-  getBranchWithIdentifer(identifier: string): Promise<IBranch[]> {
-    return this.getBranchTask.buildUseCase(identifier);
-  }
-
+ 
   //#region company
   //
   // ─── COMPANY ────────────────────────────────────────────────────────────────────
