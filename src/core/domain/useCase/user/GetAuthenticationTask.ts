@@ -15,7 +15,6 @@
 import { injectable, inject } from "inversify";
 import { UserRepository } from "./../../repository/UserRepository";
 import { BaseUseCase } from "../base/BaseUseCase";
-import { UserEntity } from "../../entity/user/UserEntity";
 import { ICredentials } from "../../entity/user/IAuthenticationParams";
 import { UserRepositoryImpl } from "../../../data/repository/user/UserRepositoryImpl";
 import { IUser } from "../../entity/user/IUser";

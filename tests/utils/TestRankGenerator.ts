@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { IRank } from "../../src/core/domain/entity/rank/IRank";
-import { RankEntity } from "../../src/core/domain/entity/rank/RankEntity";
 /**
  * TestRankGenerator class
  */
@@ -22,8 +21,8 @@ export class TestRankGenerator {
     return { id: 0, position: "test position" };
   }
 
-  static getRanks(): RankEntity {
-    return new RankEntity({ id: 1, position: "test position" });
+  static getRanks(): IRank {
+    return { id: 1, position: "test position" };
   }
 
   static getRankList(): IRank[] {

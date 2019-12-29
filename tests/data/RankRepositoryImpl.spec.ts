@@ -39,12 +39,13 @@ describe("data.repository.rank RankRepositoryImpl test", () => {
   });
 
   it("removeRank success", async () => {
-    let rankId = TestRankGenerator.getRanks().$id.toString();
+    let rankId = TestRankGenerator.getRanks().id?.toString()
     const actual = "1 item remove";
-    when(remoteDataSource.removeRank(rankId)).thenResolve(actual);
-    const expected = await rankRepositoryImpl.removeRank(rankId);
+    when(remoteDataSource.removeRank(rankId!)).thenResolve(actual);
+    const expected = await rankRepositoryImpl.removeRank(rankId!);
     assert.equal(expected, actual);
-    verify(remoteDataSource.removeRank(rankId)).called();
+    verify(remoteDataSource.removeRank(rankId!)).called();
+    
   });
 
   it("updateRank success", async () => {

@@ -33,10 +33,6 @@ export class UserController {
           .send({ message: "Invalid credentials", status: 401 });
       return res.send({ data, status: 200 });
     } catch (e) {
-      console.error(e);
-      if (e.syscall == "connect") {
-        return res.status(500).send({ message: "Server is offline" });
-      }
       return res
         .status(500)
         .send({ message: "something went wrong try again" });
