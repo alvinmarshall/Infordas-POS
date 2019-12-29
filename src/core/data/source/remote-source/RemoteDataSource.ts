@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { IEmployee } from "../domain/entity/employee/IEmployee";
-import { IUser } from "../domain/entity/user/IUser";
-import { IRank } from "../domain/entity/rank/IRank";
-import { ICompany } from "../domain/entity/company/ICompany";
-import { IBranch } from "../domain/entity/branch/IBranch";
-import { IEmployeeOther } from "../domain/entity/employee/IEmployeeOther";
-import { IAccess } from "../domain/entity/access/IAccess";
-import { IFile } from "../domain/entity/files/IFile";
-import { IEmployeeInfo } from "../domain/entity/employee/IEmployeeInfo";
-import { IProduct } from "../domain/entity/product/IProduct";
-import { ICategory } from "../domain/entity/product/ICategory";
-import { IBrand } from "../domain/entity/product/IBrand";
-import { IPurchase } from "../domain/entity/product/IPurchase";
-import { IClient } from "../domain/entity/crm/IClient";
+import { IEmployee } from "../../../domain/entity/employee/IEmployee";
+import { IUser } from "../../../domain/entity/user/IUser";
+import { IRank } from "../../../domain/entity/rank/IRank";
+import { ICompany } from "../../../domain/entity/company/ICompany";
+import { IBranch } from "../../../domain/entity/branch/IBranch";
+import { IEmployeeOther } from "../../../domain/entity/employee/IEmployeeOther";
+import { IAccess } from "../../../domain/entity/access/IAccess";
+import { IFile } from "../../../domain/entity/files/IFile";
+import { IEmployeeInfo } from "../../../domain/entity/employee/IEmployeeInfo";
+import { IProduct } from "../../../domain/entity/product/IProduct";
+import { ICategory } from "../../../domain/entity/product/ICategory";
+import { IBrand } from "../../../domain/entity/product/IBrand";
+import { IPurchase } from "../../../domain/entity/product/IPurchase";
+import { IClient } from "../../../domain/entity/crm/IClient";
 
 export interface RemoteDataSource {
   //

@@ -29,7 +29,6 @@ export class JWTTokenService implements IJwtToken {
       username: $user.username,
       imageUrl:$user.imageUrl || ""
     };
-    console.log(payload)
     let encode;
     let hours = $user.hours || 1;
 

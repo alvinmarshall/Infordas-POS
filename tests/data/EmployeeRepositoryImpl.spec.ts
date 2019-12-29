@@ -15,7 +15,7 @@
 import "reflect-metadata";
 import { EmployeeRepositoryImpl } from "../../src/core/data/repository/employee/EmployeeRepositoryImpl";
 import { mock, instance, when } from "ts-mockito";
-import { RemoteDataSource } from "../../src/core/data/RemoteDataSource";
+import { RemoteDataSource } from "../../src/core/data/source/remote-source/RemoteDataSource";
 import { TestEmployeeGenerator } from "../utils/TestEmployeeGenerator";
 import { assert } from "chai";
 

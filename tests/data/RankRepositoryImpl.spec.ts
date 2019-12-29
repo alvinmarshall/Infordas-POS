@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { RankRepositoryImpl } from "../../src/core/data/repository/rank/RankRepositoryImpl";
-import { RemoteDataSource } from "../../src/core/data/RemoteDataSource";
+import { RemoteDataSource } from "../../src/core/data/source/remote-source/RemoteDataSource";
 import { when, mock, instance, verify } from "ts-mockito";
 import { TestRankGenerator } from "../utils/TestRankGenerator";
 import { assert } from "chai";

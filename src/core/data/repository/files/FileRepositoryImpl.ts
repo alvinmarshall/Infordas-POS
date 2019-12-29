@@ -15,8 +15,8 @@
 import { FileRepository } from "../../../domain/repository/FileRepository";
 import { injectable, inject } from "inversify";
 import { IFile } from "../../../domain/entity/files/IFile";
-import { RemoteDataSource } from "../../RemoteDataSource";
-import { RemoteDataSourceImpl } from "../../../remote-source/source/RemoteDataSourceImpl";
+import { RemoteDataSource } from "../../source/remote-source/RemoteDataSource";
+import { RemoteDataSourceImpl } from "../../source/remote-source/RemoteDataSourceImpl";
 
 /**
  * FileRepositoryImpl

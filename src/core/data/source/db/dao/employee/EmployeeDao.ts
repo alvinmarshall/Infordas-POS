@@ -1,3 +1,4 @@
+
 // Copyright 2019 Bik_krl
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,9 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { IEmployee } from "../../../../domain/entity/employee/IEmployee";
-import { IEmployeeOther } from "../../../../domain/entity/employee/IEmployeeOther";
-import { IEmployeeInfo } from "../../../../domain/entity/employee/IEmployeeInfo";
+import { IEmployee } from "../../../../../domain/entity/employee/IEmployee";
+
+import { IEmployeeOther } from "../../../../../domain/entity/employee/IEmployeeOther";
+
+import { IEmployeeInfo } from "../../../../../domain/entity/employee/IEmployeeInfo";
+
 
 export interface EmployeeDao {
   addEmployee(employee: IEmployee): Promise<any>;

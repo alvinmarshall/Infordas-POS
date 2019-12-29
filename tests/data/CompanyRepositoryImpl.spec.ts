@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import "reflect-metadata";
-import { RemoteDataSource } from "../../src/core/data/RemoteDataSource";
+import { RemoteDataSource } from "../../src/core/data/source/remote-source/RemoteDataSource";
 import { CompanyRepositoryImpl } from "../../src/core/data/repository/company/CompanyRepositoryImpl";
 import { mock, instance, when, verify } from "ts-mockito";
 import { TestCompanyGenerator } from "../utils/TestCompanyGenerator";

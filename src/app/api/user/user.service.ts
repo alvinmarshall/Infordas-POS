@@ -53,12 +53,12 @@ export class UserService {
 
   authenticateUser(credentials: ICredentials): Promise<any> {
     return this.getAuthenticationTask.buildUseCase(credentials).then(data => {
-      if (!data.uuid) return null;
+      if (!data) return null;
       const isValidPass = bcryptjs.compareSync(
         credentials.password,
         data.password
       );
-      if (!isValidPass) return null;
+      if (!isValidPass) return;
       const token = this.jwtService.generateToken(data);
       this.accessTask.buildUseCase({
         uuid: data.uuid,

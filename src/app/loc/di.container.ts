@@ -19,19 +19,15 @@
 import { Container } from "inversify";
 import { GetAuthenticationTask } from "../../core/domain/useCase/user/GetAuthenticationTask";
 import { UserRepositoryImpl } from "../../core/data/repository/user/UserRepositoryImpl";
-import { RemoteDataSourceImpl } from "../../core/remote-source/source/RemoteDataSourceImpl";
-import { UserDaoImpl } from "../../core/remote-source/db/dao/user/UserDaoImpl";
-import { MysqlDatabase } from "../../core/remote-source/db/MysqlDatabase";
+import { RemoteDataSourceImpl } from "../../core/data/source/remote-source/RemoteDataSourceImpl";
 import { UserService } from "../api/user/user.service";
 import { UserController } from "../api/user/user.controller";
 import { AddEmployeeTask } from "../../core/domain/useCase/employee/AddEmployeeTask";
-import { EmployeeDaoImpl } from "../../core/remote-source/db/dao/employee/EmployeeDaoImpl";
 import { EmployeeRepositoryImpl } from "../../core/data/repository/employee/EmployeeRepositoryImpl";
 import { EmployeeService } from "../api/employee/employee.service";
 import { EmployeeController } from "../api/employee/employee.controller";
 import { AddAUserTask } from "../../core/domain/useCase/user/AddAUserTask";
 import { SetEmployeeActiveTask } from "../../core/domain/useCase/employee/SetEmployeeActiveTask";
-import { RankDaoImpl } from "../../core/remote-source/db/dao/rank/RankDaoImpl";
 import { RankRepositoryImpl } from "../../core/data/repository/rank/RankRepositoryImpl";
 import { AddRankTask } from "../../core/domain/useCase/rank/AddRankTask";
 import { RankController } from "../api/rank/rank.controller";
@@ -40,7 +36,6 @@ import { RemoveRankTask } from "../../core/domain/useCase/rank/RemoveRankTask";
 import { UpdateRankTask } from "../../core/domain/useCase/rank/UpdateRankTask";
 import { AddCompanyTask } from "../../core/domain/useCase/company/AddCompanyTask";
 import { CompanyRepositoryImpl } from "../../core/data/repository/company/CompanyRepositoryImpl";
-import { CompanyDaoImpl } from "../../core/remote-source/db/dao/company/CompanyDaoImpl";
 import { CompanyService } from "../api/company/company.service";
 import { CompanyController } from "../api/company/company.controller";
 import { UpdateCompanyTask } from "../../core/domain/useCase/company/UpdateCompanyTask";
@@ -62,12 +57,10 @@ import { FileService } from "../api/files/file.service";
 import { FileController } from "../api/files/file.controller";
 import { SaveFileTask } from "../../core/domain/useCase/files/SaveFileTask";
 import { FileRepositoryImpl } from "../../core/data/repository/files/FileRepositoryImpl";
-import { FileDaoImpl } from "../../core/remote-source/db/dao/files/FileDaoImpl";
 import { GetEmployeeInfoTask } from "../../core/domain/useCase/employee/GetEmployeeInfoTask";
 import { UpdateEmployeeTask } from "../../core/domain/useCase/employee/UpdateEmployeeTask";
 import { AddProductTask } from "../../core/domain/useCase/product/AddProductTask";
 import { ProductRepositoryImpl } from "../../core/data/repository/product/ProductRepositoryImpl";
-import { ProductDaoImpl } from "../../core/remote-source/db/dao/product/ProductDaoImpl";
 import { ProductService } from "../api/product/product.service";
 import { ProductController } from "../api/product/product.controller";
 import { GetProductTask } from "../../core/domain/useCase/product/GetProductTask";
@@ -82,7 +75,6 @@ import { GetBrandTask } from "../../core/domain/useCase/product/GetBrandTask";
 import { UpdateBrandTask } from "../../core/domain/useCase/product/UpdateBrandTask";
 import { RemoveBrandTask } from "../../core/domain/useCase/product/RemoveBrandTask";
 import { AddPurchaseTask } from "../../core/domain/useCase/product/AddPurchaseTask";
-import { CrmDaoImpl } from "../../core/remote-source/db/dao/crm/CrmDaoImpl";
 import { CrmRepositoryImpl } from "../../core/data/repository/crm/CrmRepositoryImpl";
 import { AddClientTask } from "../../core/domain/useCase/crm/AddClientTask";
 import { CrmService } from "../api/crm/crm.service";
@@ -92,7 +84,16 @@ import { BranchService } from "../api/company/branch.service";
 import { BrandService } from "../api/product/brand.service";
 import { CategoryService } from "../api/product/category.service";
 import { PurchaseService } from "../api/product/purchase.service";
-
+import config from "config";
+import { SqliteDatabase } from "../../core/data/source/local-source/SqliteDatabase";
+import { DatabaseContext } from "../../core/data/source/remote-source/DatabaseContext";
+import { CrmDaoImpl } from "../../core/data/source/db/dao/crm/CrmDaoImpl";
+import { ProductDaoImpl } from "../../core/data/source/db/dao/product/ProductDaoImpl";
+import { FileDaoImpl } from "../../core/data/source/db/dao/files/FileDaoImpl";
+import { CompanyDaoImpl } from "../../core/data/source/db/dao/company/CompanyDaoImpl";
+import { RankDaoImpl } from "../../core/data/source/db/dao/rank/RankDaoImpl";
+import { EmployeeDaoImpl } from "../../core/data/source/db/dao/employee/EmployeeDaoImpl";
+import { UserDaoImpl } from "../../core/data/source/db/dao/user/UserDaoImpl";
 let DIContainer = new Container();
 
 //
@@ -186,6 +187,14 @@ DIContainer.bind<CompanyDaoImpl>(CompanyDaoImpl).toSelf();
 DIContainer.bind<RankDaoImpl>(RankDaoImpl).toSelf();
 DIContainer.bind<EmployeeDaoImpl>(EmployeeDaoImpl).toSelf();
 DIContainer.bind<UserDaoImpl>(UserDaoImpl).toSelf();
-DIContainer.bind<MysqlDatabase>(MysqlDatabase).toSelf();
+if (process.env.NODE_ENV === "test") {
+  DIContainer.bind<DatabaseContext>(DatabaseContext).toConstantValue(
+    new SqliteDatabase(config.get("sqliteFile"))
+  );
+} else {
+  DIContainer.bind<DatabaseContext>(DatabaseContext).toConstantValue(
+    new DatabaseContext(config.get("mysqlConfig"))
+  );
+}
 
 export default DIContainer;

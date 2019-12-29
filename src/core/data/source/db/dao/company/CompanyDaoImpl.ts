@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { CompanyDao } from "./CompanyDao";
-import { ICompany } from "../../../../domain/entity/company/ICompany";
-import { MysqlDatabase } from "../../MysqlDatabase";
-import {
-  COMPANY_TABLE,
-  BRANCH_TABLE,
-  EMPLOYEE_TABLE
-} from "../../../../../common/constants";
+
 import { injectable, inject } from "inversify";
-import { IBranch } from "../../../../domain/entity/branch/IBranch";
+import { DatabaseContext } from "../../../remote-source/DatabaseContext";
+import { IBranch } from "../../../../../domain/entity/branch/IBranch";
+import { BRANCH_TABLE, COMPANY_TABLE, EMPLOYEE_TABLE } from "../../../../../../common/constants";
+import { ICompany } from "../../../../../domain/entity/company/ICompany";
 
 /**
  * CompanyDaoImpl class
@@ -28,9 +25,13 @@ import { IBranch } from "../../../../domain/entity/branch/IBranch";
  */
 @injectable()
 export class CompanyDaoImpl implements CompanyDao {
-  private db: MysqlDatabase;
+  private db: DatabaseContext;
 
-  constructor(@inject(MysqlDatabase) $db: MysqlDatabase) {
+  /**
+   * @constructor
+   * @param $db require DatabaseContext instance
+   */
+  constructor(@inject(DatabaseContext) $db: DatabaseContext) {
     this.db = $db;
   }
   //

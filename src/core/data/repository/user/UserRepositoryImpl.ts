@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { injectable, inject } from "inversify";
-import { RemoteDataSource } from "./../../RemoteDataSource";
+import { RemoteDataSource } from "../../source/remote-source/RemoteDataSource";
 import { UserRepository } from "./../../../domain/repository/UserRepository";
 import { UserEntity } from "../../../domain/entity/user/UserEntity";
-import { RemoteDataSourceImpl } from "../../../remote-source/source/RemoteDataSourceImpl";
+import { RemoteDataSourceImpl } from "../../source/remote-source/RemoteDataSourceImpl";
 import { IUser } from "../../../domain/entity/user/IUser";
 import { IAccess } from "../../../domain/entity/access/IAccess";
 

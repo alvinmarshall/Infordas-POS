@@ -12,23 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { MysqlDatabase } from "../../MysqlDatabase";
 import { UserDao } from "./UserDao";
-import { UserEntity } from "../../../../domain/entity/user/UserEntity";
-import {
-  USER_TABLE,
-  ACCESS_TABLE,
-  EMPLOYEE_TABLE
-} from "../../../../../common/constants";
-import { injectable, inject, id } from "inversify";
-import { IUser } from "../../../../domain/entity/user/IUser";
-import { IAccess } from "../../../../domain/entity/access/IAccess";
+import { DatabaseContext } from "../../../remote-source/DatabaseContext";
+import { injectable, inject } from "inversify";
+import { IUser } from "../../../../../domain/entity/user/IUser";
+import { USER_TABLE, EMPLOYEE_TABLE, ACCESS_TABLE } from "../../../../../../common/constants";
+import { IAccess } from "../../../../../domain/entity/access/IAccess";
 
 @injectable()
 export class UserDaoImpl implements UserDao {
-  private db: MysqlDatabase;
+  private db: DatabaseContext;
 
-  constructor(@inject(MysqlDatabase) $db: MysqlDatabase) {
+  constructor(@inject(DatabaseContext) $db: DatabaseContext) {
     this.db = $db;
   }
 

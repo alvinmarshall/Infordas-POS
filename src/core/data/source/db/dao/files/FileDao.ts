@@ -1,3 +1,4 @@
+
 // Copyright 2019 Bik_krl
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,19 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { IUser } from "../../../../domain/entity/user/IUser";
-import { IAccess } from "../../../../domain/entity/access/IAccess";
+import { IFile } from "../../../../../domain/entity/files/IFile";
 
-export interface UserDao {
-  getUserWithCredentials(
-    username: string,
-    password: string
-  ): Promise<IUser>;
-
-  getUserWithidentifier(identifier: string): Promise<IUser[]>;
-  getUsers(): Promise<IUser[]>;
-
-  addUser(user: IUser): Promise<any>;
-
-  addUserAccess(access: IAccess): Promise<any>;
+export interface FileDao {
+  saveFilePath(file: IFile): Promise<any>;
 }

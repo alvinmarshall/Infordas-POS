@@ -14,9 +14,9 @@
 
 import { ProductRepository } from "../../../domain/repository/ProductRepository";
 import { IProduct } from "../../../domain/entity/product/IProduct";
-import { RemoteDataSource } from "../../RemoteDataSource";
+import { RemoteDataSource } from "../../source/remote-source/RemoteDataSource";
 import { injectable, inject } from "inversify";
-import { RemoteDataSourceImpl } from "../../../remote-source/source/RemoteDataSourceImpl";
+import { RemoteDataSourceImpl } from "../../source/remote-source/RemoteDataSourceImpl";
 import { ICategory } from "../../../domain/entity/product/ICategory";
 import { IBrand } from "../../../domain/entity/product/IBrand";
 import { IPurchase } from "../../../domain/entity/product/IPurchase";

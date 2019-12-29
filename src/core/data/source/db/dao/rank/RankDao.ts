@@ -1,3 +1,4 @@
+
 // Copyright 2019 Bik_krl
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { IFile } from "../../../../domain/entity/files/IFile";
-
-export interface FileDao {
-  saveFilePath(file: IFile): Promise<any>;
+import { IRank } from "../../../../../domain/entity/rank/IRank";
+export interface RankDao {
+  addRank(rank: IRank): Promise<any>;
+  removeRank(identifier: string): Promise<any>;
+  updateRank(rank: IRank): Promise<any>;
+  getRanks(): Promise<IRank[]>;
+  getRankWithIdentifier(identifier: string): Promise<IRank[]>;
 }

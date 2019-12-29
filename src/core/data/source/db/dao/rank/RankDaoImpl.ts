@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { RankDao } from "./RankDao";
+
+import { DatabaseContext } from "../../../remote-source/DatabaseContext";
 import { injectable, inject } from "inversify";
-import { MysqlDatabase } from "../../MysqlDatabase";
-import { IRank } from "../../../../domain/entity/rank/IRank";
-import { RANK_TABLE, USER_TABLE } from "../../../../../common/constants";
+import { RankDao } from "./RankDao";
+import { IRank } from "../../../../../domain/entity/rank/IRank";
+import { RANK_TABLE, USER_TABLE } from "../../../../../../common/constants";
 /**
  * RankDaoImpl
  * class implements RankDao {@Link ./RankDao}
  */
 @injectable()
 export class RankDaoImpl implements RankDao {
-  private db: MysqlDatabase;
+  private db: DatabaseContext;
 
   /**
    * @constructor
-   * @param $db require MysqlDatabase instance
+   * @param $db require DatabaseContext instance
    */
-  constructor(@inject(MysqlDatabase) $db: MysqlDatabase) {
+  constructor(@inject(DatabaseContext) $db: DatabaseContext) {
     this.db = $db;
   }
 

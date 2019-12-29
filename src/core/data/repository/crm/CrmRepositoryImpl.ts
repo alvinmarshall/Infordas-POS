@@ -14,9 +14,9 @@
 
 import { CrmRepository } from "../../../domain/repository/CrmRepository";
 import { IClient } from "../../../domain/entity/crm/IClient";
-import { RemoteDataSource } from "../../RemoteDataSource";
+import { RemoteDataSource } from "../../source/remote-source/RemoteDataSource";
 import { injectable, inject } from "inversify";
-import { RemoteDataSourceImpl } from "../../../remote-source/source/RemoteDataSourceImpl";
+import { RemoteDataSourceImpl } from "../../source/remote-source/RemoteDataSourceImpl";
 
 /**
  * CrmRepositoryImpl

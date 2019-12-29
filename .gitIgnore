@@ -4,7 +4,9 @@ node_modules
 public
 config/production.json
 config/development.json
-.yarn-error.log
 logs
 dist
 public
+.nyc_output
+coverage
+pos_test.db

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import "reflect-metadata";
-import { TestUserGeneratorTest } from "./../utils/TestUserGenerator";
-import { UserRepositoryImpl } from "./../../src/core/data/repository/user/UserRepositoryImpl";
-import { RemoteDataSource } from "./../../src/core/data/RemoteDataSource";
+import { TestUserGeneratorTest } from "../utils/TestUserGenerator";
+import { UserRepositoryImpl } from "../../src/core/data/repository/user/UserRepositoryImpl";
+import { RemoteDataSource } from "../../src/core/data/source/remote-source/RemoteDataSource";
 import { mock, instance, when } from "ts-mockito";
 import { assert } from "chai";
 

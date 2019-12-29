@@ -13,33 +13,33 @@
 // limitations under the License.
 
 import { UserDao } from "../db/dao/user/UserDao";
-import { RemoteDataSource } from "../../data/RemoteDataSource";
+import { RemoteDataSource } from "./RemoteDataSource";
 import { injectable, inject } from "inversify";
 import { UserDaoImpl } from "../db/dao/user/UserDaoImpl";
-import { IEmployee } from "../../domain/entity/employee/IEmployee";
+import { IEmployee } from "../../../domain/entity/employee/IEmployee";
 import { EmployeeDao } from "../db/dao/employee/EmployeeDao";
 import { EmployeeDaoImpl } from "../db/dao/employee/EmployeeDaoImpl";
-import { IUser } from "../../domain/entity/user/IUser";
+import { IUser } from "../../../domain/entity/user/IUser";
 import { RankDao } from "../db/dao/rank/RankDao";
 import { RankDaoImpl } from "../db/dao/rank/RankDaoImpl";
-import { IRank } from "../../domain/entity/rank/IRank";
-import { ICompany } from "../../domain/entity/company/ICompany";
+import { IRank } from "../../../domain/entity/rank/IRank";
+import { ICompany } from "../../../domain/entity/company/ICompany";
 import { CompanyDao } from "../db/dao/company/CompanyDao";
 import { CompanyDaoImpl } from "../db/dao/company/CompanyDaoImpl";
-import { IBranch } from "../../domain/entity/branch/IBranch";
-import { IEmployeeOther } from "../../domain/entity/employee/IEmployeeOther";
-import { IAccess } from "../../domain/entity/access/IAccess";
-import { IFile } from "../../domain/entity/files/IFile";
+import { IBranch } from "../../../domain/entity/branch/IBranch";
+import { IEmployeeOther } from "../../../domain/entity/employee/IEmployeeOther";
+import { IAccess } from "../../../domain/entity/access/IAccess";
+import { IFile } from "../../../domain/entity/files/IFile";
 import { FileDao } from "../db/dao/files/FileDao";
 import { FileDaoImpl } from "../db/dao/files/FileDaoImpl";
-import { IEmployeeInfo } from "../../domain/entity/employee/IEmployeeInfo";
-import { IProduct } from "../../domain/entity/product/IProduct";
+import { IEmployeeInfo } from "../../../domain/entity/employee/IEmployeeInfo";
+import { IProduct } from "../../../domain/entity/product/IProduct";
 import { ProductDao } from "../db/dao/product/ProductDao";
 import { ProductDaoImpl } from "../db/dao/product/ProductDaoImpl";
-import { ICategory } from "../../domain/entity/product/ICategory";
-import { IBrand } from "../../domain/entity/product/IBrand";
-import { IPurchase } from "../../domain/entity/product/IPurchase";
-import { IClient } from "../../domain/entity/crm/IClient";
+import { ICategory } from "../../../domain/entity/product/ICategory";
+import { IBrand } from "../../../domain/entity/product/IBrand";
+import { IPurchase } from "../../../domain/entity/product/IPurchase";
+import { IClient } from "../../../domain/entity/crm/IClient";
 import { CrmDao } from "../db/dao/crm/CrmDao";
 import { CrmDaoImpl } from "../db/dao/crm/CrmDaoImpl";
 

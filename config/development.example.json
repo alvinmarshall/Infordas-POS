@@ -9,7 +9,7 @@
         "password":"",
         "connectionLimit":100
     },
-    "sqliteFile":"",
+    "sqliteFile":"pos_test.db",
     "asset":"",
     "jwtConfig":{
         "secret":""

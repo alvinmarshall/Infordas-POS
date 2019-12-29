@@ -13,22 +13,22 @@
 // limitations under the License.
 
 import { FileDao } from "./FileDao";
-import { MysqlDatabase } from "../../MysqlDatabase";
 import { injectable, inject } from "inversify";
-import { IFile } from "../../../../domain/entity/files/IFile";
+import { DatabaseContext } from "../../../remote-source/DatabaseContext";
+import { IFile } from "../../../../../domain/entity/files/IFile";
 
 /**
  * FileDaoImpl
  */
 @injectable()
 export class FileDaoImpl implements FileDao {
-  private db: MysqlDatabase;
+  private db: DatabaseContext;
 
   /**
    * @constructor
-   * @param $db MysqlDatabase instance
+   * @param $db DatabaseContext instance required
    */
-  constructor(@inject(MysqlDatabase) $db: MysqlDatabase) {
+  constructor(@inject(DatabaseContext) $db: DatabaseContext) {
     this.db = $db;
   }
 

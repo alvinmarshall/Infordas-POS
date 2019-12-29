@@ -13,7 +13,7 @@
     "serve": "npm run build&& node ./dist/src/index.js ",
     "start:dev": "set NODE_ENV=development&& nodemon",
     "dev": "set NODE_ENV=development&& ts-node ./src/index.ts",
-    "test": "mocha -r ts-node/register \"tests/**/*.spec.ts\""
+    "test": "set NODE_ENV=test&& nyc --reporter=html --reporters=text mocha -r ts-node/register --exit"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -48,11 +48,17 @@
     "@types/node": "^12.12.7",
     "@types/passport": "^1.0.1",
     "@types/passport-jwt": "^3.0.3",
+    "@types/sqlite3": "^3.1.6",
+    "@types/supertest": "^2.0.8",
     "@types/uuid": "^3.4.6",
     "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "mocha": "^6.2.2",
     "nodemon": "^1.19.4",
+    "nyc": "^15.0.0",
     "rimraf": "^3.0.0",
+    "sqlite3": "^4.1.1",
+    "supertest": "^4.0.2",
     "ts-mockito": "^2.5.0",
     "ts-node": "^8.5.0",
     "typescript": "^3.7.3"

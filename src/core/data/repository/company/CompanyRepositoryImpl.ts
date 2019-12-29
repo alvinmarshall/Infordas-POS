@@ -14,9 +14,9 @@
 
 import { CompanyRepository } from "../../../domain/repository/CompanyRepository";
 import { ICompany } from "../../../domain/entity/company/ICompany";
-import { RemoteDataSource } from "../../RemoteDataSource";
+import { RemoteDataSource } from "../../source/remote-source/RemoteDataSource";
 import { inject, injectable } from "inversify";
-import { RemoteDataSourceImpl } from "../../../remote-source/source/RemoteDataSourceImpl";
+import { RemoteDataSourceImpl } from "../../source/remote-source/RemoteDataSourceImpl";
 import { IBranch } from "../../../domain/entity/branch/IBranch";
 
 /**

@@ -12,27 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { MysqlDatabase } from "../../MysqlDatabase";
 import { ProductDao } from "./ProductDao";
-import { IProduct } from "../../../../domain/entity/product/IProduct";
+import { DatabaseContext } from "../../../remote-source/DatabaseContext";
 import { injectable, inject } from "inversify";
-import {
-  PRODUCT_TABLE,
-  CATEGORY_TABLE,
-  BRAND_TABLE,
-  PURCHASE_TABLE
-} from "../../../../../common/constants";
-import { ICategory } from "../../../../domain/entity/product/ICategory";
-import { IBrand } from "../../../../domain/entity/product/IBrand";
-import { IPurchase } from "../../../../domain/entity/product/IPurchase";
+import { IPurchase } from "../../../../../domain/entity/product/IPurchase";
+import { PURCHASE_TABLE, PRODUCT_TABLE, BRAND_TABLE, CATEGORY_TABLE } from "../../../../../../common/constants";
+import { IBrand } from "../../../../../domain/entity/product/IBrand";
+import { ICategory } from "../../../../../domain/entity/product/ICategory";
+import { IProduct } from "../../../../../domain/entity/product/IProduct";
 /**
  * ProductDaoImpl
  */
 @injectable()
 export class ProductDaoImpl implements ProductDao {
-  private db: MysqlDatabase;
+  private db: DatabaseContext;
 
-  constructor(@inject(MysqlDatabase) $db: MysqlDatabase) {
+  /**
+   * 
+   * @param $db require DatabaseContext instance
+   */
+  constructor(@inject(DatabaseContext) $db: DatabaseContext) {
     this.db = $db;
   }
   //

@@ -16,8 +16,8 @@ import { EmployeeRepository } from "../../../domain/repository/EmployeeRepositor
 import { IEmployee } from "../../../domain/entity/employee/IEmployee";
 import { IEmployeeOther } from "../../../domain/entity/employee/IEmployeeOther";
 import { injectable, inject } from "inversify";
-import { RemoteDataSource } from "../../RemoteDataSource";
-import { RemoteDataSourceImpl } from "../../../remote-source/source/RemoteDataSourceImpl";
+import { RemoteDataSource } from "../../source/remote-source/RemoteDataSource";
+import { RemoteDataSourceImpl } from "../../source/remote-source/RemoteDataSourceImpl";
 import { IEmployeeInfo } from "../../../domain/entity/employee/IEmployeeInfo";
 
 /**

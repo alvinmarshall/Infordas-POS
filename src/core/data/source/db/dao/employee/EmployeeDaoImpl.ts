@@ -13,12 +13,12 @@
 // limitations under the License.
 
 import { EmployeeDao } from "./EmployeeDao";
-import { IEmployee } from "../../../../domain/entity/employee/IEmployee";
-import { MysqlDatabase } from "../../MysqlDatabase";
-import { EMPLOYEE_TABLE } from "../../../../../common/constants";
+import { DatabaseContext } from "../../../remote-source/DatabaseContext";
 import { injectable, inject } from "inversify";
-import { IEmployeeOther } from "../../../../domain/entity/employee/IEmployeeOther";
-import { IEmployeeInfo } from "../../../../domain/entity/employee/IEmployeeInfo";
+import { IEmployeeInfo } from "../../../../../domain/entity/employee/IEmployeeInfo";
+import { EMPLOYEE_TABLE } from "../../../../../../common/constants";
+import { IEmployee } from "../../../../../domain/entity/employee/IEmployee";
+import { IEmployeeOther } from "../../../../../domain/entity/employee/IEmployeeOther";
 
 /**
  * EmployeeDaoImpl class
@@ -27,13 +27,13 @@ import { IEmployeeInfo } from "../../../../domain/entity/employee/IEmployeeInfo"
 
 @injectable()
 export class EmployeeDaoImpl implements EmployeeDao {
-  private db: MysqlDatabase;
+  private db: DatabaseContext;
 
   /**
    * @constructor
-   * @param $db remote database instance required
+   * @param $db DatabaseContext instance required
    */
-  constructor(@inject(MysqlDatabase) $db: MysqlDatabase) {
+  constructor(@inject(DatabaseContext) $db: DatabaseContext) {
     this.db = $db;
   }
   updateEmployee(employee: IEmployeeInfo): Promise<any> {

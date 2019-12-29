@@ -13,19 +13,20 @@
 // limitations under the License.
 
 import { CrmDao } from "./CrmDao";
-import { IClient } from "../../../../domain/entity/crm/IClient";
-import { MysqlDatabase } from "../../MysqlDatabase";
 import { inject, injectable } from "inversify";
-import {
-  CUSTOMER_TABLE,
-  SUPPLIER_TABLE
-} from "../../../../../common/constants";
+import { DatabaseContext } from "../../../remote-source/DatabaseContext";
+import { IClient } from "../../../../../domain/entity/crm/IClient";
+import { CUSTOMER_TABLE, SUPPLIER_TABLE } from "../../../../../../common/constants";
 
 @injectable()
 export class CrmDaoImpl implements CrmDao {
-  private db: MysqlDatabase;
+  private db: DatabaseContext;
 
-  constructor(@inject(MysqlDatabase) $db: MysqlDatabase) {
+  /**
+   * 
+   * @param $db require DatabaseContext instance
+   */
+  constructor(@inject(DatabaseContext) $db: DatabaseContext) {
     this.db = $db;
   }
   getCustomer(): Promise<IClient[]> {
