@@ -27,7 +27,7 @@ export class UserController {
     try {
       const body: ICredentials = req.body;
       const data = await this.userService.authenticateUser(body);
-      if (data == null)
+      if (data === null)
         return res
           .status(401)
           .send({ message: "Invalid credentials", status: 401 });

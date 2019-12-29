@@ -50,7 +50,7 @@ export class SqliteDatabase extends BaseDatabase {
         if (err) return reject(err);
         //@ts-ignore
         const affectedRows = this.changes;
-        return resolve(affectedRows);
+        resolve(affectedRows);
       });
     });
   }
@@ -58,11 +58,8 @@ export class SqliteDatabase extends BaseDatabase {
   private queryGet(sql: string, args: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.connection.all(sql, args, (err: any, results: any) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(results);
-        }
+        if (err) return reject(err);
+        resolve(results);
       });
     });
   }

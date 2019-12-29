@@ -14,7 +14,6 @@ import { injectable, inject } from "inversify";
 import { IUser } from "../../../core/domain/entity/user/IUser";
 import { AddAUserTask } from "../../../core/domain/useCase/user/AddAUserTask";
 import { JWTTokenService } from "../auth/JWTTokenService";
-import { AccessTask } from "../../../core/domain/useCase/access/AccessTask";
 import bcryptjs from "bcryptjs";
 import { GetUsersTask } from "../../../core/domain/useCase/user/GetUsersTask";
 
@@ -27,7 +26,6 @@ export class UserService {
   private addAUserTask: AddAUserTask;
   private getUsersTask: GetUsersTask;
   private jwtService: JWTTokenService;
-  private accessTask: AccessTask;
 
   /**
    *
@@ -41,35 +39,30 @@ export class UserService {
     @inject(AddAUserTask) $addAUserTask: AddAUserTask,
     @inject(GetUsersTask)
     $getUsersTask: GetUsersTask,
-    @inject(JWTTokenService) $jwtService: JWTTokenService,
-    @inject(AccessTask) $accessTask: AccessTask
+    @inject(JWTTokenService) $jwtService: JWTTokenService
   ) {
     this.getAuthenticationTask = $getAuthenticationTask;
     this.addAUserTask = $addAUserTask;
     this.getUsersTask = $getUsersTask;
     this.jwtService = $jwtService;
-    this.accessTask = $accessTask;
   }
 
   authenticateUser(credentials: ICredentials): Promise<any> {
-    return this.getAuthenticationTask.buildUseCase(credentials).then(data => {
-      if (!data) return null;
-      const isValidPass = bcryptjs.compareSync(
-        credentials.password,
-        data.password
-      );
-      if (!isValidPass) return;
-      const token = this.jwtService.generateToken(data);
-      this.accessTask.buildUseCase({
-        uuid: data.uuid,
-        token,
-        startTime: new Date().getTime().toString()
-      });
-      return {
-        name: data.name,
-        token,
-        rank: data.rank
-      };
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = await this.getAuthenticationTask.buildUseCase(credentials);
+        if (!data) return resolve(null);
+        const isValidPass = await bcryptjs.compare(
+          credentials.password,
+          data.password
+        );
+        if (!isValidPass) return resolve(null);
+        const token = this.jwtService.generateToken(data);
+        const { name, rank } = data;
+        resolve({ name, token, rank: rank });
+      } catch (error) {
+        reject(error);
+      }
     });
   }
 
