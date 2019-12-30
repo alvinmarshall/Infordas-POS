@@ -16,8 +16,15 @@ import { UserDao } from "./UserDao";
 import { DatabaseContext } from "../../../remote-source/DatabaseContext";
 import { injectable, inject } from "inversify";
 import { IUser } from "../../../../../domain/entity/user/IUser";
-import { USER_TABLE, EMPLOYEE_TABLE, ACCESS_TABLE } from "../../../../../../common/constants";
+import {
+  USER_TABLE,
+  EMPLOYEE_TABLE,
+  ACCESS_TABLE,
+  ADMIN_TABLE,
+  RANK_TABLE
+} from "../../../../../../common/constants";
 import { IAccess } from "../../../../../domain/entity/access/IAccess";
+import { IAdmin } from "../../../../../domain/entity/user/IAdmin";
 
 @injectable()
 export class UserDaoImpl implements UserDao {
@@ -25,6 +32,23 @@ export class UserDaoImpl implements UserDao {
 
   constructor(@inject(DatabaseContext) $db: DatabaseContext) {
     this.db = $db;
+  }
+
+  async addAdmin(admin: IAdmin): Promise<any> {
+    try {
+      const message = "You need an administrator right to create this account";
+      const checkAdminAvailability = await this.checkAdminAvailability();
+      const rankId = await this.createOrAssignAdminRank();
+      admin.rank = rankId;
+      if (checkAdminAvailability) {
+        const checkRef = await this.checkAdminReference(admin.adminRef);
+        if (checkRef) return this.createAdminAccount(admin);
+        return Promise.resolve({ message });
+      }
+      return this.createAdminAccount(admin);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 
   getUsers(): Promise<IUser[]> {
@@ -103,4 +127,54 @@ export class UserDaoImpl implements UserDao {
       return data[0];
     });
   }
+
+  //#region  HELPER FUNCTIONS
+  private createAdminAccount(admin: IAdmin): Promise<any> {
+    const sql = `INSERT INTO ${ADMIN_TABLE} (Name,Contact,Emp_ID,Username,Password,Rank_ID) 
+    VALUES(?,?,REPLACE(?,'-',''),?,?,?)`;
+    return this.db
+      .query(sql, [
+        admin.name,
+        admin.contact,
+        admin.uuid,
+        admin.username,
+        admin.password,
+        admin.rank
+      ])
+      .then(data => {
+        return { message: `${data.affectedRows} item inserted` };
+      });
+  }
+  private async createOrAssignAdminRank(
+    position: string = "Admin"
+  ): Promise<any> {
+    let sql = `SELECT id FROM ${RANK_TABLE} WHERE Position = ? LIMIT 1`;
+    return this.db.query(sql, [position]).then(data => {
+      if (data[0] && data[0].id > 0) {
+        return data[0].id;
+      }
+      sql = `INSERT INTO ${RANK_TABLE} (Position) VALUES(?)`;
+      return this.db.query(sql, [position]).then(data => data.insertId);
+    });
+  }
+  private checkAdminAvailability(): Promise<boolean> {
+    const sql = `SELECT COUNT(*) AS count FROM ${ADMIN_TABLE}`;
+    return this.db.query(sql, []).then(data => {
+      if (data[0] && data[0].count > 0) {
+        return true;
+      }
+      return false;
+    });
+  }
+
+  private checkAdminReference(adimRef: string): Promise<boolean> {
+    const sql = `SELECT COUNT(*) AS count FROM ${ADMIN_TABLE} WHERE Emp_ID = ? LIMIT 1`;
+    return this.db.query(sql, [adimRef]).then(data => {
+      if (data[0] && data[0].count > 0) {
+        return true;
+      }
+      return false;
+    });
+  }
+  //#endregion
 }

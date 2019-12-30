@@ -18,6 +18,7 @@ import { UserRepository } from "./../../../domain/repository/UserRepository";
 import { RemoteDataSourceImpl } from "../../source/remote-source/RemoteDataSourceImpl";
 import { IUser } from "../../../domain/entity/user/IUser";
 import { IAccess } from "../../../domain/entity/access/IAccess";
+import { IAdmin } from "../../../domain/entity/user/IAdmin";
 
 @injectable()
 export class UserRepositoryImpl implements UserRepository {
@@ -44,5 +45,8 @@ export class UserRepositoryImpl implements UserRepository {
   }
   getUsers(): Promise<IUser[]> {
     return this.remoteDataSource.getUsers();
+  }
+  addAdmin(admin: IAdmin): Promise<any> {
+    return this.remoteDataSource.addAdmin(admin);
   }
 }

@@ -56,4 +56,12 @@ router.get(
     controller.getUsersCount(req, res);
   }
 );
+
+router.post(
+  "/admin/register",
+  // passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.createAdminAccount(req, res);
+  }
+);
 export default router;

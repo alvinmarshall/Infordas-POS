@@ -50,7 +50,10 @@ export class SqliteDatabase extends BaseDatabase {
         if (err) return reject(err);
         //@ts-ignore
         const affectedRows = this.changes;
-        resolve(affectedRows);
+        //@ts-ignore
+        const insertId = this.lastID;
+        
+        resolve({affectedRows,insertId});
       });
     });
   }

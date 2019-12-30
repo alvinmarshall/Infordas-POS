@@ -26,6 +26,7 @@ export const BRAND_TABLE: string = "brand";
 export const PURCHASE_TABLE: string = "purchase";
 export const CUSTOMER_TABLE: string = "customer";
 export const SUPPLIER_TABLE: string = "supplier";
+export const ADMIN_TABLE: string = "admin";
 export const FILE_TYPE: IFileType[] = [
   {
     name: "profile",
@@ -39,4 +40,9 @@ export const FILE_TYPE: IFileType[] = [
 export enum Client_Type {
   CUSTOMER = "CUSTOMER",
   SUPPLIER = "SUPPLIER"
+}
+
+export enum User_Type {
+  ADMIN,
+  USER
 }

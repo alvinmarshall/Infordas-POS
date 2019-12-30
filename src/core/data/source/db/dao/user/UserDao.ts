@@ -16,6 +16,7 @@
 import { IUser } from "../../../../../domain/entity/user/IUser";
 
 import { IAccess } from "../../../../../domain/entity/access/IAccess";
+import { IAdmin } from "../../../../../domain/entity/user/IAdmin";
 
 export interface UserDao {
   getUserWithCredentials(
@@ -29,4 +30,5 @@ export interface UserDao {
   addUser(user: IUser): Promise<any>;
 
   addUserAccess(access: IAccess): Promise<any>;
+  addAdmin(admin: IAdmin): Promise<any>;
 }

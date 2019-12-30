@@ -94,6 +94,7 @@ import { CompanyDaoImpl } from "../../core/data/source/db/dao/company/CompanyDao
 import { RankDaoImpl } from "../../core/data/source/db/dao/rank/RankDaoImpl";
 import { EmployeeDaoImpl } from "../../core/data/source/db/dao/employee/EmployeeDaoImpl";
 import { UserDaoImpl } from "../../core/data/source/db/dao/user/UserDaoImpl";
+import { AddAdminTask } from "../../core/domain/useCase/user/AddAdminTask";
 let DIContainer = new Container();
 
 //
@@ -128,6 +129,7 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<AddAdminTask>(AddAdminTask).toSelf()
 DIContainer.bind<GetClientTask>(GetClientTask).toSelf();
 DIContainer.bind<AddClientTask>(AddClientTask).toSelf();
 DIContainer.bind<AddPurchaseTask>(AddPurchaseTask).toSelf();
@@ -189,7 +191,8 @@ DIContainer.bind<EmployeeDaoImpl>(EmployeeDaoImpl).toSelf();
 DIContainer.bind<UserDaoImpl>(UserDaoImpl).toSelf();
 if (process.env.NODE_ENV === "test") {
   DIContainer.bind<DatabaseContext>(DatabaseContext).toConstantValue(
-    new SqliteDatabase(config.get("sqliteFile"))
+    // new SqliteDatabase(config.get("sqliteFile"))
+    new DatabaseContext(config.get("mysqlConfig"))
   );
 } else {
   DIContainer.bind<DatabaseContext>(DatabaseContext).toConstantValue(

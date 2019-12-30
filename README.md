@@ -3,6 +3,7 @@
 ### can login with credentials
 ### can add a new user
 ### can get user with identifier
+### can have admin access
 
 # Employee use case
 

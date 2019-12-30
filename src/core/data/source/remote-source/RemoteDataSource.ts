@@ -26,6 +26,7 @@ import { ICategory } from "../../../domain/entity/product/ICategory";
 import { IBrand } from "../../../domain/entity/product/IBrand";
 import { IPurchase } from "../../../domain/entity/product/IPurchase";
 import { IClient } from "../../../domain/entity/crm/IClient";
+import { IAdmin } from "../../../domain/entity/user/IAdmin";
 
 export interface RemoteDataSource {
   //
@@ -118,4 +119,5 @@ export interface RemoteDataSource {
   getUserWithCredentials(username: string, password: string): Promise<IUser>;
   getUserWithIdentifier(identifier: string): Promise<IUser[]>;
   getUsers(): Promise<IUser[]>;
+  addAdmin(admin: IAdmin): Promise<any>;
 }

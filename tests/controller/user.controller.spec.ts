@@ -2,6 +2,7 @@ import app from "../../src";
 import { agent as request } from "supertest";
 import { expect } from "chai";
 import { ICredentials } from "../../src/core/domain/entity/user/IAuthenticationParams";
+import { TestUserGeneratorTest } from "../utils/TestUserGenerator";
 
 describe("controller.User test", () => {
   it("Login user with correct credentials success", async () => {
@@ -32,4 +33,24 @@ describe("controller.User test", () => {
     }
   });
 
+  it("Register new admin", async () => {
+    const admin = TestUserGeneratorTest.admin();
+    admin.adminRef = admin.uuid;
+    const res = await request(app)
+      .post("/users/admin/register")
+      .send(admin);
+    console.log("response", res.body);
+  });
+
+  it("Register new admin with no admin right", async () => {
+    const message = "You need an administrator right to create this account";
+    const admin = TestUserGeneratorTest.admin();
+    admin.username = "test admin 2"
+    const res = await request(app)
+      .post("/users/admin/register")
+      .send(admin);
+    expect(res.status).to.be.equal(403);
+    expect(res.body.data.message).to.be.equal(message);
+    console.log("response", res.body);
+  });
 });

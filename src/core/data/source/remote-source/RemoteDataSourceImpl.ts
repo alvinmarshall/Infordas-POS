@@ -42,6 +42,7 @@ import { IPurchase } from "../../../domain/entity/product/IPurchase";
 import { IClient } from "../../../domain/entity/crm/IClient";
 import { CrmDao } from "../db/dao/crm/CrmDao";
 import { CrmDaoImpl } from "../db/dao/crm/CrmDaoImpl";
+import { IAdmin } from "../../../domain/entity/user/IAdmin";
 
 @injectable()
 export class RemoteDataSourceImpl implements RemoteDataSource {
@@ -269,5 +270,9 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   }
   getUsers(): Promise<IUser[]> {
     return this.userDao.getUsers();
+  }
+
+  addAdmin(admin: IAdmin): Promise<any> {
+    return this.userDao.addAdmin(admin);
   }
 }

@@ -14,8 +14,20 @@
 
 import { IUser } from "../../src/core/domain/entity/user/IUser";
 import { IAccess } from "../../src/core/domain/entity/access/IAccess";
+import { IAdmin } from "../../src/core/domain/entity/user/IAdmin";
 
 export class TestUserGeneratorTest {
+  static admin(): IAdmin {
+    return {
+      name:"test name",
+      contact:"test contact",
+      username: "admin_testusername",
+      password: "test password",
+      uuid: "test uuid",
+      adminRef: "test admin ref"
+    };
+  }
+
   static getUser(): IUser[] {
     return [
       {

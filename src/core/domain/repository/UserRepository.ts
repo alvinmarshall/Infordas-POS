@@ -14,6 +14,7 @@
 
 import { IUser } from "../entity/user/IUser";
 import { IAccess } from "../entity/access/IAccess";
+import { IAdmin } from "../entity/user/IAdmin";
 
 export interface UserRepository {
   getUserWithCredentials(
@@ -24,6 +25,7 @@ export interface UserRepository {
   getUserWithIdentifier(identifier: string): Promise<IUser[]>;
 
   addAUser(user: IUser): Promise<any>;
+  addAdmin(admin: IAdmin): Promise<any>;
 
   setUserAccess(access: IAccess): Promise<any>;
   getUsers():Promise<IUser[]>;
