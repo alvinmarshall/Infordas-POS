@@ -14,7 +14,7 @@
 import { CompanyDao } from "./CompanyDao";
 
 import { injectable, inject } from "inversify";
-import { DatabaseContext } from "../../../remote-source/DatabaseContext";
+import { DatabaseContext } from "../../../../DatabaseContext";
 import { IBranch } from "../../../../../domain/entity/branch/IBranch";
 import { BRANCH_TABLE, COMPANY_TABLE, EMPLOYEE_TABLE } from "../../../../../../common/constants";
 import { ICompany } from "../../../../../domain/entity/company/ICompany";

@@ -14,7 +14,7 @@
 
 import { CrmDao } from "./CrmDao";
 import { inject, injectable } from "inversify";
-import { DatabaseContext } from "../../../remote-source/DatabaseContext";
+import { DatabaseContext } from "../../../../DatabaseContext";
 import { IClient } from "../../../../../domain/entity/crm/IClient";
 import { CUSTOMER_TABLE, SUPPLIER_TABLE } from "../../../../../../common/constants";
 

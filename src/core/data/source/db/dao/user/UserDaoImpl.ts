@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { UserDao } from "./UserDao";
-import { DatabaseContext } from "../../../remote-source/DatabaseContext";
+import { DatabaseContext } from "../../../../DatabaseContext";
 import { injectable, inject } from "inversify";
 import { IUser } from "../../../../../domain/entity/user/IUser";
 import {

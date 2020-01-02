@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { ProductDao } from "./ProductDao";
-import { DatabaseContext } from "../../../remote-source/DatabaseContext";
+import { DatabaseContext } from "../../../../DatabaseContext";
 import { injectable, inject } from "inversify";
 import { IPurchase } from "../../../../../domain/entity/product/IPurchase";
 import { PURCHASE_TABLE, PRODUCT_TABLE, BRAND_TABLE, CATEGORY_TABLE } from "../../../../../../common/constants";

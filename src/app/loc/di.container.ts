@@ -86,7 +86,7 @@ import { CategoryService } from "../api/product/category.service";
 import { PurchaseService } from "../api/product/purchase.service";
 import config from "config";
 import { SqliteDatabase } from "../../core/data/source/local-source/SqliteDatabase";
-import { DatabaseContext } from "../../core/data/source/remote-source/DatabaseContext";
+import { DatabaseContext } from "../../core/data/DatabaseContext";
 import { CrmDaoImpl } from "../../core/data/source/db/dao/crm/CrmDaoImpl";
 import { ProductDaoImpl } from "../../core/data/source/db/dao/product/ProductDaoImpl";
 import { FileDaoImpl } from "../../core/data/source/db/dao/files/FileDaoImpl";

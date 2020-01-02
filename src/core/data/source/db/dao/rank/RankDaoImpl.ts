@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-import { DatabaseContext } from "../../../remote-source/DatabaseContext";
+import { DatabaseContext } from "../../../../DatabaseContext";
 import { injectable, inject } from "inversify";
 import { RankDao } from "./RankDao";
 import { IRank } from "../../../../../domain/entity/rank/IRank";

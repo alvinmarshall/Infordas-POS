@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { EmployeeDao } from "./EmployeeDao";
-import { DatabaseContext } from "../../../remote-source/DatabaseContext";
+import { DatabaseContext } from "../../../../DatabaseContext";
 import { injectable, inject } from "inversify";
 import { IEmployeeInfo } from "../../../../../domain/entity/employee/IEmployeeInfo";
 import { EMPLOYEE_TABLE } from "../../../../../../common/constants";

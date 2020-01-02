@@ -14,7 +14,7 @@
 
 import { FileDao } from "./FileDao";
 import { injectable, inject } from "inversify";
-import { DatabaseContext } from "../../../remote-source/DatabaseContext";
+import { DatabaseContext } from "../../../../DatabaseContext";
 import { IFile } from "../../../../../domain/entity/files/IFile";
 
 /**

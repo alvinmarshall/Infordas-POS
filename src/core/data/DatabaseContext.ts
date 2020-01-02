@@ -1,6 +1,6 @@
 import mysql from "mysql";
 import { injectable } from "inversify";
-import { BaseDatabase } from "../db/base/BaseDatabase";
+import { BaseDatabase } from "./source/db/base/BaseDatabase";
 
 @injectable()
 export class DatabaseContext extends BaseDatabase {
