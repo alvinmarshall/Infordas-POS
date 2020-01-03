@@ -1,0 +1,3 @@
+--file ./integration_test/startup.spec.ts
+./integration_test/controller/**/*.spec.ts
+--file ./integration_test/teardown.spec.ts

@@ -16,7 +16,11 @@ import { CompanyDao } from "./CompanyDao";
 import { injectable, inject } from "inversify";
 import { DatabaseContext } from "../../../../DatabaseContext";
 import { IBranch } from "../../../../../domain/entity/branch/IBranch";
-import { BRANCH_TABLE, COMPANY_TABLE, EMPLOYEE_TABLE } from "../../../../../../common/constants";
+import {
+  BRANCH_TABLE,
+  COMPANY_TABLE,
+  EMPLOYEE_TABLE
+} from "../../../../../../common/constants";
 import { ICompany } from "../../../../../domain/entity/company/ICompany";
 
 /**
@@ -54,9 +58,10 @@ export class CompanyDaoImpl implements CompanyDao {
     
     FROM ${BRANCH_TABLE} b
     
-    INNER JOIN ${COMPANY_TABLE} c, ${EMPLOYEE_TABLE} e
+    LEFT JOIN ${COMPANY_TABLE} c ON c.id = b.Comp_ID
+    LEFT JOIN ${EMPLOYEE_TABLE} e ON e.Emp_ID = b.Emp_ID
     
-    WHERE b.Comp_ID = c.id AND b.Emp_ID = e.Emp_ID AND b.Branch_ID = ?`;
+    WHERE b.Branch_ID = ?`;
 
     return this.db.query(sql, [identifier]);
   }
@@ -77,10 +82,9 @@ export class CompanyDaoImpl implements CompanyDao {
     
     FROM ${BRANCH_TABLE} b
     
-    INNER JOIN ${COMPANY_TABLE} c, ${EMPLOYEE_TABLE} e
-    
-    WHERE b.Comp_ID = c.id AND b.Emp_ID = e.Emp_ID`;
-
+    LEFT JOIN ${COMPANY_TABLE} c ON c.id = b.Comp_ID
+    LEFT JOIN ${EMPLOYEE_TABLE} e ON e.Emp_ID = b.Emp_ID
+    `;
     return this.db.query(sql, []);
   }
   removeBranch(identifier: string): Promise<any> {
@@ -150,7 +154,6 @@ export class CompanyDaoImpl implements CompanyDao {
   }
 
   updateCompany(company: ICompany): Promise<any> {
-    console.log(company);
     let sql = `UPDATE ${COMPANY_TABLE} SET Name = ?,Location = ?,Address = ?,Contact = ?,Email = ?,Website = ? WHERE id = ?`;
     return this.db
       .query(sql, [

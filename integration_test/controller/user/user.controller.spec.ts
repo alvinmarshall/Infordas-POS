@@ -1,27 +1,18 @@
 import "reflect-metadata";
-import app from "../../src";
+import app from "../../../src";
 import { agent as request } from "supertest";
 import { expect } from "chai";
-import { ICredentials } from "../../src/core/domain/entity/user/IAuthenticationParams";
-import { TestUserGeneratorTest } from "../utils/TestUserGenerator";
-import DIContainer from "../../src/app/loc/di.container";
-import { UserDaoImpl } from "../../src/core/data/source/db/dao/user/UserDaoImpl";
+import { ICredentials } from "../../../src/core/domain/entity/user/IAuthenticationParams";
+import { TestUserGeneratorTest } from "../../../tests/utils/TestUserGenerator";
 
-describe("controller.User test", () => {
-  const context = DIContainer.resolve<UserDaoImpl>(UserDaoImpl);
+describe("controller.user UserController Test", () => {
   let authToken: string;
 
   before(async () => {
-    const admin = TestUserGeneratorTest.admin();
-    let res = await request(app)
-      .post("/users/admin/register")
-      .send(admin);
-    expect(res.status).to.be.equal(201);
-
     const { username, password } = TestUserGeneratorTest.admin();
     const body: ICredentials = { username, password };
     body.username = `admin_${username}`;
-    res = await request(app)
+    const res = await request(app)
       .post("/users/login")
       .send(body);
     expect(res.status).to.be.equal(200);
@@ -29,7 +20,7 @@ describe("controller.User test", () => {
     authToken = `Bearer ${token}`;
   });
 
-  it("Register new admin", async () => {
+  it("POST /users/admin/register", async () => {
     const admin = TestUserGeneratorTest.admin();
     admin.username = "test_username2";
     admin.adminRef = admin.uuid;
@@ -40,7 +31,7 @@ describe("controller.User test", () => {
     // console.log("response", res.body);
   });
 
-  it("Login admin with correct credentials success", async () => {
+  it("POST /users/login Admin login", async () => {
     const { username, password } = TestUserGeneratorTest.admin();
     let body: ICredentials = { username, password };
     body.username = `admin_${username}`;
@@ -74,7 +65,7 @@ describe("controller.User test", () => {
     // console.log("response", res.body);
   });
 
-  it("Create a new user account success", async () => {
+  it("POST /users/register", async () => {
     const user = TestUserGeneratorTest.createUser();
     const res = await request(app)
       .post("/users/register")
@@ -94,7 +85,7 @@ describe("controller.User test", () => {
     expect(res.body.data).to.be.an("Object");
   });
 
-  it("Get user count success", async () => {
+  it("GET /users/counts", async () => {
     const res = await request(app)
       .get("/users/counts")
       .set("Authorization", authToken);
@@ -107,11 +98,5 @@ describe("controller.User test", () => {
       .send({ password: "" })
       .set("Authorization", authToken);
     expect(res.status).to.be.equal(500);
-  });
-
-  after(async () => {
-    await context.db.query(TestUserGeneratorTest.resetAdminTableSql(), []);
-    await context.db.query(TestUserGeneratorTest.resetUserTableSql(), []);
-    await context.db.query(TestUserGeneratorTest.resetRankTableSql(), []);
   });
 });

@@ -29,7 +29,6 @@ export class CrmController {
 
   async addCustomer(req: Request, res: Response) {
     try {
-      console.log("v4", v4());
       const body: IClient = req.body;
       body.uid = v4();
       body.type = Client_Type.CUSTOMER;

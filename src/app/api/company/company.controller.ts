@@ -149,14 +149,7 @@ export class CompanyController {
   async getCompanies(req: Request, res: Response) {
     try {
       const data = await this.companyService.getCompanies();
-      const message =
-        data.length == 0 ? "No record available" : "Available records";
-
-      return res.status(200).send({
-        message,
-        data,
-        status: 200
-      });
+      return res.status(200).send({ data, status: 200 });
     } catch (error) {
       console.error(error);
       return res
@@ -167,11 +160,9 @@ export class CompanyController {
 
   async getCompany(req: Request, res: Response) {
     try {
-      const params = req.params;
-      const data = await this.companyService.getCompany(params.id);
-      const message =
-        data.length == 0 ? "No record available" : "Available records";
-      return res.status(201).send({ data });
+      const identifier = req.params.identifier;
+      const data = await this.companyService.getCompany(identifier);
+      return res.send({ data });
     } catch (error) {
       console.error(error);
       return res

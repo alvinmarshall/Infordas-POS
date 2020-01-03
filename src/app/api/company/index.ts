@@ -113,7 +113,7 @@ router.get(
 //
 
 router.get(
-  "/company/:id",
+  "/company/:identifier",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     controller.getCompany(req, res);

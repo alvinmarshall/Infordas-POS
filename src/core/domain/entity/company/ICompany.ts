@@ -13,11 +13,14 @@
 // limitations under the License.
 
 export interface ICompany {
-  id?: number;
+  id?: number|string;
   name: string;
   location: string;
   address: string;
   contact: string;
   email?: string;
   website?: string;
+  empId?: string;
+  imageUrl?: string;
+
 }

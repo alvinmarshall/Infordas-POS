@@ -85,7 +85,6 @@ export class RankController {
   async getRank(req: Request, res: Response) {
     try {
       const identifier = req.params.identifier;
-      console.log(identifier);
       const data = await this.rankService.getRankWithIdentifier(identifier);
       return res.send({ data, status: 200 });
     } catch (error) {

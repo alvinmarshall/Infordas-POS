@@ -103,17 +103,4 @@ export class TestUserGeneratorTest {
       endTime: "test end time"
     };
   }
-  static resetAdminTableSql(): string {
-    return `DELETE FROM ${ADMIN_TABLE};
-    DELETE FROM sqlite_sequence WHERE name= admin;
-`;
-  }
-
-  static resetRankTableSql(): string {
-    return `DELETE FROM ${RANK_TABLE};`;
-  }
-
-  static resetUserTableSql(): string {
-    return `DELETE FROM ${USER_TABLE}; `;
-  }
 }

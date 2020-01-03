@@ -12,18 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export interface IBranch {
-  id?: number;
+import { ICompany } from "../company/ICompany";
+
+export interface IBranch extends ICompany {
   uuid?: string;
-  compId?: number;
-  empId?: string;
-  name?: string;
-  location?: string;
-  address?: string;
-  contact?: string;
-  email?: string;
-  website?: string;
+  compId?: number | string;
   companyName?: string;
   employeeName?: string;
-  imageUrl?: string;
 }
