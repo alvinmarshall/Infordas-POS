@@ -28,12 +28,50 @@ import { IAdmin } from "../../../../../domain/entity/user/IAdmin";
 
 @injectable()
 export class UserDaoImpl implements UserDao {
-  private db: DatabaseContext;
+  db: DatabaseContext;
 
   constructor(@inject(DatabaseContext) $db: DatabaseContext) {
     this.db = $db;
   }
 
+  getAdmins(): Promise<IUser[]> {
+    const sql = `
+    SELECT 
+      Emp_ID AS uuid,
+      Contact AS contact,
+      Name AS name,
+      Password AS password,
+      Username AS username,
+      Rank_ID AS rank 
+    FROM ${ADMIN_TABLE}`;
+    return this.db.query(sql, []);
+  }
+
+  getAdminWithIdentifier(identifier: string): Promise<IUser[]> {
+    const sql = `
+    SELECT 
+      Emp_ID AS uuid,
+      Contact AS contact,
+      Name AS name,
+      Password AS password,
+      Username AS username,
+      Rank_ID AS rank 
+    FROM ${ADMIN_TABLE} WHERE Emp_ID = ? LIMIT 1`;
+    return this.db.query(sql, [identifier]);
+  }
+
+  getAdminWithCredentials(username: string, password: string): Promise<IUser> {
+    const sql = `
+    SELECT 
+    Emp_ID AS uuid,
+    Contact AS contact,
+    Name AS name,
+    Password AS password,
+    Username AS username,
+      Rank_ID AS rank 
+    FROM ${ADMIN_TABLE} WHERE Username = ? LIMIT 1`;
+    return this.db.query(sql, [username]).then(data => data[0]);
+  }
   async addAdmin(admin: IAdmin): Promise<any> {
     try {
       const message = "You need an administrator right to create this account";
@@ -53,7 +91,7 @@ export class UserDaoImpl implements UserDao {
 
   getUsers(): Promise<IUser[]> {
     let sql = `SELECT 
-      u.Name AS name,
+    u.Name AS name,
       u.Contact AS contact,
       u.Emp_ID AS uuid,
       u.Username AS username,
@@ -61,14 +99,14 @@ export class UserDaoImpl implements UserDao {
       u.Rank_ID AS rank,
       e.Hours AS hours
 
-    FROM ${USER_TABLE} u
-    INNER JOIN ${EMPLOYEE_TABLE} e WHERE u.Emp_ID = e.Emp_ID`;
+      FROM ${USER_TABLE} u
+      INNER JOIN ${EMPLOYEE_TABLE} e WHERE u.Emp_ID = e.Emp_ID`;
     return this.db.query(sql, []);
   }
 
   getUserWithidentifier(identifier: string): Promise<IUser[]> {
     let sql = `SELECT 
-      u.Name AS name,
+    u.Name AS name,
       u.Contact AS contact,
       u.Emp_ID AS uuid,
       u.Username AS username,

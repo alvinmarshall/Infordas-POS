@@ -18,6 +18,8 @@ import config from "config";
 import { injectable } from "inversify";
 import { IUser } from "../../../core/domain/entity/user/IUser";
 import { ITokenPayload } from "../../model/ITokenPayload";
+import { type } from "os";
+import { User_Type } from "../../../common/constants";
 @injectable()
 export class JWTTokenService implements IJwtToken {
   generateToken($user: IUser): string {
@@ -27,8 +29,13 @@ export class JWTTokenService implements IJwtToken {
       contact: $user.contact || "",
       rankId: $user.rank || -1,
       username: $user.username,
-      imageUrl:$user.imageUrl || ""
+      imageUrl: $user.imageUrl || "",
+      type: User_Type.USER
     };
+    
+    if ($user.username.includes("admin_")) {
+      payload.type = User_Type.ADMIN;
+    }
     let encode;
     let hours = $user.hours || 1;
 

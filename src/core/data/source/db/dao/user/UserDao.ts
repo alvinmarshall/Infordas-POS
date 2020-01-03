@@ -31,4 +31,10 @@ export interface UserDao {
 
   addUserAccess(access: IAccess): Promise<any>;
   addAdmin(admin: IAdmin): Promise<any>;
+  getAdminWithCredentials(
+    username: string,
+    password: string
+  ): Promise<IUser>;
+  getAdmins():Promise<IUser[]>;
+  getAdminWithIdentifier(identifier: string): Promise<IUser[]>;
 }

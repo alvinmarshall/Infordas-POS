@@ -1,3 +1,6 @@
+import { injectable } from "inversify";
+
+@injectable()
 export abstract class BaseDatabase {
   protected connectionString: string;
   protected connection: any;

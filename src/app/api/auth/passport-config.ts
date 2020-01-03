@@ -20,6 +20,7 @@ import { inject, injectable } from "inversify";
 import isEmpty from "lodash/isEmpty";
 import { ITokenPayload } from "../../model/ITokenPayload";
 import { IUser } from "../../../core/domain/entity/user/IUser";
+import { User_Type } from "../../../common/constants";
 /**
  * PassportService class
  */
@@ -40,14 +41,23 @@ class PassportService {
       opt,
       async (payload: ITokenPayload, done: any) => {
         try {
-          const result = await this.userService.getUserWithIdentifier(payload.uuid)
+          let result;
+          if (payload.type === User_Type.ADMIN) {
+            result = await this.userService.getAdminWithIdentifier(
+              payload.uuid
+            );
+          } else {
+            result = await this.userService.getUserWithIdentifier(payload.uuid);
+          }
 
           if (isEmpty(result)) {
             return done(null, false);
           }
 
-          const tokenPayload:IUser = result;
-          console.log(payload)
+          const tokenPayload: IUser = result;
+          if (process.env.NODE_ENV === "development") {
+            console.log(payload);
+          }
           return done(null, tokenPayload);
         } catch (error) {
           return console.error(error);

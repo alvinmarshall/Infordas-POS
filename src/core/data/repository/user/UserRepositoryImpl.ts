@@ -49,4 +49,13 @@ export class UserRepositoryImpl implements UserRepository {
   addAdmin(admin: IAdmin): Promise<any> {
     return this.remoteDataSource.addAdmin(admin);
   }
+  getAdminWithCredentials(username: string, password: string): Promise<IUser> {
+    return this.remoteDataSource.getAdminWithCredentials(username, password);
+  }
+  getAdmins(): Promise<IUser[]> {
+    return this.remoteDataSource.getAdmins();
+  }
+  getAdminWithIdentifier(identifier: string): Promise<IUser[]> {
+    return this.remoteDataSource.getAdminWithIdentifier(identifier);
+  }
 }

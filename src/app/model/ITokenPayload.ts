@@ -1,3 +1,5 @@
+import { User_Type } from "../../common/constants";
+
 // Copyright 2019 Bik_krl
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,4 +21,5 @@ export interface ITokenPayload {
   username: string;
   rankId: number;
   imageUrl: string;
+  type:User_Type;
 }

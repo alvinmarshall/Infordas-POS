@@ -36,6 +36,11 @@ export class GetAuthenticationTask extends BaseUseCase<IUser, ICredentials> {
   }
   protected generateUseCase(input?: ICredentials | undefined): Promise<IUser> {
     if (input == null) throw new Error("credentials can't be null");
+    if (input.username.includes("admin_"))
+      return this.userRepository.getAdminWithCredentials(
+        input.username,
+        input.password
+      );
     return this.userRepository.getUserWithCredentials(
       input.username,
       input.password

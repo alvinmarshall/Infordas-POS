@@ -29,4 +29,12 @@ export interface UserRepository {
 
   setUserAccess(access: IAccess): Promise<any>;
   getUsers():Promise<IUser[]>;
+  getAdminWithCredentials(
+    username: string,
+    password: string
+  ): Promise<IUser>;
+
+  getAdmins():Promise<IUser[]>;
+  getAdminWithIdentifier(identifier: string): Promise<IUser[]>;
+
 }

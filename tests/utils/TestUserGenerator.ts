@@ -15,13 +15,18 @@
 import { IUser } from "../../src/core/domain/entity/user/IUser";
 import { IAccess } from "../../src/core/domain/entity/access/IAccess";
 import { IAdmin } from "../../src/core/domain/entity/user/IAdmin";
+import {
+  ADMIN_TABLE,
+  RANK_TABLE,
+  USER_TABLE
+} from "../../src/common/constants";
 
 export class TestUserGeneratorTest {
   static admin(): IAdmin {
     return {
-      name:"test name",
-      contact:"test contact",
-      username: "admin_testusername",
+      name: "test name",
+      contact: "test contact",
+      username: "testusername",
       password: "test password",
       uuid: "test uuid",
       adminRef: "test admin ref"
@@ -97,5 +102,18 @@ export class TestUserGeneratorTest {
       startTime: "test start time",
       endTime: "test end time"
     };
+  }
+  static resetAdminTableSql(): string {
+    return `DELETE FROM ${ADMIN_TABLE};
+    DELETE FROM sqlite_sequence WHERE name= admin;
+`;
+  }
+
+  static resetRankTableSql(): string {
+    return `DELETE FROM ${RANK_TABLE};`;
+  }
+
+  static resetUserTableSql(): string {
+    return `DELETE FROM ${USER_TABLE}; `;
   }
 }

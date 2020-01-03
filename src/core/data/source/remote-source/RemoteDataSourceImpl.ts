@@ -275,4 +275,13 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   addAdmin(admin: IAdmin): Promise<any> {
     return this.userDao.addAdmin(admin);
   }
+  getAdminWithCredentials(username: string, password: string): Promise<IUser> {
+    return this.userDao.getAdminWithCredentials(username, password);
+  }
+  getAdmins(): Promise<IUser[]> {
+    return this.userDao.getAdmins();
+  }
+  getAdminWithIdentifier(identifier: string): Promise<IUser[]> {
+    return this.userDao.getAdminWithIdentifier(identifier);
+  }
 }

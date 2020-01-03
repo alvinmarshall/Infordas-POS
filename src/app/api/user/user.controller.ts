@@ -1,12 +1,16 @@
-/*
- *  This is the default license template.
- *
- *  File: user.controller.ts
- *  Author: Bik_krl
- *  Copyright (c) 2019 Bik_krl
- *
- *  To edit this license information: Press Ctrl+Shift+P and press 'Create new License Template...'.
- */
+// Copyright 2019 Bik_krl
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import { UserService } from "./user.service";
 import { Request, Response } from "express";
@@ -43,7 +47,6 @@ export class UserController {
   async createUserAccount(req: Request, res: Response) {
     try {
       const body: IUser = req.body;
-      console.log(body);
       if (body.password != undefined) {
         let password = body.password;
         const salt = await bcryptjs.genSalt(10);

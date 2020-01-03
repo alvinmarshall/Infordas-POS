@@ -18,6 +18,7 @@ import bcryptjs from "bcryptjs";
 import { GetUsersTask } from "../../../core/domain/useCase/user/GetUsersTask";
 import { AddAdminTask } from "../../../core/domain/useCase/user/AddAdminTask";
 import { IAdmin } from "../../../core/domain/entity/user/IAdmin";
+import { GetAdminTask } from "../../../core/domain/useCase/user/GetAdminTask";
 
 /**
  * UserService class
@@ -28,7 +29,8 @@ export class UserService {
   private addAUserTask: AddAUserTask;
   private getUsersTask: GetUsersTask;
   private jwtService: JWTTokenService;
-  private addAdminTask:AddAdminTask;
+  private addAdminTask: AddAdminTask;
+  private getAdminTask: GetAdminTask;
 
   /**
    *
@@ -43,13 +45,15 @@ export class UserService {
     @inject(GetUsersTask)
     $getUsersTask: GetUsersTask,
     @inject(JWTTokenService) $jwtService: JWTTokenService,
-    @inject(AddAdminTask) $addAdminTask:AddAdminTask
+    @inject(AddAdminTask) $addAdminTask: AddAdminTask,
+    @inject(GetAdminTask) $getAdminTask: GetAdminTask
   ) {
     this.getAuthenticationTask = $getAuthenticationTask;
     this.addAUserTask = $addAUserTask;
     this.getUsersTask = $getUsersTask;
     this.jwtService = $jwtService;
-    this.addAdminTask = $addAdminTask
+    this.addAdminTask = $addAdminTask;
+    this.getAdminTask = $getAdminTask;
   }
 
   authenticateUser(credentials: ICredentials): Promise<any> {
@@ -84,5 +88,8 @@ export class UserService {
   }
   createAdmin(admin: IAdmin): Promise<any> {
     return this.addAdminTask.buildUseCase(admin);
+  }
+  getAdminWithIdentifier(identifier: string): Promise<IUser> {
+    return this.getAdminTask.buildUseCase(identifier).then(data => data[0]);
   }
 }
