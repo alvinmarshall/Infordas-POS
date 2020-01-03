@@ -1,4 +1,4 @@
-import { TestUserGeneratorTest } from "../tests/utils/TestUserGenerator";
+import { TestUserGeneratorTest } from "../unit_test/utils/TestUserGenerator";
 
 import { agent as request } from "supertest";
 

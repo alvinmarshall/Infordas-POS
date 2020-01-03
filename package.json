@@ -13,7 +13,7 @@
     "serve": "npm run build&& node ./dist/src/index.js ",
     "start:dev": "set NODE_ENV=development&& nodemon",
     "dev": "set NODE_ENV=development&& ts-node ./src/index.ts",
-    "test:unit": "nyc --reporter=html --reporters=text mocha --opts ./tests/mocha.opts -r ts-node/register --exit",
+    "test:unit": "nyc --reporter=html --reporters=text mocha --opts ./unit_test/mocha.opts -r ts-node/register --exit",
     "test:integration": "set NODE_ENV=test&& nyc --reporter=html --reporters=text mocha --opts ./integration_test/mocha.opts -r ts-node/register --exit",
     "tests": "npm run test:unit&& npm run test:integration"
   },

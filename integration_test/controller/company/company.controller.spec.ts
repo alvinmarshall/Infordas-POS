@@ -1,4 +1,4 @@
-import { TestUserGeneratorTest } from "../../../tests/utils/TestUserGenerator";
+import { TestUserGeneratorTest } from "../../../unit_test/utils/TestUserGenerator";
 
 import { ICredentials } from "../../../src/core/domain/entity/user/IAuthenticationParams";
 
@@ -7,7 +7,7 @@ import { agent } from "supertest";
 import app from "../../../src";
 
 import { expect, assert } from "chai";
-import { TestCompanyGenerator } from "../../../tests/utils/TestCompanyGenerator";
+import { TestCompanyGenerator } from "../../../unit_test/utils/TestCompanyGenerator";
 
 describe("controller.company CompanyController Test", () => {
   let authToken: string;

@@ -14,10 +14,10 @@
 
 import { agent } from "supertest";
 import app from "../../../src";
-import { TestUserGeneratorTest } from "../../../tests/utils/TestUserGenerator";
+import { TestUserGeneratorTest } from "../../../unit_test/utils/TestUserGenerator";
 import { ICredentials } from "../../../src/core/domain/entity/user/IAuthenticationParams";
 import { expect, assert } from "chai";
-import { TestCrmGenerator } from "../../../tests/utils/TestCrmGenerator";
+import { TestCrmGenerator } from "../../../unit_test/utils/TestCrmGenerator";
 
 describe("controller.crm CrmController Test", () => {
   let authToken: string;

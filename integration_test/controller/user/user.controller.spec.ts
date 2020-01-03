@@ -3,7 +3,7 @@ import app from "../../../src";
 import { agent as request } from "supertest";
 import { expect } from "chai";
 import { ICredentials } from "../../../src/core/domain/entity/user/IAuthenticationParams";
-import { TestUserGeneratorTest } from "../../../tests/utils/TestUserGenerator";
+import { TestUserGeneratorTest } from "../../../unit_test/utils/TestUserGenerator";
 
 describe("controller.user UserController Test", () => {
   let authToken: string;
