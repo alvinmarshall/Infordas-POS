@@ -1,0 +1,15 @@
+/* Replace with your SQL commands */
+
+DROP TABLE IF EXISTS `access`;
+DROP TABLE IF EXISTS `admin`;
+DROP TABLE IF EXISTS `branch`;
+DROP TABLE IF EXISTS `brand`;
+DROP TABLE IF EXISTS `category`;
+DROP TABLE IF EXISTS `company`;
+DROP TABLE IF EXISTS `customer`;
+DROP TABLE IF EXISTS `employee`;
+DROP TABLE IF EXISTS `product`;
+DROP TABLE IF EXISTS `purchase`;
+DROP TABLE IF EXISTS `rank`;
+DROP TABLE IF EXISTS `supplier`;
+DROP TABLE IF EXISTS `users`;
