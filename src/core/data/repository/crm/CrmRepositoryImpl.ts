@@ -52,4 +52,10 @@ export class CrmRepositoryImpl implements CrmRepository {
   getSupplierWithIdentifier(identifier: string): Promise<IClient[]> {
     return this.remoteSource.getSupplierWithIdentifier(identifier);
   }
+  updateCustomer(customer: IClient): Promise<any> {
+    return this.remoteSource.updateCustomer(customer);
+  }
+  updateSupplier(supplier: IClient): Promise<any> {
+    return this.remoteSource.updateSupplier(supplier);
+  }
 }

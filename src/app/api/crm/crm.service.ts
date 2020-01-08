@@ -3,6 +3,7 @@ import { IClient } from "../../../core/domain/entity/crm/IClient";
 import { injectable, inject } from "inversify";
 import { IClientParams } from "../../../core/domain/entity/crm/IClientParams";
 import { GetClientTask } from "../../../core/domain/useCase/crm/GetClientTask";
+import { UpdateClientTask } from "../../../core/domain/useCase/crm/UpdateClientTask";
 
 // Copyright 2019 Bik_krl
 //
@@ -25,13 +26,16 @@ import { GetClientTask } from "../../../core/domain/useCase/crm/GetClientTask";
 export class CrmService {
   private addClientTask: AddClientTask;
   private getClientTask: GetClientTask;
+  private updateClientTask:UpdateClientTask;
 
   constructor(
     @inject(AddClientTask) $addClientTask: AddClientTask,
-    @inject(GetClientTask) $getClientTask: GetClientTask
+    @inject(GetClientTask) $getClientTask: GetClientTask,
+    @inject(UpdateClientTask) $updateClientTask:UpdateClientTask
   ) {
     this.addClientTask = $addClientTask;
     this.getClientTask = $getClientTask;
+    this.updateClientTask = $updateClientTask
   }
 
   addClient(client: IClient): Promise<any> {
@@ -44,6 +48,10 @@ export class CrmService {
 
   getSuppliers(params: IClientParams): Promise<IClient[]> {
     return this.getClientTask.buildUseCase(params);
+  }
+
+  updateClient(client: IClient): Promise<any> {
+    return this.updateClientTask.buildUseCase(client);
   }
 
 }

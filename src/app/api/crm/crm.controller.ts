@@ -116,4 +116,32 @@ export class CrmController {
         .send({ message: "Internal error occurred", status: 500 });
     }
   }
+
+  async updateCustomer(req: Request, res: Response) {
+    try {
+      const body: IClient = req.body;
+      body.type = Client_Type.CUSTOMER;
+      const data = await this.crmService.updateClient(body);
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "Internal error occurred", status: 500 });
+    }
+  }
+
+  async updateSupplier(req: Request, res: Response) {
+    try {
+      const body: IClient = req.body;
+      body.type = Client_Type.SUPPLIER;
+      const data = await this.crmService.updateClient(body);
+      return res.send({ data, status: 200 });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .send({ message: "Internal error occurred", status: 500 });
+    }
+  }
 }

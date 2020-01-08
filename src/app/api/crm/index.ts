@@ -65,4 +65,21 @@ router.get(
     controller.getSupplierWithIdentifier(req, res);
   }
 );
+
+router.put(
+  "/update-supplier",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.updateSupplier(req, res);
+  }
+);
+
+router.put(
+  "/update-customer",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    controller.updateCustomer(req, res);
+  }
+);
+
 export default router;

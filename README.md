@@ -52,3 +52,4 @@
 # Customer Relation management (CRM)
 ### can add crm (customer/supplier)
 ### can get all crm (customer/supplier)
+### can update crm

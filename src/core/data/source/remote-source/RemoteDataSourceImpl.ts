@@ -99,6 +99,12 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   getSupplierWithIdentifier(identifier: string): Promise<IClient[]> {
     return this.crmDao.getSupplierWithIdentifier(identifier);
   }
+  updateCustomer(customer: IClient): Promise<any> {
+    return this.crmDao.updateCustomer(customer);
+  }
+  updateSupplier(supplier: IClient): Promise<any> {
+    return this.crmDao.updateSupplier(supplier);
+  }
   //
   // ─── PRODUCT ────────────────────────────────────────────────────────────────────
   //

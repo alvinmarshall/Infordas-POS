@@ -16,18 +16,65 @@ import { CrmDao } from "./CrmDao";
 import { inject, injectable } from "inversify";
 import { DatabaseContext } from "../../../../DatabaseContext";
 import { IClient } from "../../../../../domain/entity/crm/IClient";
-import { CUSTOMER_TABLE, SUPPLIER_TABLE } from "../../../../../../common/constants";
+import {
+  CUSTOMER_TABLE,
+  SUPPLIER_TABLE
+} from "../../../../../../common/constants";
 
 @injectable()
 export class CrmDaoImpl implements CrmDao {
   private db: DatabaseContext;
 
   /**
-   * 
+   *
    * @param $db require DatabaseContext instance
    */
   constructor(@inject(DatabaseContext) $db: DatabaseContext) {
     this.db = $db;
+  }
+  updateCustomer(customer: IClient): Promise<any> {
+    const sql = `
+    UPDATE ${CUSTOMER_TABLE}
+    SET 
+      Name = ?,
+      Contact = ?,
+      Email = ?,
+      Address = ?,
+      PrevDue = ?
+    WHERE Cus_ID = ?`;
+    return this.db
+      .query(sql, [
+        customer.name,
+        customer.contact,
+        customer.email,
+        customer.prevDue,
+        customer.uid
+      ])
+      .then(data => {
+        return { message: `${data.affectedRows} item modified` };
+      });
+  }
+  updateSupplier(supplier: IClient): Promise<any> {
+    const sql = `
+    UPDATE ${SUPPLIER_TABLE}
+    SET 
+      Name = ?,
+      Contact = ?,
+      Email = ?,
+      Address = ?,
+      PrevDue = ?
+    WHERE Sup_ID = ?`;
+    return this.db
+      .query(sql, [
+        supplier.name,
+        supplier.contact,
+        supplier.email,
+        supplier.prevDue,
+        supplier.uid
+      ])
+      .then(data => {
+        return { message: `${data.affectedRows} item modified` };
+      });
   }
   getCustomer(): Promise<IClient[]> {
     const sql = `

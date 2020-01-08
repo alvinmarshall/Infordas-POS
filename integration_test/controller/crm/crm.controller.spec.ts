@@ -91,4 +91,26 @@ describe("controller.crm CrmController Test", () => {
     assert.isNotEmpty(res.body.data);
     // console.log("sup",res.body)
   });
+
+  it("PUT /crm/update-supplier success", async () => {
+    const supplier = TestCrmGenerator.supplier();
+    const res = await agent(app)
+      .put("/crm/update-supplier")
+      .set("Authorization", authToken)
+      .send(supplier)
+      .expect(200);
+    assert.isNotEmpty(res.body.data.message);
+  });
+
+  it("PUT /crm/update-customer success", async () => {
+    const customer = TestCrmGenerator.customer();
+    const res = await agent(app)
+      .put("/crm/update-customer")
+      .set("Authorization", authToken)
+      .send(customer)
+      .expect(200);
+    assert.isNotEmpty(res.body.data.message);
+  });
+
+  
 });

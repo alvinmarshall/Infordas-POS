@@ -23,11 +23,11 @@ describe("controller.user UserController Test", () => {
   it("POST /users/admin/register", async () => {
     const admin = TestUserGeneratorTest.admin();
     admin.username = "test_username2";
-    admin.adminRef = admin.uuid;
+    admin.adminRef = admin.uuid; //note uuid is auto-generated
     const res = await request(app)
       .post("/users/admin/register")
       .send(admin);
-    expect(res.status).to.be.equal(201);
+    expect(res.status).to.be.equal(403); //hence 403
     // console.log("response", res.body);
   });
 

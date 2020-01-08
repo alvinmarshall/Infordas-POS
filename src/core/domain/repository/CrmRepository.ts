@@ -21,4 +21,6 @@ export interface CrmRepository {
   getCustomerWithIdentifier(identifier: string): Promise<IClient[]>;
   getSupplier(): Promise<IClient[]>;
   getSupplierWithIdentifier(identifier: string): Promise<IClient[]>;
+  updateCustomer(customer: IClient): Promise<any>;
+  updateSupplier(supplier: IClient): Promise<any>;
 }
