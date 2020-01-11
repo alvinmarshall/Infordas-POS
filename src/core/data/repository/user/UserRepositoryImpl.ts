@@ -23,25 +23,25 @@ import { IAdmin } from "../../../domain/entity/user/IAdmin";
 @injectable()
 export class UserRepositoryImpl implements UserRepository {
   private remoteDataSource: RemoteDataSource;
-
+  
   constructor(
     @inject(RemoteDataSourceImpl) $remoteDataSource: RemoteDataSource
-  ) {
-    this.remoteDataSource = $remoteDataSource;
-  }
-
-  getUserWithCredentials(username: string, password: string): Promise<IUser> {
-    return this.remoteDataSource.getUserWithCredentials(username, password);
-  }
-
-  addAUser(user: IUser): Promise<any> {
-    return this.remoteDataSource.addNewUser(user);
-  }
-  setUserAccess(access: IAccess): Promise<any> {
-    return this.remoteDataSource.setUserAccess(access);
-  }
-  getUserWithIdentifier(identifier: string): Promise<IUser[]> {
-    return this.remoteDataSource.getUserWithIdentifier(identifier);
+    ) {
+      this.remoteDataSource = $remoteDataSource;
+    }
+    
+    getUserWithCredentials(username: string, password: string): Promise<IUser> {
+      return this.remoteDataSource.getUserWithCredentials(username, password);
+    }
+    
+    addAUser(user: IUser): Promise<any> {
+      return this.remoteDataSource.addNewUser(user);
+    }
+    setUserAccess(access: IAccess): Promise<any> {
+      return this.remoteDataSource.setUserAccess(access);
+    }
+    getUserWithIdentifier(identifier: string): Promise<IUser[]> {
+      return this.remoteDataSource.getUserWithIdentifier(identifier);
   }
   getUsers(): Promise<IUser[]> {
     return this.remoteDataSource.getUsers();
@@ -57,5 +57,8 @@ export class UserRepositoryImpl implements UserRepository {
   }
   getAdminWithIdentifier(identifier: string): Promise<IUser[]> {
     return this.remoteDataSource.getAdminWithIdentifier(identifier);
+  }
+  checkForAdmin(): Promise<boolean> {
+    return this.remoteDataSource.checkForAdmin()
   }
 }

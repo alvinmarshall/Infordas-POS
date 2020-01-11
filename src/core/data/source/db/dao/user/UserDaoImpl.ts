@@ -33,6 +33,9 @@ export class UserDaoImpl implements UserDao {
   constructor(@inject(DatabaseContext) $db: DatabaseContext) {
     this.db = $db;
   }
+  checkForAdmin(): Promise<boolean> {
+    return this.checkAdminAvailability();
+  }
 
   getAdmins(): Promise<IUser[]> {
     const sql = `

@@ -1,4 +1,3 @@
-
 // Copyright 2019 Bik_krl
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,10 +18,7 @@ import { IAccess } from "../../../../../domain/entity/access/IAccess";
 import { IAdmin } from "../../../../../domain/entity/user/IAdmin";
 
 export interface UserDao {
-  getUserWithCredentials(
-    username: string,
-    password: string
-  ): Promise<IUser>;
+  getUserWithCredentials(username: string, password: string): Promise<IUser>;
 
   getUserWithidentifier(identifier: string): Promise<IUser[]>;
   getUsers(): Promise<IUser[]>;
@@ -31,10 +27,8 @@ export interface UserDao {
 
   addUserAccess(access: IAccess): Promise<any>;
   addAdmin(admin: IAdmin): Promise<any>;
-  getAdminWithCredentials(
-    username: string,
-    password: string
-  ): Promise<IUser>;
-  getAdmins():Promise<IUser[]>;
+  getAdminWithCredentials(username: string, password: string): Promise<IUser>;
+  getAdmins(): Promise<IUser[]>;
   getAdminWithIdentifier(identifier: string): Promise<IUser[]>;
+  checkForAdmin(): Promise<boolean>;
 }

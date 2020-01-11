@@ -67,7 +67,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     @inject(FileDaoImpl) $fileDao: FileDao,
     @inject(ProductDaoImpl) $productDao: ProductDao,
     @inject(CrmDaoImpl) $crmDao: CrmDao
-  ) {
+    ) {
     this.userDao = $userDao;
     this.employeeDao = $employeeDao;
     this.rankDao = $rankDao;
@@ -80,7 +80,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   //
   // ─── CRM ────────────────────────────────────────────────────────────────────────
   //
-
+  
   addCustomer(customer: IClient): Promise<any> {
     return this.crmDao.addCustomer(customer);
   }
@@ -108,7 +108,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   //
   // ─── PRODUCT ────────────────────────────────────────────────────────────────────
   //
-
+  
   addProduct(product: IProduct): Promise<any> {
     return this.productDao.addProduct(product);
   }
@@ -140,7 +140,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   removeCategory(identifier: string): Promise<any> {
     return this.productDao.removeCategory(identifier);
   }
-
+  
   addBrand(brand: IBrand): Promise<any> {
     return this.productDao.addBrand(brand);
   }
@@ -162,15 +162,15 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   //
   // ─── FILE ───────────────────────────────────────────────────────────────────────
   //
-
+  
   saveFile(file: IFile): Promise<any> {
     return this.fileDao.saveFilePath(file);
   }
-
+  
   //
   // ─── BRANCH ─────────────────────────────────────────────────────────────────────
   //
-
+  
   addNewBranch(branch: IBranch): Promise<any> {
     return this.companyDao.addBranch(branch);
   }
@@ -186,15 +186,15 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   getBranchs(): Promise<IBranch[]> {
     return this.companyDao.getBranchs();
   }
-
+  
   //
   // ─── COMPANY ────────────────────────────────────────────────────────────────────
   //
-
+  
   addNewCompany(company: ICompany): Promise<any> {
     return this.companyDao.addCompany(company);
   }
-
+  
   updateCompany(company: ICompany): Promise<any> {
     return this.companyDao.updateCompany(company);
   }
@@ -211,14 +211,14 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   //
   // ─── RANK ───────────────────────────────────────────────────────────────────────
   //
-
+  
   addRank(rank: IRank): Promise<any> {
     return this.rankDao.addRank(rank);
   }
   removeRank(identifier: string): Promise<any> {
     return this.rankDao.removeRank(identifier);
   }
-
+  
   updateRank(rank: IRank): Promise<any> {
     return this.rankDao.updateRank(rank);
   }
@@ -228,11 +228,11 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   getRankWithIdentifier(identifier: string): Promise<IRank[]> {
     return this.rankDao.getRankWithIdentifier(identifier);
   }
-
+  
   //
   // ─── EMPLOYEE ───────────────────────────────────────────────────────────────────
   //
-
+  
   addEmployeeOtherInfo(employeeDetail: IEmployeeOther): Promise<any> {
     return this.employeeDao.addEmployeeDetailInfo(employeeDetail);
   }
@@ -242,14 +242,14 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   addNewEmployee(employee: IEmployee): Promise<string> {
     return this.employeeDao.addEmployee(employee);
   }
-
+  
   getEmployees(): Promise<IEmployee[]> {
     return this.employeeDao.getEmployees();
   }
   getEmployeeWithIdentifier(identifier: string): Promise<IEmployee[]> {
     return this.employeeDao.getEmployeeWithIdentifier(identifier);
   }
-
+  
   getEmployeeInfo(identifier?: string): Promise<IEmployeeInfo[]> {
     return this.employeeDao.getEmployeeInfo(identifier);
   }
@@ -259,7 +259,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   //
   // ─── USERS ──────────────────────────────────────────────────────────────────────
   //
-
+  
   addNewUser(user: IUser): Promise<any> {
     return this.userDao.addUser(user);
   }
@@ -270,14 +270,14 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   setUserAccess(access: IAccess): Promise<any> {
     return this.userDao.addUserAccess(access);
   }
-
+  
   getUserWithIdentifier(identifier: string): Promise<IUser[]> {
     return this.userDao.getUserWithidentifier(identifier);
   }
   getUsers(): Promise<IUser[]> {
     return this.userDao.getUsers();
   }
-
+  
   addAdmin(admin: IAdmin): Promise<any> {
     return this.userDao.addAdmin(admin);
   }
@@ -289,5 +289,8 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
   }
   getAdminWithIdentifier(identifier: string): Promise<IUser[]> {
     return this.userDao.getAdminWithIdentifier(identifier);
+  }
+  checkForAdmin(): Promise<boolean> {
+    return this.userDao.checkForAdmin()
   }
 }

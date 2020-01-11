@@ -122,10 +122,8 @@ export interface RemoteDataSource {
   getUserWithIdentifier(identifier: string): Promise<IUser[]>;
   getUsers(): Promise<IUser[]>;
   addAdmin(admin: IAdmin): Promise<any>;
-  getAdminWithCredentials(
-    username: string,
-    password: string
-  ): Promise<IUser>;
-  getAdmins():Promise<IUser[]>;
+  getAdminWithCredentials(username: string, password: string): Promise<IUser>;
+  getAdmins(): Promise<IUser[]>;
   getAdminWithIdentifier(identifier: string): Promise<IUser[]>;
+  checkForAdmin(): Promise<boolean>;
 }

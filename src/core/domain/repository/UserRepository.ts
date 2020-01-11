@@ -17,10 +17,7 @@ import { IAccess } from "../entity/access/IAccess";
 import { IAdmin } from "../entity/user/IAdmin";
 
 export interface UserRepository {
-  getUserWithCredentials(
-    username: string,
-    password: string
-  ): Promise<IUser>;
+  getUserWithCredentials(username: string, password: string): Promise<IUser>;
 
   getUserWithIdentifier(identifier: string): Promise<IUser[]>;
 
@@ -28,13 +25,10 @@ export interface UserRepository {
   addAdmin(admin: IAdmin): Promise<any>;
 
   setUserAccess(access: IAccess): Promise<any>;
-  getUsers():Promise<IUser[]>;
-  getAdminWithCredentials(
-    username: string,
-    password: string
-  ): Promise<IUser>;
+  getUsers(): Promise<IUser[]>;
+  getAdminWithCredentials(username: string, password: string): Promise<IUser>;
 
-  getAdmins():Promise<IUser[]>;
+  getAdmins(): Promise<IUser[]>;
   getAdminWithIdentifier(identifier: string): Promise<IUser[]>;
-
+  checkForAdmin(): Promise<boolean>;
 }

@@ -19,6 +19,7 @@ import { GetUsersTask } from "../../../core/domain/useCase/user/GetUsersTask";
 import { AddAdminTask } from "../../../core/domain/useCase/user/AddAdminTask";
 import { IAdmin } from "../../../core/domain/entity/user/IAdmin";
 import { GetAdminTask } from "../../../core/domain/useCase/user/GetAdminTask";
+import { CheckForAdminTask } from "../../../core/domain/useCase/user/CheckForAdminTask";
 
 /**
  * UserService class
@@ -31,6 +32,7 @@ export class UserService {
   private jwtService: JWTTokenService;
   private addAdminTask: AddAdminTask;
   private getAdminTask: GetAdminTask;
+  private checkAdminTask: CheckForAdminTask;
 
   /**
    *
@@ -46,7 +48,8 @@ export class UserService {
     $getUsersTask: GetUsersTask,
     @inject(JWTTokenService) $jwtService: JWTTokenService,
     @inject(AddAdminTask) $addAdminTask: AddAdminTask,
-    @inject(GetAdminTask) $getAdminTask: GetAdminTask
+    @inject(GetAdminTask) $getAdminTask: GetAdminTask,
+    @inject(CheckForAdminTask) $checkForAdmin: CheckForAdminTask
   ) {
     this.getAuthenticationTask = $getAuthenticationTask;
     this.addAUserTask = $addAUserTask;
@@ -54,6 +57,7 @@ export class UserService {
     this.jwtService = $jwtService;
     this.addAdminTask = $addAdminTask;
     this.getAdminTask = $getAdminTask;
+    this.checkAdminTask = $checkForAdmin;
   }
 
   authenticateUser(credentials: ICredentials): Promise<any> {
@@ -91,5 +95,8 @@ export class UserService {
   }
   getAdminWithIdentifier(identifier: string): Promise<IUser> {
     return this.getAdminTask.buildUseCase(identifier).then(data => data[0]);
+  }
+  checkForAdmin(): Promise<boolean> {
+    return this.checkAdminTask.buildUseCase();
   }
 }

@@ -22,6 +22,9 @@ import {
 } from "../../src/common/constants";
 
 export class TestUserGeneratorTest {
+  static checkForAdmin(): boolean {
+    return true;
+  }
   static admin(): IAdmin {
     return {
       name: "test name",

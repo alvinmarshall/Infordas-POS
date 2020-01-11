@@ -57,11 +57,11 @@ router.get(
   }
 );
 
-router.post(
-  "/admin/register",
-  // passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    controller.createAdminAccount(req, res);
-  }
-);
+router.post("/admin/register", (req, res) => {
+  controller.createAdminAccount(req, res);
+});
+
+router.get("/admin/status", (req, res) => {
+  controller.checkForAdmin(req, res);
+});
 export default router;

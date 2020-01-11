@@ -99,4 +99,11 @@ describe("controller.user UserController Test", () => {
       .set("Authorization", authToken);
     expect(res.status).to.be.equal(500);
   });
+
+  it("GET /users/admin/status success", async () => {
+    const res = await request(app)
+      .get("/users/admin/status")
+    expect(res.status).to.be.equal(200);
+    expect(res.body.data).to.be.equal(true)
+  });
 });

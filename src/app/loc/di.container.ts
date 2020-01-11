@@ -97,6 +97,7 @@ import { UserDaoImpl } from "../../core/data/source/db/dao/user/UserDaoImpl";
 import { AddAdminTask } from "../../core/domain/useCase/user/AddAdminTask";
 import { GetAdminTask } from "../../core/domain/useCase/user/GetAdminTask";
 import { UpdateClientTask } from "../../core/domain/useCase/crm/UpdateClientTask";
+import { CheckForAdminTask } from "../../core/domain/useCase/user/CheckForAdminTask";
 let DIContainer = new Container();
 
 //
@@ -131,6 +132,7 @@ DIContainer.bind<UserController>(UserController).toSelf();
 //
 // ─── DOMAIN ─────────────────────────────────────────────────────────────────────
 //
+DIContainer.bind<CheckForAdminTask>(CheckForAdminTask).toSelf();
 DIContainer.bind<UpdateClientTask>(UpdateClientTask).toSelf();
 DIContainer.bind<GetAdminTask>(GetAdminTask).toSelf();
 DIContainer.bind<AddAdminTask>(AddAdminTask).toSelf();
