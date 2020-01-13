@@ -14,7 +14,6 @@
 
 import { ICompany } from "../../src/core/domain/entity/company/ICompany";
 import { IBranch } from "../../src/core/domain/entity/branch/IBranch";
-import { CompanyEntity } from "../../src/core/domain/entity/company/CompanyEntity";
 
 export class TestCompanyGenerator {
   static create(): ICompany {

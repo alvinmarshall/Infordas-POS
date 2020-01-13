@@ -48,7 +48,7 @@ export class UserController {
   async createUserAccount(req: Request, res: Response) {
     try {
       const body: IUser = req.body;
-      if (body.password != undefined) {
+      if (body.password !== undefined) {
         body.uuid = v4();
         let password = body.password;
         const salt = await bcryptjs.genSalt(10);
@@ -85,7 +85,7 @@ export class UserController {
     try {
       const body: IAdmin = req.body;
       body.username = `admin_${body.username}`;
-      if (body.password != undefined) {
+      if (body.password !== undefined) {
         body.uuid = v4();
         let password = body.password;
         const salt = await bcryptjs.genSalt(10);
@@ -94,7 +94,7 @@ export class UserController {
         const data = await this.userService.createAdmin(body);
         const { message } = data;
         if (message.includes("administrator right")) {
-          return res.status(403).send({ data, status: 403 });
+          return res.status(200).send({ data, status: 403 });
         }
         return res.status(201).send({ data, status: 201 });
       }

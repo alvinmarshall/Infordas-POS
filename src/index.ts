@@ -23,7 +23,7 @@ import router from "./app/router";
 import DIContainer from "./app/loc/di.container";
 import PassportService from "./app/api/auth/passport-config";
 const app: Express = express();
-const port: number = config.get("port") || 3000;
+const port: number = config.get("port") || 9000;
 const passService = DIContainer.resolve<PassportService>(PassportService);
 //middleware
 app.use(express.static(path.join(__dirname, config.get("asset"))));
@@ -33,7 +33,7 @@ app.use(cors());
 app.use(fileUploader());
 router(app);
 passService.init();
-app.listen(port, "0.0.0.0", () => {
+app.listen(port, () => {
   console.log(`${config.get("name")} running on port: ${port}`);
 });
 

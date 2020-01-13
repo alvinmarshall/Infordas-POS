@@ -27,7 +27,7 @@ describe("controller.user UserController Test", () => {
     const res = await request(app)
       .post("/users/admin/register")
       .send(admin);
-    expect(res.status).to.be.equal(403); //hence 403
+    expect(res.body.status).to.be.equal(403); //hence 403
     // console.log("response", res.body);
   });
 
@@ -60,7 +60,7 @@ describe("controller.user UserController Test", () => {
     const res = await request(app)
       .post("/users/admin/register")
       .send(admin);
-    expect(res.status).to.be.equal(403);
+    expect(res.body.status).to.be.equal(403);
     expect(res.body.data.message).to.be.equal(message);
     // console.log("response", res.body);
   });

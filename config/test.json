@@ -1,7 +1,7 @@
 {
     "name":"Server Test",
     "version":"1.0.0-alpha",
-    "port":"3001",
+    "port":"3005",
     "mysqlConfig":{
         "host":"localhost",
         "database":"infordas_pos_test",
